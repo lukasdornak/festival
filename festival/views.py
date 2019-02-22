@@ -1,9 +1,12 @@
+from django.contrib.auth.decorators import login_required
 from django.views.generic import ListView, TemplateView
 from django.shortcuts import redirect, reverse
+from django.utils.decorators import method_decorator
 
 from . import models
 
 
+@method_decorator(login_required, name='dispatch')
 class HomeTemplateView(TemplateView):
     template_name = 'festival/home.html'
 
@@ -16,6 +19,7 @@ class HomeTemplateView(TemplateView):
         return super().get(request, *args, **kwargs)
 
 
+@method_decorator(login_required, name='dispatch')
 class SectionListView(ListView):
     model = models.Section
 

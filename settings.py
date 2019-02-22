@@ -114,3 +114,5 @@ CKEDITOR_CONFIGS = {
         ]
     }
 }
+
+LOGIN_URL = '/admin/login'
