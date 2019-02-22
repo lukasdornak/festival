@@ -1,0 +1,5 @@
+<div>
+{% for object in widget_context.object_list %}
+    <div><a href="{{ object.file.url }}">{{ object.name }}</a></div>
+{% endfor %}
+</div>

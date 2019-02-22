@@ -1,0 +1,11 @@
+#: festival/urls.py:14
+msgid "author/"
+msgstr "tvurce/"
+
+#: festival/urls.py:15
+msgid "visitor/"
+msgstr "navstevnik/"
+
+#: festival/urls.py:16
+msgid "journalist/"
+msgstr "novinar/"

@@ -1,0 +1,5 @@
+<div>
+{% for object in widget_context.object_list %}
+    <div>{% if object.url %}<a href="{{ object.url }}">{{ object.name }}</a>{% else %}{{ object.name }}{% endif %}</div>
+{% endfor %}
+</div>

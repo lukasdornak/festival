@@ -1,0 +1,126 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2019-02-15 13:22+0100\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: \n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+#: festival/models.py:16 festival/templates/festival/base.html:24
+msgid "tvůrce"
+msgstr "author"
+
+#: festival/models.py:17 festival/templates/festival/base.html:34
+msgid "novinář"
+msgstr "journalist"
+
+#: festival/models.py:18 festival/templates/festival/base.html:29
+msgid "návštěvník"
+msgstr "visitor"
+
+#: festival/models.py:151
+msgid "jméno autora"
+msgstr "author name"
+
+#: festival/models.py:152
+msgid "rok narození"
+msgstr "year of birth"
+
+#: festival/models.py:154
+msgid "škola/produkce"
+msgstr "school/production"
+
+#: festival/models.py:155
+msgid "stát"
+msgstr "country"
+
+#: festival/models.py:156
+msgid "název"
+msgstr "movie name"
+
+#: festival/models.py:157
+msgid "stopáž"
+msgstr "footage"
+
+#: festival/models.py:158
+msgid "rok vzniku"
+msgstr "year of creation"
+
+#: festival/models.py:159
+msgid "režie"
+msgstr "directed by"
+
+#: festival/models.py:160
+msgid "scénář"
+msgstr "screenplay"
+
+#: festival/models.py:161
+msgid "kamera"
+msgstr "cameraman"
+
+#: festival/models.py:162
+msgid "zvuk"
+msgstr "sound"
+
+#: festival/models.py:163
+msgid "střih"
+msgstr "cut"
+
+#: festival/models.py:164
+msgid "ostatní tvůrci"
+msgstr ""
+
+#: festival/models.py:165
+msgid "Kategorie"
+msgstr ""
+
+#: festival/models.py:166
+msgid "mám zájem o osobní účast na festivalu"
+msgstr ""
+
+#: festival/models.py:167
+msgid "souhlasím s podmínkami přihlášení"
+msgstr ""
+
+#: festival/templates/festival/base.html:17
+msgid "ahoj."
+msgstr "hi."
+
+#: festival/templates/festival/base.html:18
+msgid "s kým máme tu čest?"
+msgstr "who are you?"
+
+#: festival/templates/festival/base.html:22
+msgid "tvurce"
+msgstr "author"
+
+#: festival/templates/festival/base.html:27
+msgid "navstevnik"
+msgstr "visitor"
+
+#: festival/templates/festival/base.html:32
+msgid "novinar"
+msgstr "journalist"
+
+#: festival/urls.py:14
+msgid "tvurce/"
+msgstr "author/"
+
+#: festival/urls.py:15
+msgid "navstevnik/"
+msgstr "visitor/"
+
+#: festival/urls.py:16
+msgid "novinar/"
+msgstr "journalist/"

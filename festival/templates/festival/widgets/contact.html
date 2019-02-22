@@ -1,0 +1,12 @@
+{% load i18n %}
+<div>
+{% for object in widget_context.object_list %}
+    <div>
+        <p><b>{{ object.name }}</b><br />
+        {% if request.LANGUAGE_CODE == 'en' %}{{ object.function_en }}{% else %}{{ object.function }}{% endif %}<br />
+        {{ object.email }}<br />{% if object.phone %}
+        {{ object.phone }}<br />{% endif %}
+        </p>
+    </div>
+{% endfor %}
+</div>
