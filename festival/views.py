@@ -35,7 +35,8 @@ class SectionListView(ListView):
         return context_data
 
     def get(self, request, *args, **kwargs):
-        self.first_time = not bool(request.session.get('FESTIVAL_ROLE', None))
+        self.first_time = bool(request.GET.get('first', 0))
+        print(self.first_time)
         self.role = kwargs.get('role', None)
         if self.role:
             request.session['FESTIVAL_ROLE'] = self.role

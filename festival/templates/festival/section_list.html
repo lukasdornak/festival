@@ -1,26 +1,37 @@
 {% extends 'festival/base.html' %}
+{% load i18n %}
 
-{% block content %}{% if view.first_time %}
+{% block content %}
     {{ block.super }}
-    <script>
-
-$(function(){
-    $('#header, nav').removeClass('first_time');
-    $('html, body').animate({
-        scrollTop: $('section').not('#id-uvod').offset().top
-    }, 800)
-    $('body').promise().done(function() {
-        $('#id-uvod').remove();
-    });
-})
-    </script>{% endif %}
     {% for section in object_list %}
     <section id="id-{% if request.LANGUAGE_CODE == 'en' %}{{ section.slug_en }}{% else %}{{ section.slug }}{% endif %}">
-        <div class="page">{% if section.auto_headline %}
+        <div class="page_width">{% if section.auto_headline %}
             <h1>{% if request.LANGUAGE_CODE == 'en' %}{{ section.headline_en }}{% else %}{{ section.headline }}{% endif %}</h1>{% endif %}{% if section.widget %}
             {% include section.get_widget.template_name with widget_context=section.widget_context %}{% endif %}
             <div class="text">{% if request.LANGUAGE_CODE == 'en' %}{{ section.full_text_en|safe }}{% else %}{{ section.full_text|safe }}{% endif %}</div>
+        </div>{% if request.LANGUAGE_CODE == 'en' and section.extra_full_text_en %}
+        <div id="{{ section.slug_en }}-extra_text" class="extra_text hidden_extra">
+            <div class="page_width text">{{ section.extra_full_text_en|safe }}</div>
         </div>
+        <div class="button"><div id="{{ section.slug_en }}-button" class="extra_button">{% trans 'chceš vědět víc?' %}</div></div>{% elif request.LANGUAGE_CODE == 'cs' and section.extra_full_text %}
+        <div id="{{ section.slug_en }}-extra_text" class="extra_text hidden_extra">
+            <div class="page_width text">{{ section.extra_full_text|safe }}</div>
+        </div>
+        <div class="button"><div id="{{ section.slug_en }}-button" class="extra_button">{% trans 'chceš vědět víc?' %}</div></div>{% endif %}
     </section>
+    <script>
+$(function(){
+    $('body').removeClass('first_time');
+    $('#logo').on('click', function (event) {
+        $('.extra_text').addClass('hidden');
+        $('body').addClass('first_time');
+        $('nav').addClass('hidden');
+    });
+    $('.extra_button').on('click', function (event) {
+        $('#' + $(this).attr('id').replace('-button', '-extra_text')).toggleClass('hidden_extra');
+        $(this).html($(this).html() === "{% trans 'chceš vědět víc?' %}" ? "{% trans 'chceš vědět míň?' %}" : "{% trans 'chceš vědět víc?' %}")
+    })
+})
+    </script>
     {% endfor %}
 {% endblock %}

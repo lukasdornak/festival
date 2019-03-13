@@ -84,6 +84,8 @@ class Article(AbstractArticle):
 
 
 class Section(AbstractArticle):
+    extra_full_text = RichTextField('extra obsah', null=True, blank=True)
+    extra_full_text_en = RichTextField('extra obsah anglicky', null=True, blank=True)
     role = models.CharField('role', max_length=1, default='v', choices=ROLE_CHOICES)
     order = models.PositiveSmallIntegerField('pořadí', default=1)
     widget = models.CharField('dynamický objekt', max_length=1, choices=widgets.Widget.get_choices(),
