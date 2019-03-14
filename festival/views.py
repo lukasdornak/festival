@@ -15,6 +15,7 @@ class HomeTemplateView(TemplateView):
         if role:
             return redirect(reverse(role))
         self.first_time = True
+        self.nav = bool(request.GET.get('nav', 0))
         self.all_sections = models.Section.objects.all()
         return super().get(request, *args, **kwargs)
 
@@ -35,9 +36,10 @@ class SectionListView(ListView):
         return context_data
 
     def get(self, request, *args, **kwargs):
-        self.first_time = bool(request.GET.get('first', 0))
-        print(self.first_time)
         self.role = kwargs.get('role', None)
         if self.role:
             request.session['FESTIVAL_ROLE'] = self.role
+        self.first_time = bool(request.GET.get('first', 0))
+        self.nav = bool(request.GET.get('nav', 0))
+        self.home = bool(request.GET.get('home', 0))
         return super().get(request, *args, **kwargs)

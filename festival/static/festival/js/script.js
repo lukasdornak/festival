@@ -28,7 +28,6 @@ function hashCheck(){
 
 function getScrolledPage(){
     for(p=$pages.length-1, len=0; p>=len; p-- ){
-        // if( $(document).scrollTop() > ($pages.eq(p).offset().top - head) ){
         if( $(document).scrollTop() > ($pages.eq(p).offset().top - 5) ){
             return p;
         }
@@ -37,7 +36,6 @@ function getScrolledPage(){
 
 function scrollToPage(){
     $('html, body').animate({
-        // scrollTop: $pages.eq(page).offset().top - head + 5
         scrollTop: $pages.eq(page).offset().top
     }, 800);
     $('body').promise().done(function() {
@@ -56,7 +54,6 @@ function pageCheck(){
 
 $(function(){
     $pages = $('section');
-    // head = 70;
     hashCheck();
     $(window).on('hashchange', function(event) {
         hashCheck();
@@ -69,9 +66,25 @@ $(function(){
         }
     });
     $('#menu_button').click(function(event) {
+        $('#logo').toggleClass('nav_on');
         $('nav').toggleClass('hidden');
     });
     $('nav a').click(function(event) {
         $('nav').addClass('hidden');
+        $('#logo').removeClass('nav_on');
     });
-})
+
+    $('#lang_switch').mousedown(function () {
+        $lang_switch = $('#lang_switch');
+        var query_string = '';
+        if ($('body').hasClass('first_time')) {
+            query_string = 'home=1&';
+        }
+        if (!$('nav').hasClass('hidden')) {
+            query_string = query_string + 'nav=1';
+        }
+        if (query_string) {
+            $lang_switch.attr('href', $lang_switch.attr('href') + '?' + query_string);
+        }
+    });
+});

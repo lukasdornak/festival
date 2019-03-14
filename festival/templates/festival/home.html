@@ -1,1 +1,11 @@
 {% extends 'festival/base.html' %}
+
+{% block js %}
+    <script>
+$(function () {
+    $('#lang_switch').mousedown(function () {
+        document.cookie = "django_language={% if request.LANGUAGE_CODE == 'en' %}cs{% else %}en{% endif %}";
+    })
+})
+    </script>
+{% endblock %}

@@ -50,10 +50,17 @@ header {
 #logo {
   cursor: pointer;
   flex-grow: 1;
-  background-image: url("../img/logo.png");
+  background-image: url("../img/logo-bare.png");
   background-size: contain;
   background-repeat: no-repeat;
-  z-index: 120; }
+  z-index: 120;
+  -webkit-transition: filter 800ms;
+  -moz-transition: filter 800ms;
+  -ms-transition: filter 800ms;
+  -o-transition: filter 800ms;
+  transition: filter 800ms; }
+  #logo.nav_on {
+    filter: brightness(10); }
 
 #nav_bar {
   display: flex;
@@ -68,7 +75,7 @@ nav {
   background: -o-linear-gradient(top left, #38CE95, #09516B);
   background: linear-gradient(to bottom right, #38CE95, #09516B);
   position: fixed;
-  padding-top: 70px;
+  padding-top: calc(4% + 50px);
   top: 0;
   right: 0;
   width: 100%;
@@ -118,7 +125,7 @@ nav {
   padding: 0;
   z-index: 50; }
   #id-uvod div.page_width {
-    padding-top: 100px;
+    padding-top: calc(4% + 40px);
     height: 100vh;
     box-sizing: border-box;
     display: flex;
@@ -279,7 +286,9 @@ section {
       background: -o-linear-gradient(top left, #38CE95, #09516B);
       background: linear-gradient(to bottom right, #38CE95, #09516B); }
     .role .page_width {
-      width: 90%; } }
+      width: 90%; }
+  #logo {
+    background-image: url("../img/logo-full.png"); } }
 
 @media (min-width: 992px) {
   body {
@@ -300,3 +309,15 @@ section {
     font-size: 27px; }
   .page_width {
     width: 80%; } }
+
+/* Extra large devices */
+@media (min-width: 1921px) {
+  body {
+    font-size: 30px; }
+  #id-uvod div.page_width {
+    padding-top: 0;
+    justify-content: space-evenly; }
+    #id-uvod div.page_width > div {
+      flex-grow: initial; }
+  .role {
+    max-height: 600px; } }

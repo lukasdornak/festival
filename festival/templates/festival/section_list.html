@@ -19,19 +19,22 @@
         </div>
         <div class="button"><div id="{{ section.slug_en }}-button" class="extra_button">{% trans 'chceš vědět víc?' %}</div></div>{% endif %}
     </section>
+    {% endfor %}
+{% endblock %}
+
+{% block js %}
     <script>
-$(function(){
-    $('body').removeClass('first_time');
+$(function(){{% if not view.home %}
+    $('body').removeClass('first_time');{% endif %}
     $('#logo').on('click', function (event) {
-        $('.extra_text').addClass('hidden');
         $('body').addClass('first_time');
         $('nav').addClass('hidden');
+        $('#logo').removeClass('nav_on');
     });
     $('.extra_button').on('click', function (event) {
         $('#' + $(this).attr('id').replace('-button', '-extra_text')).toggleClass('hidden_extra');
-        $(this).html($(this).html() === "{% trans 'chceš vědět víc?' %}" ? "{% trans 'chceš vědět míň?' %}" : "{% trans 'chceš vědět víc?' %}")
-    })
+        $(this).html($(this).html() === "{% trans 'chceš vědět víc?' %}" ? "{% trans 'chceš vědět míň?' %}" : "{% trans 'chceš vědět víc?' %}");
+    });
 })
     </script>
-    {% endfor %}
 {% endblock %}
