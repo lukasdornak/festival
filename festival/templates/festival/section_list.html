@@ -30,6 +30,7 @@ $(function(){{% if not view.home %}
         $('body').addClass('first_time');
         $('nav').addClass('hidden');
         $('#logo').removeClass('nav_on');
+        $('#menu_button').removeClass('cross');
     });
     $('.extra_button').on('click', function (event) {
         $('#' + $(this).attr('id').replace('-button', '-extra_text')).toggleClass('hidden_extra');

@@ -14,13 +14,13 @@ from django.db.models import Avg
 
 from . import widgets
 
-AUTHOR = _('tvůrce')
-VISITOR = _('návštěvník')
-JOURNALIST = _('novinář')
+AUTHOR = 'a'
+VISITOR = 'b'
+JOURNALIST = 'c'
 ROLE_CHOICES = (
-    ('a', AUTHOR),
-    ('b', VISITOR),
-    ('c', JOURNALIST),
+    (AUTHOR, _('tvůrce')),
+    (VISITOR, _('návštěvník')),
+    (JOURNALIST, _('novinář')),
 )
 
 class Year(models.Model):

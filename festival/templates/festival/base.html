@@ -21,7 +21,7 @@
     <meta name="theme-color" content="#1A1C1E">
     <meta name="msapplication-TileColor" content="#292b2f">
     <meta name="msapplication-TileImage" content="{% static 'festival/favicon/ms-icon-144x144.png' %}">
-    <title>{% block title %}Kraťasy (>) Mezinárodní festival krátkých filmů{% endblock %}</title>
+    <title>{% block title %}Kraťasy{% endblock %}</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <link href="https://fonts.googleapis.com/css?family=Poppins:light,bold" rel="stylesheet">
     <script src="{%  static '/festival/js/script.js' %}"></script>
@@ -43,7 +43,7 @@
             </div>
             <div class="role">
                 <a href="/{% trans "navstevnik" %}/?first=1"></a>
-                <img id="wide_role" src="{% static 'festival/img/visitor.png' %}">
+                <img src="{% static 'festival/img/visitor.png' %}">
                 <div class="button"><div>{% trans "návštěvník" %}</div></div>
             </div>
             <div class="role">
@@ -57,17 +57,23 @@
     <header>
         <nav {% if not view.nav %}class="hidden"{% endif %}>
             {% regroup view.all_sections by role as section_list %}{% for group in section_list %}
-            <ul>
-                <li><a href="/{{ group.list.0.get_role_display|slugify }}/" {% if group.grouper == view.role %} {% endif %}><b>{{ group.list.0.get_role_display }}</b></a></li>{% for section in group.list %}
-                <li><a href="/{{ section.get_role_display|slugify }}/#{% if request.LANGUAGE_CODE == 'en' %}{{ section.slug_en }}">{{ section.headline_en }}{% else %}{{ section.slug }}">{{ section.headline }}{% endif %}</a></li>{% endfor %}
-            </ul>{% endfor %}
+            <div>
+                <span id="{{ group.list.0.get_role_display|slugify }}-head" class="nav-head"><b>{{ group.list.0.get_role_display }}</b></span>
+                <div id="{{ group.list.0.get_role_display|slugify }}-list" class="nav-list{% if not view.role == group.list.0.role %} hidden{% endif %}">{% for section in group.list %}
+                    <a href="/{{ section.get_role_display|slugify }}/#{% if request.LANGUAGE_CODE == 'en' %}{{ section.slug_en }}">{{ section.headline_en }}{% else %}{{ section.slug }}">{{ section.headline }}{% endif %}</a>{% endfor %}
+                </div>
+            </div>{% endfor %}
         </nav>
         <div id="header">
             <div id="logo" {% if view.nav %}class="nav_on"{% endif %}></div>
             <div id="nav_bar">{% with request.path|slice:"1:" as path %}{% if request.LANGUAGE_CODE == 'en' %}{% language "cs" %}
                 <a href="/{% trans path %}" id="lang_switch">cs/<b>en</b></a>{% endlanguage %}{% else %}{% language "en" %}
                 <a href="/{% trans path %}" id="lang_switch"><b>cs</b>/en</a>{% endlanguage %}{% endif %}{% endwith %}
-                <a id="menu_button"><img src="{% static 'festival/img/menu.png' %}"></a>
+                <div id="menu_button"{% if view.nav %} class="cross"{% endif %}>
+                    <div class="bar1"></div>
+                    <div class="bar2"></div>
+                    <div class="bar3"></div>
+                </div>
             </div>
         </div>
     </header>
