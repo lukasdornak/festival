@@ -26,15 +26,23 @@
     <script>
 $(function(){{% if not view.home %}
     $('body').removeClass('first_time');{% endif %}
-    $('#logo').on('click', function (event) {
+    $('#logo').on('click', function () {
         $('body').addClass('first_time');
         $('nav').addClass('hidden');
         $('#logo').removeClass('nav_on');
         $('#menu_button').removeClass('cross');
     });
-    $('.extra_button').on('click', function (event) {
-        $('#' + $(this).attr('id').replace('-button', '-extra_text')).toggleClass('hidden_extra');
-        $(this).html($(this).html() === "{% trans 'chceš vědět víc?' %}" ? "{% trans 'chceš vědět míň?' %}" : "{% trans 'chceš vědět víc?' %}");
+    $('.extra_button').on('click', function () {
+        var $text = $('#' + $(this).attr('id').replace('-button', '-extra_text'));
+        if ($text.hasClass('hidden_extra')){
+            $text.removeClass('hidden_extra');
+            $(this).html("{% trans 'chceš vědět míň?' %}");
+        } else {
+            $text.addClass('hidden_extra');
+            readyToScroll = false;
+            scrollToPage(200);
+            $(this).html("{% trans 'chceš vědět víc?' %}");
+        }
     });
 })
     </script>

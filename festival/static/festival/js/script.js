@@ -34,10 +34,10 @@ function getScrolledPage(){
     }
 }
 
-function scrollToPage(){
+function scrollToPage(time=800){
     $('html, body').animate({
         scrollTop: $pages.eq(page).offset().top
-    }, 800);
+    }, time);
     $('body').promise().done(function() {
         readyToScroll = true;
         nextCheck();
