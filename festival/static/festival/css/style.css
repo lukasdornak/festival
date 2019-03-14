@@ -100,8 +100,7 @@ nav {
     padding: 10px;
     list-style: none; }
   nav.hidden {
-    width: 0;
-    height: 0; }
+    width: 0; }
 
 #lang_switch {
   font-size: 13px;
