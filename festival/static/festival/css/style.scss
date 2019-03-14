@@ -71,7 +71,7 @@ header {
 }
 #logo {
     cursor: pointer;
-    flex-grow: 1;
+    width: 47px;
     background-image: url("../img/logo-bare.png");
     background-size: contain;
     background-repeat: no-repeat;
@@ -223,7 +223,6 @@ nav {
 }
 .role {
     position: relative;
-    height: 40vh;
     display: flex;
     flex-direction: row;
     justify-content: flex-start;
@@ -425,6 +424,7 @@ section {
     .role {
         flex-direction: column;
         justify-content: space-between;
+        height: 40vh;
         img {
             height: 20vh;
             width: auto;
@@ -445,6 +445,7 @@ section {
         }
     }
     #logo {
+        width: 166px;
         background-image: url("../img/logo-full.png");
     }
 }
