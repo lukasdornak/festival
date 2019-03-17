@@ -56,6 +56,7 @@ $(function(){
     $pages = $('section');
     hashCheck();
     $(window).on('hashchange', function(event) {
+        console.log('hashchango');
         hashCheck();
     });
     $(document).bind('scroll', function(event) {
@@ -67,12 +68,10 @@ $(function(){
     });
     $('#menu_button').click(function() {
         $('#menu_button').toggleClass('cross');
-        $('#logo').toggleClass('nav_on');
         $('nav').toggleClass('hidden');
     });
     $('nav a').click(function() {
         $('nav').addClass('hidden');
-        $('#logo').removeClass('nav_on');
         $('body').removeClass('first_time');
         $('#menu_button').removeClass('cross');
     });

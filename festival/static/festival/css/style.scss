@@ -4,6 +4,7 @@ $header-height: 46px;
 $color-mint: rgba(56, 206, 159, 1);
 $gradient-from: #38CE95;
 $gradient-to: #09516B;
+$shadow-color: #1c1c1c;
 
 @mixin background-gradient {
     background-color: $color-mint;
@@ -22,8 +23,10 @@ body {
     &.first_time {
         height: 100vh;
         overflow-y: hidden;
-        #header {
-            padding-top: 4%;
+        header {
+            -webkit-box-shadow: none;
+            -moz-box-shadow: none;
+            box-shadow: none;
         }
         section:nth-child(1) {
             top: 0;
@@ -54,6 +57,9 @@ header {
     width: 100%;
     background-color: $color-dark;
     z-index: 100;
+    -webkit-box-shadow: 0 0 60px 15px $shadow-color;
+    -moz-box-shadow: 0 0 60px 15px $shadow-color;
+    box-shadow: 0 0 60px 15px $shadow-color;
 }
 #header {
     display: flex;
@@ -75,15 +81,11 @@ header {
     background-image: url("../img/logo-bare.png");
     background-size: contain;
     background-repeat: no-repeat;
-    z-index: 120;
     -webkit-transition: filter 800ms;
     -moz-transition: filter 800ms;
     -ms-transition: filter 800ms;
     -o-transition: filter 800ms;
     transition: filter 800ms;
-    &.nav_on {
-        filter: brightness(10);
-    }
 }
 #nav_bar {
     display: flex;
@@ -149,7 +151,7 @@ nav {
     text-decoration: none;
     background: none;
     color: white;
-    border: white solid 1px;
+    border: white solid 2px;
     border-radius: 25px;
     padding: 8px 16px;
 }
@@ -160,9 +162,10 @@ nav {
 }
 .bar1, .bar2, .bar3 {
     width: 40px;
-    height: 2px;
+    height: 4px;
+    border-radius: 4px;
     background-color: white;
-    margin: 12px 0;
+    margin: 10px 0;
     transition: 0.4s;
 }
 .bar3 {
@@ -294,18 +297,19 @@ section {
 
 .extra_text {
     @include background-gradient;
+    font-size: 0.8em;
     background-attachment: fixed;
     margin-bottom: 1em;
     position: relative;
     color: white;
-    padding: 50px 0;
+    padding: 50px 10%;
     box-sizing: border-box;
     overflow-y: hidden;
-    -webkit-transition: all 600ms;
-    -moz-transition: all 600ms;
-    -ms-transition: all 600ms;
-    -o-transition: all 600ms;
-    transition: all 600ms;
+    -webkit-transition: padding-top 600ms, padding-bottom 600ms;
+    -moz-transition: padding-top 600ms, padding-bottom 600ms;
+    -ms-transition: padding-top 600ms, padding-bottom 600ms;
+    -o-transition: padding-top 600ms, padding-bottom 600ms;
+    transition: padding-top 600ms, padding-bottom 600ms;
     &.hidden_extra {
         height: 0;
         padding: 0;
@@ -332,6 +336,9 @@ section {
         -webkit-box-shadow: 0 0 60px 15px $color-dark;
         -moz-box-shadow: 0 0 60px 15px $color-dark;
         box-shadow: 0 0 60px 15px $color-dark;
+    }
+    p {
+        text-align: left;
     }
 }
 
@@ -448,11 +455,22 @@ section {
         width: 166px;
         background-image: url("../img/logo-full.png");
     }
+    .extra_text {
+        -webkit-column-count: 2;
+        -moz-column-count: 2;
+        column-count: 2;
+        -webkit-column-gap: 3em;
+        -moz-column-gap: 3em;
+        column-gap: 3em;
+    }
 }
 
 @media (min-width: 992px) {
     body {
         font-size: 24px;
+        &.first_time #header {
+            padding-top: 4%;
+        }
     }
     #roles {
         justify-content: space-between;
@@ -476,6 +494,14 @@ section {
     }
     .page_width {
         width: 80%;
+    }
+    .extra_text {
+        -webkit-column-count: 3;
+        -moz-column-count: 3;
+        column-count: 3;
+      -webkit-column-width: 100px;
+      -moz-column-width: 100px;
+      column-width: 100px;
     }
 }
 
