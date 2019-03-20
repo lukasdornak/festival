@@ -1,12 +1,12 @@
-{% extends 'festival/base.html' %}
+{% extends 'festival/base.html' %}{% load static %}
 {% load i18n %}
 
 {% block content %}
     {{ block.super }}
     {% for section in object_list %}
-    <section id="id-{% if request.LANGUAGE_CODE == 'en' %}{{ section.slug_en }}{% else %}{{ section.slug }}{% endif %}">
-        <div class="page_width">{% if section.auto_headline %}
-            <h1>{% if request.LANGUAGE_CODE == 'en' %}{{ section.headline_en }}{% else %}{{ section.headline }}{% endif %}</h1>{% endif %}{% if section.widget %}
+    <section id="id-{% if request.LANGUAGE_CODE == 'en' %}{{ section.slug_en }}{% else %}{{ section.slug }}{% endif %}">{% if section.auto_headline %}
+        <h1>{% if request.LANGUAGE_CODE == 'en' %}{{ section.headline_en }}{% else %}{{ section.headline }}{% endif %}</h1>{% endif %}
+        <div class="page_width">{% if section.widget %}
             {% include section.get_widget.template_name with widget_context=section.widget_context %}{% endif %}
             <div class="text">{% if request.LANGUAGE_CODE == 'en' %}{{ section.full_text_en|safe }}{% else %}{{ section.full_text|safe }}{% endif %}</div>
         </div>{% if request.LANGUAGE_CODE == 'en' and section.extra_full_text_en %}
@@ -14,8 +14,32 @@
         <div class="button"><div id="{{ section.slug_en }}-button" class="extra_button">{% trans 'chceš vědět víc?' %}</div></div>{% elif request.LANGUAGE_CODE == 'cs' and section.extra_full_text %}
         <div id="{{ section.slug_en }}-extra_text" class="extra_text hidden_extra">{{ section.extra_full_text|safe }}</div>
         <div class="button"><div id="{{ section.slug_en }}-button" class="extra_button">{% trans 'chceš vědět víc?' %}</div></div>{% endif %}
+    </section>{% endfor %}
+    <section id="id-{% trans 'kontakt' %}" class="contact">
+        <div class="page_width">
+            <div class="halves">
+                <div>
+                    <b>{% trans 'Potřebuješ se s námi spojit?' %}<br>{% trans 'Nebo nám chceš pomoc?' %}</b><br>
+                    <a class="button smaller_at_larger" href="mailto:info@festivalkratasy.cz">{% trans 'Tak nám napiš!' %}</a>
+                </div>
+                <div>
+                    <div class="social">
+                        <a href="https://www.facebook.com/festivalkratasy/"><img src="{% static '/festival/img/fb.svg' %}" alt="facebook"></a>
+                        <a href="https://www.youtube.com/channel/UC7w24GU53i-yZoCgbsYLKsA"><img src="{% static '/festival/img/yt.svg' %}" alt="youtube"></a>
+                    </div>
+                    <b class="color-mint">Czech festival, s.r.o.</b><br>
+                    <span class="smaller_at_larger">Táborská 1813, 393 01 Pelhřimov,</span><br>
+                    <span class="smaller_at_larger">IČO: 01234567</span>
+                </div>
+            </div>
+        </div>
     </section>
-    {% endfor %}
+    <footer>
+        <div class="page_width">
+            <hr>
+            <span>{% trans 'navrhl' %} <a href="https://www.nudni.cz">Ondřej Plášil</a>, {% trans 'stvořil' %} Lukáš Dorňák</span>
+        </div>
+    </footer>
 {% endblock %}
 
 {% block js %}

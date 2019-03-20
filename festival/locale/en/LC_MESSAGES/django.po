@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-02-15 13:22+0100\n"
+"POT-Creation-Date: 2019-03-20 17:11+0100\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,110 +17,158 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-#: festival/models.py:16 festival/templates/festival/base.html:24
+
+#: festival/models.py:21 festival/templates/festival/base.html:44
 msgid "tvůrce"
 msgstr "author"
 
-#: festival/models.py:17 festival/templates/festival/base.html:34
-msgid "novinář"
-msgstr "journalist"
-
-#: festival/models.py:18 festival/templates/festival/base.html:29
+#: festival/models.py:22 festival/templates/festival/base.html:49
 msgid "návštěvník"
 msgstr "visitor"
 
-#: festival/models.py:151
+#: festival/models.py:23 festival/templates/festival/base.html:54
+msgid "novinář"
+msgstr "journalist"
+
+#: festival/models.py:157
 msgid "jméno autora"
 msgstr "author name"
 
-#: festival/models.py:152
+#: festival/models.py:158
 msgid "rok narození"
 msgstr "year of birth"
 
-#: festival/models.py:154
+#: festival/models.py:160
 msgid "škola/produkce"
 msgstr "school/production"
 
-#: festival/models.py:155
+#: festival/models.py:161
 msgid "stát"
 msgstr "country"
 
-#: festival/models.py:156
+#: festival/models.py:162
 msgid "název"
 msgstr "movie name"
 
-#: festival/models.py:157
+#: festival/models.py:163
 msgid "stopáž"
 msgstr "footage"
 
-#: festival/models.py:158
+#: festival/models.py:164
 msgid "rok vzniku"
 msgstr "year of creation"
 
-#: festival/models.py:159
+#: festival/models.py:165
 msgid "režie"
 msgstr "directed by"
 
-#: festival/models.py:160
+#: festival/models.py:166
 msgid "scénář"
 msgstr "screenplay"
 
-#: festival/models.py:161
+#: festival/models.py:167
 msgid "kamera"
 msgstr "cameraman"
 
-#: festival/models.py:162
+#: festival/models.py:168
 msgid "zvuk"
 msgstr "sound"
 
-#: festival/models.py:163
+#: festival/models.py:169
 msgid "střih"
 msgstr "cut"
 
-#: festival/models.py:164
+#: festival/models.py:170
 msgid "ostatní tvůrci"
 msgstr ""
 
-#: festival/models.py:165
+#: festival/models.py:171
 msgid "Kategorie"
 msgstr ""
 
-#: festival/models.py:166
+#: festival/models.py:172
 msgid "mám zájem o osobní účast na festivalu"
 msgstr ""
 
-#: festival/models.py:167
+#: festival/models.py:173
 msgid "souhlasím s podmínkami přihlášení"
 msgstr ""
 
-#: festival/templates/festival/base.html:17
+#: festival/templates/festival/base.html:33
+msgid "uvod"
+msgstr "intro"
+
+#: festival/templates/festival/base.html:35
 msgid "ahoj."
 msgstr "hi."
 
-#: festival/templates/festival/base.html:18
+#: festival/templates/festival/base.html:36
+msgid "my jsme Kraťasy"
+msgstr "we are Kraťasy"
+
+#: festival/templates/festival/base.html:37
+msgid "festival krátkých filmů"
+msgstr "short film festival"
+
+#: festival/templates/festival/base.html:38
 msgid "s kým máme tu čest?"
 msgstr "who are you?"
 
-#: festival/templates/festival/base.html:22
+#: festival/templates/festival/base.html:42
 msgid "tvurce"
 msgstr "author"
 
-#: festival/templates/festival/base.html:27
+#: festival/templates/festival/base.html:47
 msgid "navstevnik"
 msgstr "visitor"
 
-#: festival/templates/festival/base.html:32
+#: festival/templates/festival/base.html:52
 msgid "novinar"
 msgstr "journalist"
 
-#: festival/urls.py:14
+#: festival/templates/festival/base.html:66
+#: festival/templates/festival/section_list.html:18
+msgid "kontakt"
+msgstr "contact"
+
+#: festival/templates/festival/section_list.html:14
+#: festival/templates/festival/section_list.html:16
+#: festival/templates/festival/section_list.html:64
+msgid "chceš vědět víc?"
+msgstr "wanna know more?"
+
+#: festival/templates/festival/section_list.html:22
+msgid "Potřebuješ se s námi spojit?"
+msgstr "Need to get in touch with us?"
+
+#: festival/templates/festival/section_list.html:22
+msgid "Nebo nám chceš pomoc?"
+msgstr "Or you wanna help us?"
+
+#: festival/templates/festival/section_list.html:23
+msgid "Tak nám napiš!"
+msgstr "Write to us!"
+
+#: festival/templates/festival/section_list.html:40
+msgid "navrhl"
+msgstr "designed by"
+
+#: festival/templates/festival/section_list.html:40
+msgid "stvořil"
+msgstr "created by"
+
+#: festival/templates/festival/section_list.html:59
+msgid "chceš vědět míň?"
+msgstr "wanna know less?"
+
+#: festival/urls.py:15
 msgid "tvurce/"
 msgstr "author/"
 
-#: festival/urls.py:15
+#: festival/urls.py:16
 msgid "navstevnik/"
 msgstr "visitor/"
 
-#: festival/urls.py:16
+#: festival/urls.py:17
 msgid "novinar/"
 msgstr "journalist/"

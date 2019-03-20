@@ -30,9 +30,11 @@
 </head>
 <body {% if view.first_time or view.home %}class="first_time"{% endif %}>
 {% block content %}
-    <section id="id-uvod"><div class="page_width">
+    <section id="id-{% trans 'uvod' %}" class="home"><div class="page_width">
         <div id="hello">
             <h1>{% trans "ahoj." %}</h1>
+            <h3>{% trans "my jsme Kraťasy" %}</h3>
+            <h3>{% trans "festival krátkých filmů" %}</h3>
             <h2>{% trans "s kým máme tu čest?" %}</h2>
         </div>
         <div id="roles">
@@ -60,7 +62,8 @@
             <div>
                 <span id="{{ group.list.0.get_role_display|slugify }}-head" class="nav-head"><b>{{ group.list.0.get_role_display }}</b></span>
                 <div id="{{ group.list.0.get_role_display|slugify }}-list" class="nav-list{% if not view.role == group.list.0.role %} hidden{% endif %}">{% for section in group.list %}
-                    <a href="/{{ section.get_role_display|slugify }}/#{% if request.LANGUAGE_CODE == 'en' %}{{ section.slug_en }}">{{ section.headline_en }}{% else %}{{ section.slug }}">{{ section.headline }}{% endif %}</a>{% endfor %}
+                    <a href="/{{ section.get_role_display|slugify }}/#{% if request.LANGUAGE_CODE == 'en' %}{{ section.slug_en }}">{{ section.headline_en }}{% else %}{{ section.slug }}">{{ section.headline }}{% endif %}</a>{% if forloop.last %}
+                    <a href="/{{ section.get_role_display|slugify }}/#{% trans 'kontakt' %}">{% trans 'kontakt' %}</a>{% endif %}{% endfor %}
                 </div>
             </div>{% endfor %}
         </nav>

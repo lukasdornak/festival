@@ -56,7 +56,6 @@ $(function(){
     $pages = $('section');
     hashCheck();
     $(window).on('hashchange', function(event) {
-        console.log('hashchango');
         hashCheck();
     });
     $(document).bind('scroll', function(event) {
@@ -90,7 +89,8 @@ $(function(){
         }
     });
     $('.nav-head').click(function () {
-        $('.nav-list').addClass('hidden');
-        $('#' + $(this).attr('id').replace('-head', '-list')).removeClass('hidden');
+        var $this = $('#' + $(this).attr('id').replace('-head', '-list'));
+        $('.nav-list').not($this).addClass('hidden');
+        $this.toggleClass('hidden');
     })
 });
