@@ -330,13 +330,16 @@ footer, .contact {
 .contact {
   margin-top: 4em;
   padding-top: 3em; }
-  .contact a.button {
+  .contact .button {
     margin: 2em auto;
     line-height: initial;
-    font-weight: bold;
-    background: #38CE95;
-    padding: 1em 2em;
-    text-decoration: none; }
+    font-weight: bold; }
+    .contact .button a {
+      text-decoration: none; }
+    .contact .button div {
+      background-color: #38CE95; }
+      .contact .button div:hover {
+        background-color: transparent; }
 
 footer {
   padding: 0.5em 0 1em 0;
