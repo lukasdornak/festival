@@ -305,13 +305,13 @@ section {
     box-shadow: 0 0 60px 15px #292b2f; }
   .extra_text p {
     margin: 0;
-    margin-bottom: 1.4em;
     line-height: 1.4em;
     text-align: left; }
-  .extra_text span {
-    -webkit-column-break-inside: avoid;
-    page-break-inside: avoid;
-    break-inside: avoid; }
+  .extra_text strong {
+    display: inline-block;
+    width: 100%; }
+  .extra_text strong:not(:first-child) {
+    margin-top: 1.4em; }
 
 .halves {
   display: flex;
@@ -466,18 +466,18 @@ footer {
     margin-top: 10%; }
   .halves {
     flex-direction: row; }
-  .extra_text > div:not(.max_columns-1) {
+  .extra_text > .page_width:not(.max_columns-1) {
     -webkit-column-count: 2;
     -moz-column-count: 2;
     column-count: 2;
     -webkit-column-gap: 3em;
     -moz-column-gap: 3em;
     column-gap: 3em; }
-  .extra_text > div.max_columns-1 {
+  .extra_text > .page_width.max_columns-1 {
     -webkit-column-count: 1;
     -moz-column-count: 1;
     column-count: 1; }
-    .extra_text > div.max_columns-1 p {
+    .extra_text > .page_width.max_columns-1 p {
       width: 60%;
       margin: 0 auto; } }
 
@@ -535,18 +535,18 @@ footer {
   #logo {
     width: 186px;
     background-image: url("../img/logo-full.png"); }
-  .extra_text > div:not(.max_columns-1) {
+  .extra_text > .page_width:not(.max_columns-1) {
     -webkit-column-count: 2;
     -moz-column-count: 2;
     column-count: 2;
     -webkit-column-gap: 3em;
     -moz-column-gap: 3em;
     column-gap: 3em; }
-  .extra_text > div.max_columns-1 {
+  .extra_text > .page_width.max_columns-1 {
     -webkit-column-count: 1;
     -moz-column-count: 1;
     column-count: 1; }
-    .extra_text > div.max_columns-1 p {
+    .extra_text > .page_width.max_columns-1 p {
       width: 60%;
       margin: 0 auto; } }
 
@@ -601,11 +601,11 @@ footer {
     font-size: 27px; }
   .page_width {
     width: 70%; }
-  .extra_text > div:not(.max_columns-1):not(.max_columns-2) {
+  .extra_text > .page_width:not(.max_columns-1):not(.max_columns-2) {
     -webkit-column-count: 3;
     -moz-column-count: 3;
     column-count: 3; }
-  .extra_text > div.max_columns-2 p {
+  .extra_text > .page_width.max_columns-2 p {
     width: 80%;
     margin: 0 auto; }
   .smaller_at_larger {
@@ -624,7 +624,7 @@ footer {
     max-height: 600px; }
   .role img {
     max-height: 250px; }
-  .extra_text > div.page_width:not(.max_columns-1):not(.max_columns-2):not(.max_columns-3) {
+  .extra_text > .page_width:not(.max_columns-1):not(.max_columns-2):not(.max_columns-3) {
     max-width: 1600px;
     -webkit-column-count: 4;
     -moz-column-count: 4;
