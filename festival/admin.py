@@ -31,6 +31,17 @@ class SectionAdmin(PublishMixin, admin.ModelAdmin):
     model = models.Section
     list_display = ['__str__', 'role', 'order', 'published']
     list_filter = ['role', 'published']
+    fieldsets = (
+        (None, {
+            'fields': ('published', 'headline', 'headline_en', 'role', 'order'),
+        }),
+        ('obsah', {
+            'fields': ('full_text', 'full_text_en', 'extra_full_text', 'extra_full_text_en')
+        }),
+        ('vlastnosti', {
+            'fields': ('auto_headline', 'max_columns', 'widget', 'widget_first' )
+        })
+    )
 
 
 @admin.register(models.Guide)

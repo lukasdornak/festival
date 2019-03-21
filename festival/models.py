@@ -50,8 +50,8 @@ class Year(models.Model):
 class AbstractArticle(models.Model):
     headline = models.CharField('nadpis', max_length=50)
     headline_en = models.CharField('nadpis anglicky', max_length=50)
-    full_text = RichTextField('obsah')
-    full_text_en = RichTextField('obsah anglicky')
+    full_text = RichTextField('obsah', null=True, blank=True)
+    full_text_en = RichTextField('obsah anglicky', null=True, blank=True)
     slug = models.SlugField(editable=False)
     slug_en = models.SlugField(editable=False)
     published = models.BooleanField('publikováno', default=False)
@@ -88,9 +88,12 @@ class Section(AbstractArticle):
     extra_full_text_en = RichTextField('extra obsah anglicky', null=True, blank=True)
     role = models.CharField('role', max_length=1, default='v', choices=ROLE_CHOICES)
     order = models.PositiveSmallIntegerField('pořadí', default=1)
-    widget = models.CharField('dynamický objekt', max_length=1, choices=widgets.Widget.get_choices(),
+    widget = models.CharField('widget', max_length=1, choices=widgets.Widget.get_choices(),
                               null=True, blank=True)
+    widget_first = models.BooleanField('nejdříve widget, potom text', default=True)
     auto_headline = models.BooleanField('nadpis automaticky', default=True)
+    max_columns = models.PositiveSmallIntegerField('maximální počet sloupečků', default=3, null=True, blank=True,
+                                                   validators=[MinValueValidator(1), MaxValueValidator(4)])
 
     class Meta:
         verbose_name = 'sekce'
@@ -220,19 +223,19 @@ class Block(models.Model):
 
 
 class Sponsor(models.Model):
-    GENERAL = 'generální'
-    MEDIA = 'mediální'
-    MAIN = 'hlavní'
-    OTHERS = 'ostatní'
+    COORG = 0
+    MAIN = 10
+    MEDIA = 20
+    OTHERS = 30
     TYPE_CHOICES = (
-        (0, GENERAL),
-        (10, MAIN),
-        (20, MEDIA),
-        (30, OTHERS),
+        (COORG, 'spoluorganizátoři'),
+        (MAIN, 'hlavní'),
+        (MEDIA, 'medialní'),
+        (OTHERS, 'ostatní'),
     )
-    year = models.ManyToManyField(Year, verbose_name='ročník')
+    year = models.ManyToManyField(Year, verbose_name='ročník', null=True, blank=True)
     name = models.CharField('jméno', max_length=50)
-    logo = models.ImageField('logo')
+    logo = models.ImageField('logo', null=True, blank=True)
     url = models.URLField('odkaz na web', null=True, blank=True)
     type = models.PositiveSmallIntegerField('kategorie', default=30, choices=TYPE_CHOICES)
 

@@ -16,7 +16,10 @@ class HomeTemplateView(TemplateView):
             return redirect(reverse(role))
         self.first_time = True
         self.nav = bool(request.GET.get('nav', 0))
-        self.all_sections = models.Section.objects.all()
+        if request.user.is_staff:
+            self.all_sections = models.Section.objects.all()
+        else:
+            self.all_sections = models.Section.objects.filter(published=True)
         return super().get(request, *args, **kwargs)
 
 
@@ -25,7 +28,10 @@ class SectionListView(ListView):
     model = models.Section
 
     def get_queryset(self):
-        self.all_sections = super().get_queryset()
+        if self.request.user.is_staff:
+            self.all_sections = models.Section.objects.all()
+        else:
+            self.all_sections = models.Section.objects.filter(published=True)
         return self.all_sections.filter(role=self.role)
 
     def get_context_data(self, *args, **kwargs):
