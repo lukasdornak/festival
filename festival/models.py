@@ -92,7 +92,7 @@ class Section(AbstractArticle):
                               null=True, blank=True)
     widget_first = models.BooleanField('nejdříve widget, potom text', default=True)
     auto_headline = models.BooleanField('nadpis automaticky', default=True)
-    max_columns = models.PositiveSmallIntegerField('maximální počet sloupečků', default=3, null=True, blank=True,
+    max_columns = models.PositiveSmallIntegerField('maximální počet sloupečků', default=None, null=True, blank=True,
                                                    validators=[MinValueValidator(1), MaxValueValidator(4)])
 
     class Meta:

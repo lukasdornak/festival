@@ -317,8 +317,7 @@ section {
     margin-bottom: 1em;
     position: relative;
     color: white;
-    padding: 50px 10%;
-    box-sizing: border-box;
+    padding: 50px 0;
     overflow-y: hidden;
     -webkit-transition: padding-top 600ms, padding-bottom 600ms;
     -moz-transition: padding-top 600ms, padding-bottom 600ms;
@@ -554,6 +553,23 @@ footer {
     .halves {
         flex-direction: row;
     }
+    .extra_text > div:not(.max_columns-1) {
+        -webkit-column-count: 2;
+        -moz-column-count: 2;
+        column-count: 2;
+        -webkit-column-gap: 3em;
+        -moz-column-gap: 3em;
+        column-gap: 3em;
+    }
+    .extra_text > div.max_columns-1 {
+        -webkit-column-count: 1;
+        -moz-column-count: 1;
+        column-count: 1;
+        p {
+            width: 60%;
+            margin: 0 auto;
+        }
+    }
 }
 
 /* Medium devices */
@@ -626,13 +642,22 @@ footer {
         width: 186px;
         background-image: url("../img/logo-full.png");
     }
-    .extra_text {
+    .extra_text > div:not(.max_columns-1) {
         -webkit-column-count: 2;
         -moz-column-count: 2;
         column-count: 2;
         -webkit-column-gap: 3em;
         -moz-column-gap: 3em;
         column-gap: 3em;
+    }
+    .extra_text > div.max_columns-1 {
+        -webkit-column-count: 1;
+        -moz-column-count: 1;
+        column-count: 1;
+        p {
+            width: 60%;
+            margin: 0 auto;
+        }
     }
 }
 @media (min-width: 768px) and (min-aspect-ratio: 1/1) {
@@ -707,14 +732,16 @@ footer {
     .page_width {
         width: 70%;
     }
-    .extra_text {
+    .extra_text > div:not(.max_columns-1):not(.max_columns-2) {
         -webkit-column-count: 3;
         -moz-column-count: 3;
         column-count: 3;
-        -webkit-column-width: 100px;
-        -moz-column-width: 100px;
-        column-width: 100px;
     }
+    .extra_text > div.max_columns-2 p {
+        width: 80%;
+        margin: 0 auto;
+    }
+
     .smaller_at_larger {
         font-size: 0.7em;
     }
@@ -738,12 +765,10 @@ footer {
     .role img {
         max-height: 250px;
     }
-    .extra_text {
+    .extra_text > div.page_width:not(.max_columns-1):not(.max_columns-2):not(.max_columns-3) {
+        max-width: 1600px;
         -webkit-column-count: 4;
         -moz-column-count: 4;
         column-count: 4;
-        -webkit-column-width: 100px;
-        -moz-column-width: 100px;
-        column-width: 100px;
     }
 }

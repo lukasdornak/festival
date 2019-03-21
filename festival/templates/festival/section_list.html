@@ -12,9 +12,9 @@
             {% if section.widget and not section.widget_first %}
             {% include section.get_widget.template_name with widget_context=section.widget_context %}{% endif %}
         </div>{% if request.LANGUAGE_CODE == 'en' and section.extra_full_text_en %}
-        <div id="{{ section.slug_en }}-extra_text" class="extra_text hidden_extra">{{ section.extra_full_text_en|safe }}</div>
+        <div id="{{ section.slug_en }}-extra_text" class="extra_text hidden_extra"><div class="page_width{% if section.max_columns %} max_columns-{{ section.max_columns }}{% endif %}">{{ section.extra_full_text_en|safe }}</div></div>
         <div class="button"><div id="{{ section.slug_en }}-button" class="extra_button">{% trans 'chceš vědět víc?' %}</div></div>{% elif request.LANGUAGE_CODE == 'cs' and section.extra_full_text %}
-        <div id="{{ section.slug_en }}-extra_text" class="extra_text hidden_extra">{{ section.extra_full_text|safe }}</div>
+        <div id="{{ section.slug_en }}-extra_text" class="extra_text hidden_extra"><div class="page_width{% if section.max_columns %} max_columns-{{ section.max_columns }}{% endif %}">{{ section.extra_full_text|safe }}</div></div>
         <div class="button"><div id="{{ section.slug_en }}-button" class="extra_button">{% trans 'chceš vědět víc?' %}</div></div>{% endif %}
     {% endfor %}
     <section id="id-{% trans 'kontakt' %}" class="contact">
