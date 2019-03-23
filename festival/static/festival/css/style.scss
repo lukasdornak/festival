@@ -472,6 +472,20 @@ footer {
         box-sizing: border-box;
     }
 }
+.press_releases {
+    display: flex;
+    justify-content: space-evenly;
+    .press_release {
+        color: white;
+        text-decoration: none;
+        img {
+            height: 4em;
+        }
+        span {
+            display: block;
+        }
+    }
+}
 
 @media (min-aspect-ratio: 1/1) {
     #header {

@@ -404,6 +404,17 @@ footer {
     filter: grayscale(1) brightness(100);
     box-sizing: border-box; }
 
+.press_releases {
+  display: flex;
+  justify-content: space-evenly; }
+  .press_releases .press_release {
+    color: white;
+    text-decoration: none; }
+    .press_releases .press_release img {
+      height: 4em; }
+    .press_releases .press_release span {
+      display: block; }
+
 @media (min-aspect-ratio: 1 / 1) {
   #header {
     height: 38px; }
