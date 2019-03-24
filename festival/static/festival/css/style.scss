@@ -773,8 +773,8 @@ footer {
     body {
         font-size: 30px;
     }
-    .home div.page_width {
-        padding-top: 0;
+    .home .page_width {
+        padding-top: calc(4% + 40px);
         justify-content: space-evenly;
         > div {
             flex-grow: initial;

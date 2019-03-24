@@ -629,10 +629,10 @@ footer {
 @media (min-width: 1921px) {
   body {
     font-size: 30px; }
-  .home div.page_width {
-    padding-top: 0;
+  .home .page_width {
+    padding-top: calc(4% + 40px);
     justify-content: space-evenly; }
-    .home div.page_width > div {
+    .home .page_width > div {
       flex-grow: initial; }
   .role {
     max-height: 600px; }
