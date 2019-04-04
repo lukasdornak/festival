@@ -1,5 +1,6 @@
 from datetime import date
 
+from django.forms import ModelForm
 from django.contrib.auth.models import User
 from django.db import models
 from django.utils.text import slugify
@@ -261,3 +262,10 @@ class PressRelease(models.Model):
 
     def __str__(self):
         return self.name
+
+
+class FilmRegistrationForm(ModelForm):
+
+    class Meta:
+        model = Film
+        exclude = ('status', )

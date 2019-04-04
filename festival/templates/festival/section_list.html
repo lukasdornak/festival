@@ -89,13 +89,21 @@ $(function(){{% if not view.home %}
     $('.extra_button').on('click', function () {
         var $text = $('#' + $(this).attr('id').replace('-button', '-extra_text'));
         if ($text.hasClass('hidden_extra')){
-            $(this).html("{% trans 'chceš vědět míň?' %}");
             open_extra($text);
+            if ($text.attr('id') === 'film-register-widget-extra_text'){
+                $(this).html("{% trans 'radši si to ještě pročtu' %}");
+            } else {
+                $(this).html("{% trans 'chceš vědět míň?' %}");
+            }
         } else {
             close_extra($text);
             readyToScroll = false;
-            $(this).html("{% trans 'chceš vědět víc?' %}");
             scrollToPage(400);
+            if ($text.attr('id') === 'film-register-widget-extra_text'){
+                $(this).html("{% trans 'četl jsem a chci přihlásit svůj film' %}");
+            } else {
+                $(this).html("{% trans 'chceš vědět víc?' %}");
+            }
         }
     });
     $(window).resize(function () {

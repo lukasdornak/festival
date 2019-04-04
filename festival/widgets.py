@@ -75,3 +75,18 @@ class PressReleaseWidget(Widget):
             'object_list': models.PressRelease.objects.filter(date_release__lte=date.today(), year__in=[models.Year.get_current()])
         }
         return context_data
+
+
+class FilmRegistrationWidget(Widget):
+    name = 'Přihlášení filmu'
+    short_name = 'f'
+    template_name = 'festival/widgets/film_registration.html'
+
+    def get_context_data(self):
+        context_data = {
+            'form': models.FilmRegistrationForm()
+        }
+        for field in context_data['form']:
+            print(field.field.__class__.__name__)
+            field.boolean = True if field.field.__class__.__name__ == 'BooleanField' else False
+        return context_data
