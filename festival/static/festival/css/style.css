@@ -1,9 +1,11 @@
+html {
+  font-family: "Poppins";
+  font-size: 15px; }
+
 body {
   margin: 0 auto;
   background-color: #292b2f;
-  color: white;
-  font-family: "Poppins";
-  font-size: 15px; }
+  color: white; }
   body.first_time {
     height: 100vh;
     overflow-y: hidden; }
@@ -17,7 +19,7 @@ body {
       padding-top: 70vh; }
 
 h1 {
-  font-size: 3em;
+  font-size: 3rem;
   line-height: 1.5em;
   color: #fff;
   margin: 0.3em auto; }
@@ -102,9 +104,9 @@ nav {
     padding-left: 10vw; }
   nav .nav-head {
     cursor: pointer;
-    font-size: 2.3em; }
+    font-size: 2.3rem; }
   nav .nav-list {
-    font-size: 1.8em;
+    font-size: 1.8rem;
     display: flex;
     flex-direction: column;
     padding-left: 10vw; }
@@ -183,15 +185,15 @@ nav {
     z-index: 120;
     margin: 0; }
   #hello h1 {
-    font-size: 4em;
+    font-size: 4rem;
     margin-bottom: -0.2em; }
   #hello h2 {
     margin-top: 0;
-    font-size: 1.5em; }
+    font-size: 1.5rem; }
   #hello h3 {
     margin-top: -0.3em;
     color: #707070;
-    font-size: 1em; }
+    font-size: 1rem; }
 
 #roles {
   display: flex;
@@ -267,7 +269,7 @@ section {
   background: -webkit-linear-gradient(top left, #38CE95, #09516B);
   background: -o-linear-gradient(top left, #38CE95, #09516B);
   background: linear-gradient(to bottom right, #38CE95, #09516B);
-  font-size: 0.8em;
+  font-size: 0.8rem;
   background-attachment: fixed;
   margin-bottom: 1em;
   position: relative;
@@ -328,8 +330,8 @@ footer, .contact {
   color: white; }
 
 .contact {
-  margin-top: 4em;
-  padding-top: 3em; }
+  margin-top: 4rem;
+  padding-top: 3rem; }
   .contact .button {
     margin: 2em auto;
     line-height: initial;
@@ -348,7 +350,7 @@ footer {
     border-color: #707070; }
   footer span {
     color: #707070;
-    font-size: 0.7em; }
+    font-size: 0.7rem; }
     footer span a {
       color: inherit; }
 
@@ -373,7 +375,7 @@ footer {
       opacity: 0.75; }
 
 .smaller_at_larger {
-  font-size: 1em; }
+  font-size: 1rem; }
 
 .partners {
   margin: 0.5em auto;
@@ -433,9 +435,9 @@ footer {
     nav div {
       padding: 0; }
     nav .nav-head {
-      font-size: 1.3em; }
+      font-size: 1.3rem; }
     nav .nav-list {
-      font-size: 1.3em;
+      font-size: 1.3rem;
       padding-left: 0; }
       nav .nav-list.hidden a {
         height: auto; }
@@ -445,7 +447,7 @@ footer {
     text-align: center;
     padding-left: 0; }
     #hello h3 {
-      font-size: 0.8em; }
+      font-size: 0.8rem; }
   .role {
     flex-direction: column;
     justify-content: space-between; }
@@ -454,9 +456,6 @@ footer {
       width: auto;
       max-width: none;
       margin: 0; }
-      .role img#wide_role {
-        height: 130px;
-        margin-top: 15px; }
     .role:hover .button {
       background-color: #38CE95;
       background: -webkit-gradient(linear, left top, right bottom, from(#38CE95), to(#09516B));
@@ -466,15 +465,15 @@ footer {
 
 /* Small devices */
 @media (min-width: 576px) {
-  h1 {
-    font-size: 4em; }
-  body {
+  html {
     font-size: 18px; }
+  h1 {
+    font-size: 4rem; }
   .page_width {
     width: 85%; } }
 
 @media (min-width: 576px) and (min-aspect-ratio: 1 / 1) {
-  body {
+  html {
     font-size: 15px; }
   .role img {
     margin-top: 10%; }
@@ -497,8 +496,8 @@ footer {
 
 /* Medium devices */
 @media (min-width: 768px) {
-  body {
-    font-size: 21px; }
+  html {
+    font-size: 20px; }
   body.first_time #header {
     padding: 4% 4% 12px 4%; }
   #hello {
@@ -507,7 +506,7 @@ footer {
     #hello h2 {
       margin-top: 0.3em; }
     #hello h3 {
-      font-size: 0.8em; }
+      font-size: 0.8rem; }
   #roles {
     flex-direction: row;
     justify-content: space-around;
@@ -518,9 +517,9 @@ footer {
     nav div {
       padding: 0; }
     nav .nav-head {
-      font-size: 1.3em; }
+      font-size: 1.3rem; }
     nav .nav-list {
-      font-size: 1.3em;
+      font-size: 1.3rem;
       padding-left: 0; }
       nav .nav-list.hidden a {
         height: auto; }
@@ -535,9 +534,6 @@ footer {
       width: auto;
       max-width: none;
       margin: 0; }
-      .role img#wide_role {
-        height: 130px;
-        margin-top: 15px; }
     .role:hover .button {
       background-color: #38CE95;
       background: -webkit-gradient(linear, left top, right bottom, from(#38CE95), to(#09516B));
@@ -565,7 +561,7 @@ footer {
       margin: 0 auto; } }
 
 @media (min-width: 768px) and (min-aspect-ratio: 1 / 1) {
-  body {
+  html {
     font-size: 18px; }
   body.first_time #header {
     padding: 12px 4% 0 4%; }
@@ -576,11 +572,11 @@ footer {
     flex-direction: row; } }
 
 @media (min-width: 992px) {
-  body {
-    font-size: 24px; }
-    body.first_time #header {
-      padding-top: 4%;
-      padding-bottom: 12px; }
+  html {
+    font-size: 22px; }
+  body.first_time #header {
+    padding-top: 4%;
+    padding-bottom: 12px; }
   #header {
     height: 46px; }
   .home .page_width {
@@ -590,15 +586,12 @@ footer {
       padding: 1em 2em; }
   .role img {
     max-height: 200px; }
-    .role img#wide_role {
-      height: 160px;
-      margin-top: 20px; }
   .page_width {
     width: 75%; }
   .halves {
     flex-direction: row; }
   .smaller_at_larger {
-    font-size: 0.8em; } }
+    font-size: 0.8rem; } }
 
 @media (min-width: 992px) and (min-aspect-ratio: 1 / 1) {
   #header {
@@ -611,8 +604,8 @@ footer {
 
 /* Extra large devices */
 @media (min-width: 1200px) {
-  body {
-    font-size: 27px; }
+  html {
+    font-size: 24px; }
   .page_width {
     width: 70%; }
   .extra_text > .page_width:not(.max_columns-1):not(.max_columns-2) {
@@ -623,12 +616,12 @@ footer {
     width: 80%;
     margin: 0 auto; }
   .smaller_at_larger {
-    font-size: 0.7em; } }
+    font-size: 0.7rem; } }
 
 /* Extra large devices */
 @media (min-width: 1921px) {
-  body {
-    font-size: 30px; }
+  html {
+    font-size: 26px; }
   .home .page_width {
     padding-top: calc(4% + 40px);
     justify-content: space-evenly; }
