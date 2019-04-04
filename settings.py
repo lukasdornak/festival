@@ -6,8 +6,7 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'not secret key')
 
 DEBUG = True
 
-ALLOWED_HOSTS = ['kratasy.lukasdornak.cz', 'festivalkratasy.cz']
-
+ALLOWED_HOSTS = ['festivalkratasy.cz', 'www.festivalkratasy.cz', 'festivalkratasy.com', 'www.festivalkratasy.com']
 
 INSTALLED_APPS = [
     'festival',
