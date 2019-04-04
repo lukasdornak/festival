@@ -274,17 +274,12 @@ section {
   margin-bottom: 1em;
   position: relative;
   color: white;
-  padding: 50px 0;
+  padding: 0;
   overflow-y: hidden;
-  -webkit-transition: padding-top 600ms, padding-bottom 600ms;
-  -moz-transition: padding-top 600ms, padding-bottom 600ms;
-  -ms-transition: padding-top 600ms, padding-bottom 600ms;
-  -o-transition: padding-top 600ms, padding-bottom 600ms;
-  transition: padding-top 600ms, padding-bottom 600ms; }
+  height: 0; }
   .extra_text.hidden_extra {
-    height: 0;
-    padding: 0;
-    margin-bottom: 0; }
+    height: auto;
+    display: none; }
   .extra_text:before {
     content: "";
     position: absolute;
