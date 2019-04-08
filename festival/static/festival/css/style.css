@@ -236,7 +236,9 @@ nav {
   display: inline-block;
   color: white;
   border-radius: 100px; }
-  .button > div {
+  .button > div, .button > button {
+    border: none;
+    color: white;
     background-color: #707070;
     padding: 1em 2em;
     cursor: pointer;
@@ -246,7 +248,7 @@ nav {
     -ms-transition: background 400ms;
     -o-transition: background 400ms;
     transition: background 400ms; }
-    .button > div:hover {
+    .button > div:hover, .button > button:hover {
       background-color: transparent; }
 
 section {
@@ -276,9 +278,10 @@ section {
   color: white;
   padding: 0;
   overflow-y: hidden;
-  height: 0; }
+  height: auto;
+  max-height: 0; }
   .extra_text.hidden_extra {
-    height: auto;
+    max-height: none;
     display: none; }
   .extra_text:before {
     content: "";
@@ -300,6 +303,8 @@ section {
     -webkit-box-shadow: 0 0 60px 15px #292b2f;
     -moz-box-shadow: 0 0 60px 15px #292b2f;
     box-shadow: 0 0 60px 15px #292b2f; }
+  .extra_text > .page_width {
+    margin: 3em auto; }
   .extra_text p {
     margin: 0;
     line-height: 1.4em;
@@ -309,6 +314,17 @@ section {
     width: 100%; }
   .extra_text strong:not(:first-child) {
     margin-top: 1.4em; }
+  .extra_text .button > div, .extra_text .button > button {
+    background-color: #38CE95;
+    font-weight: bold;
+    font-size: 0.8rem; }
+    .extra_text .button > div:hover, .extra_text .button > button:hover {
+      background-color: transparent; }
+
+.no_columns {
+  -webkit-column-count: 1 !important;
+  -moz-column-count: 1 !important;
+  column-count: 1 !important; }
 
 .halves {
   display: flex;
@@ -412,6 +428,9 @@ footer {
     .press_releases .press_release span {
       display: block; }
 
+form table {
+  margin: 0 auto; }
+
 form tr {
   break-inside: avoid-column; }
 
@@ -446,7 +465,7 @@ form label {
     font-weight: bold; }
 
 form option {
-  color: #09516B; }
+  color: #1A1C1E; }
 
 @media (min-aspect-ratio: 1 / 1) {
   #header {

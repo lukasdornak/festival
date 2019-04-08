@@ -47,39 +47,30 @@
 
 {% block js %}
     <script>
-var extra_heights = {};
-
-function get_extra_heights(){
-    var $extras = $('.extra_text');
-    var extra_heights = {};
-    for(var i=0, len=$extras.length; i<len; i++){
-        extra_heights[$extras.eq(i).attr('id')] = $extras.eq(i).height();
-    }
-    return extra_heights;
-}
 
 function open_extra($extra){
+    var height = $extra.height();
     $extra.removeClass('hidden_extra');
     $extra.animate({
-        'height': extra_heights[$extra.attr('id')] + 'px',
-        'padding': "50px 0",
-    }, 400, function () {
-        $extra.css('height', 'auto');
+        'max-height': height + 'px',
+    }, 500, function () {
+        $extra.css('max-height', 'none');
     });
 }
 
 function close_extra($extra){
+    var height = $extra.height();
+    $extra.css('max-height', height + 'px');
     $extra.animate({
-        'height': 0,
-        'padding': 0,
-    }, 400, function () {
+        'max-height': 0,
+    }, 500, function () {
         $extra.addClass('hidden_extra');
+        $extra.removeAttr('style');
     });
 }
 
 $(function(){{% if not view.home %}
     $('body').removeClass('first_time');{% endif %}
-    extra_heights = get_extra_heights();
     $('#logo').on('click', function () {
         $('body').addClass('first_time');
         $('nav').addClass('hidden');
@@ -98,6 +89,7 @@ $(function(){{% if not view.home %}
         } else {
             close_extra($text);
             readyToScroll = false;
+            page = $pages.index($text.parent());
             scrollToPage(400);
             if ($text.attr('id') === 'film-register-widget-extra_text'){
                 $(this).html("{% trans 'četl jsem a chci přihlásit svůj film' %}");
@@ -105,9 +97,6 @@ $(function(){{% if not view.home %}
                 $(this).html("{% trans 'chceš vědět víc?' %}");
             }
         }
-    });
-    $(window).resize(function () {
-        extra_heights = get_extra_heights();
     });
 })
     </script>

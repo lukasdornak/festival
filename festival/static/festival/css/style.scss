@@ -281,7 +281,9 @@ nav {
     display: inline-block;
     color: white;
     border-radius: 100px;
-    > div {
+    > div, > button {
+        border: none;
+        color: white;
         background-color: $color-gray;
         padding: 1em 2em;
         cursor: pointer;
@@ -322,9 +324,10 @@ section {
     color: white;
     padding: 0;
     overflow-y: hidden;
-    height: 0;
+    height: auto;
+    max-height: 0;
     &.hidden_extra {
-        height: auto;
+        max-height: none;
         display: none;
     }
     &:before {
@@ -349,6 +352,9 @@ section {
         -moz-box-shadow: 0 0 60px 15px $color-dark;
         box-shadow: 0 0 60px 15px $color-dark;
     }
+    > .page_width {
+        margin: 3em auto;
+    }
     p {
         margin: 0;
         line-height: 1.4em;
@@ -361,6 +367,20 @@ section {
     strong:not(:first-child) {
         margin-top: 1.4em;
     }
+    .button > div, .button > button {
+        background-color: $color-mint;
+        font-weight: bold;
+        font-size: 0.8rem;
+        &:hover {
+            background-color: transparent;
+        }
+    }
+}
+
+.no_columns {
+    -webkit-column-count: 1 !important;
+    -moz-column-count: 1 !important;
+    column-count: 1 !important;
 }
 
 .halves {
@@ -486,6 +506,9 @@ footer {
 }
 
 form {
+    table {
+        margin: 0 auto;
+    }
     tr {
         break-inside: avoid-column;
     }
@@ -525,7 +548,7 @@ form {
     }
 
     option {
-        color: $gradient-to;
+        color: $color-deep-dark;
     }
 }
 
