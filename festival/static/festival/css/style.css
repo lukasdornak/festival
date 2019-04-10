@@ -46,14 +46,14 @@ header {
   justify-content: space-between;
   margin: 0 auto;
   max-width: 1900px;
-  height: 46px;
+  height: 40px;
   box-sizing: content-box;
   padding: 12px 4%;
-  -webkit-transition: padding-top 800ms;
-  -moz-transition: padding-top 800ms;
-  -ms-transition: padding-top 800ms;
-  -o-transition: padding-top 800ms;
-  transition: padding-top 800ms; }
+  -webkit-transition: height 800ms;
+  -moz-transition: height 800ms;
+  -ms-transition: height 800ms;
+  -o-transition: height 800ms;
+  transition: height 800ms; }
 
 #logo {
   cursor: pointer;
@@ -80,7 +80,7 @@ nav {
   background: -o-linear-gradient(top left, #38CE95, #09516B);
   background: linear-gradient(to bottom right, #38CE95, #09516B);
   position: fixed;
-  padding-top: calc(4% + 50px);
+  padding-top: 74px;
   top: 0;
   right: 0;
   width: 100%;
@@ -166,12 +166,10 @@ nav {
   height: 100vh;
   background-color: #292b2f;
   color: white;
-  padding: 0;
   z-index: 50; }
   .home .page_width {
     width: 100%;
-    padding-top: calc(4% + 40px);
-    height: 90vh;
+    height: 90%;
     box-sizing: border-box;
     display: flex;
     flex-direction: column; }
@@ -186,7 +184,8 @@ nav {
     margin: 0; }
   #hello h1 {
     font-size: 4rem;
-    margin-bottom: -0.2em; }
+    line-height: 1em;
+    margin-bottom: 0.15em; }
   #hello h2 {
     margin-top: 0;
     font-size: 1.5rem; }
@@ -198,19 +197,21 @@ nav {
 #roles {
   display: flex;
   flex-grow: 1;
-  flex-direction: column;
-  justify-content: space-around; }
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: stretch; }
 
 .role {
-  position: relative;
   display: flex;
-  flex-direction: row;
-  justify-content: flex-start;
-  align-items: center; }
+  flex-direction: column;
+  justify-content: space-around;
+  align-items: center;
+  text-decoration: none;
+  max-height: 600px; }
   .role img {
-    margin: 0 8vw;
-    width: 25vw;
+    width: 20vw;
     max-width: 20vh;
+    margin: 0;
     -webkit-transition: all 200ms;
     -moz-transition: all 200ms;
     -ms-transition: all 200ms;
@@ -220,11 +221,6 @@ nav {
     transform: scale(1.2); }
   .role:hover .button > div {
     background-color: transparent; }
-  .role a {
-    position: absolute;
-    width: 100%;
-    height: 100%;
-    z-index: 10; }
 
 .button {
   background-color: #38CE95;
@@ -252,7 +248,8 @@ nav {
       background-color: transparent; }
 
 section {
-  padding-top: 70px;
+  padding-top: 64px;
+  box-sizing: border-box;
   text-align: center;
   color: #999;
   -webkit-transition: all 800ms;
@@ -468,17 +465,8 @@ form option {
   color: #1A1C1E; }
 
 @media (min-aspect-ratio: 1 / 1) {
-  #header {
-    height: 38px; }
-  body.first_time #header {
-    padding-bottom: 0; }
-  .home .page_width {
-    padding-top: 33px; }
-    .home .page_width .button > div {
-      padding: 0.7em 1.4em; }
-  #roles {
-    flex-direction: row;
-    justify-content: space-around; }
+  .home .page_width .button > div {
+    padding: 0.7em 1.4em; }
   nav {
     flex-direction: row;
     justify-content: space-evenly; }
@@ -497,21 +485,7 @@ form option {
     text-align: center;
     padding-left: 0; }
     #hello h3 {
-      font-size: 0.8rem; }
-  .role {
-    flex-direction: column;
-    justify-content: space-between; }
-    .role img {
-      height: 50%;
-      width: auto;
-      max-width: none;
-      margin: 0; }
-    .role:hover .button {
-      background-color: #38CE95;
-      background: -webkit-gradient(linear, left top, right bottom, from(#38CE95), to(#09516B));
-      background: -webkit-linear-gradient(top left, #38CE95, #09516B);
-      background: -o-linear-gradient(top left, #38CE95, #09516B);
-      background: linear-gradient(to bottom right, #38CE95, #09516B); } }
+      font-size: 0.8rem; } }
 
 /* Small devices */
 @media (min-width: 576px) {
@@ -525,8 +499,6 @@ form option {
 @media (min-width: 576px) and (min-aspect-ratio: 1 / 1) {
   html {
     font-size: 15px; }
-  .role img {
-    margin-top: 10%; }
   .halves {
     flex-direction: row; }
   .extra_text > .page_width:not(.max_columns-1):not(.form_columns) {
@@ -544,23 +516,35 @@ form option {
       width: 60%;
       margin: 0 auto; } }
 
+@media (max-width: 767px) and (max-aspect-ratio: 1 / 1) {
+  #roles {
+    flex-direction: column; }
+  .role {
+    flex-direction: row;
+    justify-content: flex-start; }
+    .role img {
+      margin: 0 8vw;
+      width: 25vw;
+      max-width: 15vh;
+      -webkit-transition: all 200ms;
+      -moz-transition: all 200ms;
+      -ms-transition: all 200ms;
+      -o-transition: all 200ms;
+      transition: all 200ms; } }
+
 /* Medium devices */
 @media (min-width: 768px) {
   html {
     font-size: 20px; }
   body.first_time #header {
-    padding: 4% 4% 12px 4%; }
+    height: 60px; }
+  .home {
+    padding-top: 84px; }
   #hello {
     text-align: center;
     padding-left: 0; }
-    #hello h2 {
-      margin-top: 0.3em; }
     #hello h3 {
       font-size: 0.8rem; }
-  #roles {
-    flex-direction: row;
-    justify-content: space-around;
-    align-items: center; }
   nav {
     flex-direction: row;
     justify-content: space-evenly; }
@@ -575,25 +559,8 @@ form option {
         height: auto; }
       nav .nav-list a {
         height: auto; }
-  .role {
-    flex-direction: column;
-    justify-content: space-between;
-    height: 40vh; }
-    .role img {
-      height: 50%;
-      width: auto;
-      max-width: none;
-      margin: 0; }
-    .role:hover .button {
-      background-color: #38CE95;
-      background: -webkit-gradient(linear, left top, right bottom, from(#38CE95), to(#09516B));
-      background: -webkit-linear-gradient(top left, #38CE95, #09516B);
-      background: -o-linear-gradient(top left, #38CE95, #09516B);
-      background: linear-gradient(to bottom right, #38CE95, #09516B); }
-    .role .page_width {
-      width: 80%; }
   #logo {
-    width: 186px;
+    width: 200px;
     background-image: url("../img/logo-full.png"); }
   .extra_text > .page_width:not(.max_columns-1):not(.form_columns) {
     -webkit-column-count: 2;
@@ -613,29 +580,30 @@ form option {
 @media (min-width: 768px) and (min-aspect-ratio: 1 / 1) {
   html {
     font-size: 18px; }
-  body.first_time #header {
-    padding: 12px 4% 0 4%; }
-  .role img {
-    margin-top: 10%;
-    height: 60%; }
   .halves {
     flex-direction: row; } }
+
+@media (max-width: 991px) and (min-aspect-ratio: 1 / 1) {
+  #header {
+    height: 36px;
+    padding: 8px 4%; }
+  .home {
+    padding-top: 52px; }
+  body.first_time #header {
+    height: 36px;
+    padding-bottom: 0; }
+  body.first_time .home {
+    padding-top: 44px; } }
 
 @media (min-width: 992px) {
   html {
     font-size: 22px; }
-  body.first_time #header {
-    padding-top: 4%;
-    padding-bottom: 12px; }
-  #header {
-    height: 46px; }
   .home .page_width {
-    padding-top: calc(4% + 40px);
-    height: 100vh; }
+    height: 100%; }
     .home .page_width .button > div {
       padding: 1em 2em; }
-  .role img {
-    max-height: 200px; }
+  #hello h2 {
+    margin-top: 0.3em; }
   .page_width {
     width: 75%; }
   .halves {
@@ -649,15 +617,6 @@ form option {
     -webkit-column-gap: 1.5em;
     -moz-column-gap: 1.5em;
     column-gap: 1.5em; } }
-
-@media (min-width: 992px) and (min-aspect-ratio: 1 / 1) {
-  #header {
-    height: 46px; }
-  body.first_time #header {
-    padding-top: 4%;
-    padding-bottom: 12px; }
-  .home .page_width {
-    padding-top: calc(4% + 40px); } }
 
 /* Extra large devices */
 @media (min-width: 1200px) {
@@ -679,15 +638,12 @@ form option {
 @media (min-width: 1921px) {
   html {
     font-size: 26px; }
+  .role img {
+    max-width: 250px; }
   .home .page_width {
-    padding-top: calc(4% + 40px);
     justify-content: space-evenly; }
     .home .page_width > div {
       flex-grow: initial; }
-  .role {
-    max-height: 600px; }
-  .role img {
-    max-height: 250px; }
   .extra_text > .page_width:not(.max_columns-1):not(.max_columns-2):not(.max_columns-3):not(.form_columns) {
     max-width: 1600px;
     -webkit-column-count: 4;

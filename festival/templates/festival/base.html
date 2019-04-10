@@ -38,21 +38,18 @@
             <h2>{% trans "s kým máme tu čest?" %}</h2>
         </div>
         <div id="roles">
-            <div class="role">
-                <a href="/{% trans "tvurce" %}/?first=1"></a>
+            <a href="/{% trans "tvurce" %}/?first=1" class="role">
                 <img src="{% static 'festival/img/author.png' %}">
                 <div class="button"><div>{% trans "tvůrce" %}</div></div>
-            </div>
-            <div class="role">
-                <a href="/{% trans "navstevnik" %}/?first=1"></a>
+            </a>
+            <a href="/{% trans "navstevnik" %}/?first=1" class="role">
                 <img src="{% static 'festival/img/visitor.png' %}">
                 <div class="button"><div>{% trans "návštěvník" %}</div></div>
-            </div>
-            <div class="role">
-                <a href="/{% trans "novinar" %}/?first=1"></a>
+            </a>
+            <a href="/{% trans "novinar" %}/?first=1" class="role">
                 <img src="{% static 'festival/img/journalist.png' %}">
                 <div class="button"><div>{% trans "novinář" %}</div></div>
-            </div>
+            </a>
         </div>
     </div></section>
 {% endblock %}

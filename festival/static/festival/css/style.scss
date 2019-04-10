@@ -1,8 +1,12 @@
 $color-dark: rgba(41, 43, 47, 1);
 $color-deep-dark: #1A1C1E;
 $color-gray: #707070;
-$header-height: 46px;
-$header-height-smaller: 38px;
+$color-light-gray: #999;
+$header-height: 40px;
+$header-padding: 12px;
+$big-header-height: 60px;
+$small-header-height: 36px;
+$small-header-padding-top: 8px;
 $color-mint: #38CE95;
 $gradient-from: #38CE95;
 $gradient-to: #09516B;
@@ -74,12 +78,12 @@ header {
     max-width: 1900px;
     height: $header-height;
     box-sizing: content-box;
-    padding: 12px 4%;
-    -webkit-transition: padding-top 800ms;
-    -moz-transition: padding-top 800ms;
-    -ms-transition: padding-top 800ms;
-    -o-transition: padding-top 800ms;
-    transition: padding-top 800ms;
+    padding: $header-padding 4%;
+    -webkit-transition: height 800ms;
+    -moz-transition: height 800ms;
+    -ms-transition: height 800ms;
+    -o-transition: height 800ms;
+    transition: height 800ms;
 }
 #logo {
     cursor: pointer;
@@ -102,7 +106,7 @@ header {
 nav {
     @include background-gradient;
     position: fixed;
-    padding-top: calc(4% + 50px);
+    padding-top: 74px;
     top: 0;
     right: 0;
     width: 100%;
@@ -199,12 +203,10 @@ nav {
     height: 100vh;
     background-color: $color-dark;
     color: white;
-    padding: 0;
     z-index: 50;
     .page_width{
         width: 100%;
-        padding-top: calc(4% + 40px);
-        height: 90vh;
+        height: 90%;
         box-sizing: border-box;
         display: flex;
         flex-direction: column;
@@ -223,7 +225,8 @@ nav {
     }
     h1 {
         font-size: 4rem;
-        margin-bottom: -0.2em;
+        line-height: 1em;
+        margin-bottom: 0.15em;
     }
     h2 {
         margin-top: 0;
@@ -239,20 +242,21 @@ nav {
 #roles {
     display: flex;
     flex-grow: 1;
-    flex-direction: column;
+    flex-direction: row;
     justify-content: space-around;
-
+    align-items: stretch;
 }
 .role {
-    position: relative;
     display: flex;
-    flex-direction: row;
-    justify-content: flex-start;
+    flex-direction: column;
+    justify-content: space-around;
     align-items: center;
+    text-decoration: none;
+    max-height: 600px;
     img {
-        margin: 0 8vw;
-        width: 25vw;
+        width: 20vw;
         max-width: 20vh;
+        margin: 0;
         -webkit-transition: all 200ms;
         -moz-transition: all 200ms;
         -ms-transition: all 200ms;
@@ -266,12 +270,6 @@ nav {
         .button > div {
             background-color: transparent;
         }
-    }
-    a {
-        position: absolute;
-        width: 100%;
-        height: 100%;
-        z-index: 10;
     }
 }
 
@@ -300,9 +298,10 @@ nav {
 }
 
 section {
-    padding-top: 70px;
+    padding-top: $header-height + $header-padding + $header-padding;
+    box-sizing: border-box;
     text-align: center;
-    color: #999;
+    color: $color-light-gray;
     -webkit-transition: all 800ms;
     -moz-transition: all 800ms;
     -ms-transition: all 800ms;
@@ -484,8 +483,8 @@ footer {
         width: 100%;
     }
     img {
-        max-height: 100px;
-        max-width: 300px;
+        max-height: 80px;
+        max-width: 200px;
         filter: grayscale(1) brightness(100);
         box-sizing: border-box;
     }
@@ -553,21 +552,10 @@ form {
 }
 
 @media (min-aspect-ratio: 1/1) {
-    #header {
-        height: $header-height-smaller;
-    }
-    body.first_time #header {
-        padding-bottom: 0;
-    }
     .home .page_width {
-        padding-top: 33px;
         .button > div{
             padding: 0.7em 1.4em;
         }
-    }
-    #roles {
-        flex-direction: row;
-        justify-content: space-around;
     }
     nav {
         flex-direction: row;
@@ -596,21 +584,6 @@ form {
             font-size: 0.8rem;
         }
     }
-    .role {
-        flex-direction: column;
-        justify-content: space-between;
-        img {
-            height: 50%;
-            width: auto;
-            max-width: none;
-            margin: 0;
-        }
-        &:hover {
-            .button {
-                @include background-gradient;
-            }
-        }
-    }
 }
 
 /* Small devices */
@@ -628,9 +601,6 @@ form {
 @media (min-width: 576px) and (min-aspect-ratio: 1/1) {
     html {
         font-size: 15px;
-    }
-    .role img {
-        margin-top: 10%;
     }
     .halves {
         flex-direction: row;
@@ -654,28 +624,45 @@ form {
     }
 }
 
-/* Medium devices */
+
+@media (max-width: 767px) and (max-aspect-ratio: 1/1) {
+    #roles {
+        flex-direction: column;
+    }
+    .role {
+        flex-direction: row;
+        justify-content: flex-start;
+        img {
+            margin: 0 8vw;
+            width: 25vw;
+            max-width: 15vh;
+            -webkit-transition: all 200ms;
+            -moz-transition: all 200ms;
+            -ms-transition: all 200ms;
+            -o-transition: all 200ms;
+            transition: all 200ms;
+        }
+    }
+}
+
+
+    /* Medium devices */
 @media (min-width: 768px) {
     html {
         font-size: 20px;
     }
     body.first_time #header {
-        padding: 4% 4% 12px 4%;
+        height: $big-header-height;
+    }
+    .home {
+        padding-top: $big-header-height + $header-padding + $header-padding;
     }
     #hello {
         text-align: center;
         padding-left: 0;
-        h2 {
-            margin-top: 0.3em;
-        }
         h3 {
             font-size: 0.8rem;
         }
-    }
-    #roles {
-        flex-direction: row;
-        justify-content: space-around;
-        align-items: center;
     }
     nav {
         flex-direction: row;
@@ -697,27 +684,8 @@ form {
             }
         }
     }
-    .role {
-        flex-direction: column;
-        justify-content: space-between;
-        height: 40vh;
-        img {
-            height: 50%;
-            width: auto;
-            max-width: none;
-            margin: 0;
-        }
-        &:hover {
-            .button {
-                @include background-gradient;
-            }
-        }
-        .page_width {
-            width: 80%;
-        }
-    }
     #logo {
-        width: 186px;
+        width: 200px;
         background-image: url("../img/logo-full.png");
     }
     .extra_text > .page_width:not(.max_columns-1):not(.form_columns) {
@@ -742,15 +710,27 @@ form {
     html {
         font-size: 18px;
     }
-    body.first_time #header {
-        padding: 12px 4% 0 4%;
-    }
-    .role img {
-        margin-top: 10%;
-        height: 60%;
-    }
     .halves {
         flex-direction: row;
+    }
+}
+
+@media (max-width: 991px) and (min-aspect-ratio: 1/1) {
+    #header {
+        height: $small-header-height;
+        padding: $small-header-padding-top 4%;
+    }
+    .home {
+        padding-top: $small-header-height + $small-header-padding-top + $small-header-padding-top;
+    }
+    body.first_time {
+        #header {
+            height: $small-header-height;
+            padding-bottom: 0;
+        }
+        .home {
+            padding-top: $small-header-height + $small-header-padding-top;
+        }
     }
 }
 
@@ -758,22 +738,18 @@ form {
     html {
         font-size: 22px;
     }
-    body.first_time #header {
-        padding-top: 4%;
-        padding-bottom: 12px;
-    }
-    #header {
-        height: 46px;
-    }
-    .home .page_width {
-        padding-top: calc(4% + 40px);
-        height: 100vh;
-        .button > div{
-            padding: 1em 2em;
+    .home {
+        .page_width {
+            height: 100%;
+            .button > div {
+                padding: 1em 2em;
+            }
         }
     }
-    .role img{
-        max-height: 200px;
+    #hello {
+        h2 {
+            margin-top: 0.3em;
+        }
     }
     .page_width {
         width: 75%;
@@ -795,16 +771,7 @@ form {
 }
 
 @media (min-width: 992px) and (min-aspect-ratio: 1/1) {
-    #header {
-        height: 46px;
-    }
-    body.first_time #header {
-        padding-top: 4%;
-        padding-bottom: 12px;
-    }
-    .home .page_width {
-        padding-top: calc(4% + 40px);
-    }
+
 }
 /* Extra large devices */
 @media (min-width: 1200px) {
@@ -834,18 +801,16 @@ form {
     html {
         font-size: 26px;
     }
+    .role {
+        img {
+            max-width: 250px;
+        }
+    }
     .home .page_width {
-        padding-top: calc(4% + 40px);
         justify-content: space-evenly;
         > div {
             flex-grow: initial;
         }
-    }
-    .role {
-        max-height: 600px;
-    }
-    .role img {
-        max-height: 250px;
     }
     .extra_text > .page_width:not(.max_columns-1):not(.max_columns-2):not(.max_columns-3):not(.form_columns) {
         max-width: 1600px;
