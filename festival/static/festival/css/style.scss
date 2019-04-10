@@ -374,6 +374,17 @@ section {
             background-color: transparent;
         }
     }
+    &.grey_extra {
+        background: $color-dark;
+        font-size: 1rem;
+        color: $color-light-gray;
+        > .page_width {
+            margin: 0 auto;
+        }
+        &:before, &:after {
+            display: none;
+        }
+    }
 }
 
 .no_columns {

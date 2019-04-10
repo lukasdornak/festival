@@ -317,6 +317,14 @@ section {
     font-size: 0.8rem; }
     .extra_text .button > div:hover, .extra_text .button > button:hover {
       background-color: transparent; }
+  .extra_text.grey_extra {
+    background: #292b2f;
+    font-size: 1rem;
+    color: #999; }
+    .extra_text.grey_extra > .page_width {
+      margin: 0 auto; }
+    .extra_text.grey_extra:before, .extra_text.grey_extra:after {
+      display: none; }
 
 .no_columns {
   -webkit-column-count: 1 !important;
@@ -409,8 +417,8 @@ footer {
     height: 100%;
     width: 100%; }
   .partner_logo img {
-    max-height: 100px;
-    max-width: 300px;
+    max-height: 80px;
+    max-width: 200px;
     filter: grayscale(1) brightness(100);
     box-sizing: border-box; }
 

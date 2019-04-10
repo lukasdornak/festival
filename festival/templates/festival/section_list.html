@@ -82,6 +82,8 @@ $(function(){{% if not view.home %}
             open_extra($text);
             if ($text.attr('id') === 'film-register-widget-extra_text'){
                 $(this).html("{% trans 'radši si to ještě pročtu' %}");
+            } else if ($text.attr('id') === 'sponsor-widget-extra_text'){
+                $(this).html("{% trans 'hlavní partneři' %}");
             } else {
                 $(this).html("{% trans 'chceš vědět míň?' %}");
             }
@@ -92,6 +94,8 @@ $(function(){{% if not view.home %}
             scrollToPage(400);
             if ($text.attr('id') === 'film-register-widget-extra_text'){
                 $(this).html("{% trans 'četl jsem a chci přihlásit svůj film' %}");
+            } else if ($text.attr('id') === 'sponsor-widget-extra_text'){
+                $(this).html("{% trans 'všichni partneři' %}");
             } else {
                 $(this).html("{% trans 'chceš vědět víc?' %}");
             }
