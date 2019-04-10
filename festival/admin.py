@@ -19,6 +19,7 @@ class PublishMixin:
 @admin.register(models.Year)
 class YearAdmin(admin.ModelAdmin):
     model = models.Year
+    list_display = ['__str__', 'vol', 'name', 'date_start', 'date_end', 'current']
 
 
 @admin.register(models.Article)

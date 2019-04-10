@@ -25,7 +25,7 @@ ROLE_CHOICES = (
 )
 
 class Year(models.Model):
-    vol = models.PositiveSmallIntegerField('ročník číslo', validators=[MinValueValidator(0), MaxValueValidator(100)])
+    vol = models.PositiveSmallIntegerField('číslo', validators=[MinValueValidator(0), MaxValueValidator(100)])
     name = models.CharField('název', max_length=50, blank=True, null=True)
     date_start = models.DateField('datum zahájení')
     date_end = models.DateField('datum ukončení')
@@ -36,16 +36,30 @@ class Year(models.Model):
         verbose_name_plural = 'ročníky'
 
     def __str__(self):
-        return str(self.vol)
+        return f'{ self.get_year() } vol. { self.get_vol() }'
 
     def save(self, *args, **kwargs):
         if self.current:
             Year.objects.filter(current=True).update(current=False)
         super().save(*args, **kwargs)
 
+    def get_year(self):
+        return self.date_start.year
+
+    def get_vol(self):
+        vol_int = self.vol
+        ints = (1000, 900, 500, 400, 100, 90, 50, 40, 10,  9, 5, 4, 1)
+        romans = ('M', 'CM', 'D', 'CD', 'C', 'XC', 'L', 'XL', 'X', 'IX', 'V', 'IV', 'I')
+        vol_roman = []
+        for i in range(len(ints)):
+            count = int(vol_int / ints[i])
+            vol_roman.append(romans[i] * count)
+            vol_int -= ints[i] * count
+        return ''.join(vol_roman)
+
     @classmethod
     def get_current(cls):
-        return Year.objects.filter(current=True).first()
+        return cls.objects.filter(current=True).first()
 
 
 class AbstractArticle(models.Model):
