@@ -1,5 +1,6 @@
 {% load static %}
-<div class="press_releases">{% for object in widget_context.object_list %}
-    <a href="{{ object.file.url }}" class="press_release" target="_blank"><div><img src="{% static '/festival/img/journalist.png' %}"><span>{{ object.date_release }}</span><span>{{ object.name }}</span></div></a>
-{% endfor %}
-</div>
+{% regroup widget_context.object_list by year as by_year%}{% for year in by_year %}
+<h2>{{ year.grouper }}</h2>
+<div class="press_releases">{% for object in year.list %}
+    <a href="{{ object.file.url }}" class="press_release" target="_blank"><div><img src="{% static '/festival/img/journalist.png' %}"><span>{{ object.date_release }}</span><span>{{ object.name }}</span></div></a>{% endfor %}
+</div>{% endfor %}

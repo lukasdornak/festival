@@ -85,3 +85,5 @@ class SponsorAdmin(admin.ModelAdmin):
 @admin.register(models.PressRelease)
 class PressRelease(admin.ModelAdmin):
     models = models.PressRelease
+    list_display = ['__str__', 'date_release', 'year']
+    list_filter = ['year']

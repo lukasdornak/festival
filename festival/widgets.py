@@ -71,8 +71,10 @@ class PressReleaseWidget(Widget):
     template_name = 'festival/widgets/press_release.html'
 
     def get_context_data(self):
+        today = date.today()
         context_data = {
-            'object_list': models.PressRelease.objects.filter(date_release__lte=date.today(), year__in=[models.Year.get_current()])
+            'object_list': models.PressRelease.objects.filter(date_release__lte=today,
+                                                              date_release__year__in=[today.year, today.year-1])
         }
         return context_data
 
@@ -87,6 +89,5 @@ class FilmRegistrationWidget(Widget):
             'form': models.FilmRegistrationForm()
         }
         for field in context_data['form']:
-            print(field.field.__class__.__name__)
             field.boolean = True if field.field.__class__.__name__ == 'BooleanField' else False
         return context_data
