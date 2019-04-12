@@ -535,10 +535,18 @@ form {
         font-size: 1em;
         background: transparent;
         border: none;
+        -webkit-transition: border-bottom-width 200ms;
+        -moz-transition: border-bottom-width 200ms;
+        -ms-transition: border-bottom-width 200ms;
+        -o-transition: border-bottom-width 200ms;
+        transition: border-bottom-width 200ms;
         border-bottom: solid 1px white;
         &:focus {
-            border-bottom: solid 0.15em white;
+            border-bottom-width: 0.15em;
             outline: none;
+        }
+        &::placeholder {
+            color: white;
         }
     }
     input {

@@ -115,3 +115,8 @@ CKEDITOR_CONFIGS = {
 }
 
 LOGIN_URL = '/admin/login'
+
+TP_MERCHANT_ID = os.environ.get('TP_MERCHANT_ID', 1)
+TP_ACCOUNT_ID = os.environ.get('TP_ACCOUNT_ID', 1)
+TP_PASSWORD = os.environ.get('TP_PASSWORD', 'my$up3rsecr3tp4$$word')
+TP_GATE_URL = os.environ.get('TP_GATE_URL', 'https://www.thepay.cz/demo-gate/')

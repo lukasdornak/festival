@@ -15,6 +15,10 @@ urlpatterns = [
     path(_('tvurce/') ,views.SectionListView.as_view(), {'role':'a'}, name='a'),
     path(_('navstevnik/'), views.SectionListView.as_view(), {'role':'b'}, name='b'),
     path(_('novinar/'), views.SectionListView.as_view(), {'role':'c'}, name='c'),
+    path(_('dekujeme-za-registraci-filmu/'), views.ThanksView.as_view(), {'for': 'f'}),
+    path(_('dekujeme-za-zakoupeni-vstupenek/'), views.ThanksView.as_view(), {'for': 't'}),
+    path('thepay-payment-done/', views.PaymentCreateView.as_view()),
+    path('ajax/film-registration/', views.FilmRegistrationView.as_view()),
     path('admin/', admin.site.urls),
 ]
 

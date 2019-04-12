@@ -1,0 +1,10 @@
+{% load festival_filters %}
+{% if not disable_button_css %}
+    <link href="{{ gate_url }}div/style{% if skin %}/{{ skin }}{% endif %}/div.css?v={{ time }}" type="text/css" rel="stylesheet" />{% endif %}
+    <script type="text/javascript">
+var thepayGateUrl = "{{ gate_url|tp_escape }}div\/index.php?{{ query_string|tp_escape }}",
+disableThepayPopupCss = {{ disable_popup_css|lower }};
+    </script>
+    <script type="text/javascript" src="{{ gate_url }}div/js/jquery.js?v={{ time }}" async="async"></script>
+    <script type="text/javascript" src="{{ gate_url }}div/js/div.js?v={{ time }}" async="async"></script>
+    <div id="thepay-method-box" style="border: 0;"></div>

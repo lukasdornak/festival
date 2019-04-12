@@ -1,0 +1,29 @@
+{% load i18n %}
+    <div class="page_width form_columns">
+        <form id="film-registration-form" action="/ajax/film-registration/" method="post">
+            {% csrf_token %}
+            <table>
+                <tbody>{% for field in form %}{% if not field.boolean %}{% if field.errors %}
+                    <tr>
+                        <td colspan="2">{% for error in field.errors %}<span>{{ error }}</span><br>{% endfor %}</td>
+                    </tr>{% endif %}
+                    <tr>
+                        <td><label for="{{ field.id_for_label }}"{% if field.field.required %} class="required_field_label"{% endif %}>{{ field.label|safe }}</label></td>
+                        <td>{{ field }}</td>
+                    </tr>{% endif %}{% endfor %}
+                </tbody>
+            </table>
+            <table>
+                <tbody>{% for field in form %}{% if field.boolean %}{% if field.errors %}
+                    <tr>
+                        <td colspan="2">{% for error in field.errors %}<span>{{ error }}</span><br>{% endfor %}</td>
+                    </tr>{% endif %}
+                    <tr>
+                        <td>{{ field }}</td>
+                        <td><label for="{{ field.id_for_label }}"{% if field.field.required %} class="required_field_label"{% endif %}>{{ field.label|safe }}</label></td>
+                    </tr>{% endif %}{% endfor %}
+                </tbody>
+            </table>
+            <div class="button"><button type="submit">registrovat</button></div>
+        </form>
+    </div>

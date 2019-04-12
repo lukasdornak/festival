@@ -1,33 +1,37 @@
 {% load i18n %}
 </div>
 <div id="film-register-widget-extra_text" class="extra_text hidden_extra">
-    <div class="page_width form_columns">
-        <form action="/film-registration/" method="post">
-            {% csrf_token %}
-            <table>
-                <tbody>{% for field in widget_context.form %}{% if not field.boolean %}{% if field.errors %}
-                    <tr>
-                        <td colspan="2">{% for error in field.errors %}<span>{{ error }}</span><br>{% endfor %}</td>
-                    </tr>{% endif %}
-                    <tr>
-                        <td><label for="{{ field.id_for_label }}"{% if field.field.required %} class="required_field_label"{% endif %}>{{ field.label }}</label></td>
-                        <td>{{ field }}</td>
-                    </tr>{% endif %}{% endfor %}
-                </tbody>
-            </table>
-            <table>
-                <tbody>{% for field in widget_context.form %}{% if field.boolean %}{% if field.errors %}
-                    <tr>
-                        <td colspan="2">{% for error in field.errors %}<span>{{ error }}</span><br>{% endfor %}</td>
-                    </tr>{% endif %}
-                    <tr>
-                        <td>{{ field }}</td>
-                        <td><label for="{{ field.id_for_label }}"{% if field.field.required %} class="required_field_label"{% endif %}>{{ field.label }}</label></td>
-                    </tr>{% endif %}{% endfor %}
-                </tbody>
-            </table>
-        </form>
-    </div>
 </div>
+<script>
+function get_film_registration_form(){
+    $.ajax({
+        type: 'GET',
+        url: '/ajax/film-registration/',
+        cache: true
+    }).done(function(response){
+        $("#film-register-widget-extra_text").html(response);
+        $form = $('#film-registration-form');
+        $form.submit(function(event){
+            event.preventDefault();
+            post_film_registration_form($form);
+        });
+    });
+}
+
+function post_film_registration_form($form){
+    $.ajax({
+        type: 'POST',
+        url: '/ajax/film-registration/',
+        data: $form.serialize(),
+        success: function(response) {
+            $("#film-register-widget-extra_text").html(response);
+        }
+    });
+}
+
+$(function () {
+    get_film_registration_form();
+})
+</script>
 <div class="button"><div id="film-register-widget-button" class="extra_button">{% trans 'četl jsem a chci přihlásit svůj film' %}</div></div>
 <div>

@@ -1,8 +1,9 @@
 from datetime import date
 
-from django.forms import ModelForm
 from django.contrib.auth.models import User
-from django.db import models
+from django.core.validators import MaxValueValidator, MinValueValidator, FileExtensionValidator, RegexValidator
+from django.db import models, transaction
+from django.forms import ModelForm
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 
@@ -10,10 +11,8 @@ from ckeditor.fields import RichTextField
 from imagekit.models import ImageSpecField
 from imagekit.processors import ResizeToFill
 
-from django.core.validators import MaxValueValidator, MinValueValidator, FileExtensionValidator
-from django.db.models import Avg
+from . import widgets, iso3166
 
-from . import widgets
 
 AUTHOR = 'a'
 VISITOR = 'b'
@@ -151,45 +150,98 @@ class Contact(models.Model):
         return self.name
 
 
-class Category(models.Model):
-    name = models.CharField('název', max_length=50)
-    name_en = models.CharField('název anglicky', max_length=50)
-
-    class Meta:
-        verbose_name = 'kategorie filmu'
-        verbose_name_plural = 'kategorie filmu'
-
-    def __str__(self):
-        return self.name
+def MaxCurrentYearValidator(value):
+    current_year = Year.get_current().get_year()
+    validator = MaxValueValidator(current_year)
+    return validator(value)
 
 
 class Film(models.Model):
-    UNPAID = 'neuhrazený poplatek'
-    REGISTERED = 'registrovaný'
-    SELECTED = 'vybraný'
+    UNPAID = 'u'
+    REGISTERED = 'r'
+    SELECTED = 's'
+    OUT = 'o'
     STATUS_CHOICES = (
-        ('u', UNPAID),
-        ('r', REGISTERED),
-        ('s', SELECTED),
+        (UNPAID, 'neuhrazený poplatek'),
+        (REGISTERED, 'registrovaný'),
+        (SELECTED, 'vybraný'),
+        (OUT, 'vyřazený'),
     )
-    author_name = models.CharField(_('jméno autora'), max_length=50)
-    author_yob = models.PositiveSmallIntegerField(_('rok narození'), validators=[
-        MaxValueValidator(2012), MinValueValidator(1900)])
+    FILM = 'f'
+    DOCUMENTARY = 'd'
+    ANIMATED = 'a'
+    CATEGORY_CHOICES = (
+        (FILM, _('hraný')),
+        (DOCUMENTARY, _('dokumentární')),
+        (ANIMATED, _('animovaný')),
+    )
+    ACTION = 'ac'
+    DETECTIVE = 'de'
+    ADVENTURE = 'ad'
+    DRAMA = 'dr'
+    FANTASY = 'fa'
+    HISTORICAL = 'hi'
+    HORROR = 'ho'
+    MUSICAL = 'mu'
+    COMEDY = 'co'
+    CRIME = 'cr'
+    FAIRY_TALE = 'ft'
+    FAMILY = 'fa'
+    ROMANTIC = 'ro'
+    SCI_FI = 'sf'
+    THRILLER = 'th'
+    WAR = 'wa'
+    WESTERN = 'we'
+    GENRE_CHOICES = (
+        (ACTION, _('akční')),
+        (DETECTIVE, _('detektivní')),
+        (ADVENTURE, _('dobrodružný')),
+        (DRAMA, _('drama')),
+        (FANTASY, _('fantasy')),
+        (HISTORICAL, _('historický')),
+        (HORROR, _('horor')),
+        (MUSICAL, _('hudební')),
+        (COMEDY, _('komedie')),
+        (CRIME, _('kriminální')),
+        (FAIRY_TALE, 'pohádka'),
+        (FAMILY, _('rodinný')),
+        (ROMANTIC, _('romantický')),
+        (SCI_FI, _('sci-fi')),
+        (THRILLER, ('thriller')),
+        (WAR, 'válečný'),
+        (WESTERN, 'western'),
+    )
+    phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message=_('Zadejte, prosím, platné telefonní číslo ve formátu +999999999'))
+    first_name = models.CharField(_('jméno'), max_length=50)
+    last_name = models.CharField(_('příjmení'), max_length=50)
+    email = models.EmailField(_('email'))
     production = models.CharField(_('škola/produkce'), max_length=50)
-    author_state = models.CharField(_('stát'), max_length=50)
+    country = models.CharField(_('stát'), max_length=2, choices=iso3166.COUNTRY_CHOICES, default='CZ')
+    phone = models.CharField(_('telefon'), validators=[phone_regex], max_length=17, null=True, blank=True)
     name = models.CharField(_('název'), max_length=50)
-    time = models.TimeField(_('stopáž'))
-    year = models.SmallIntegerField(_('rok vzniku'), default=2018)
-    directed = models.CharField(_('režie'), max_length=50, null=True, blank=True)
+    time = models.DurationField(_('stopáž'))
+    description = models.TextField(_('krátký popis'), max_length=200)
+    year = models.SmallIntegerField(_('rok vzniku'), validators=[ MaxCurrentYearValidator, MinValueValidator(1980)])
+    category = models.CharField(_('kategorie'), max_length=1, choices=CATEGORY_CHOICES)
+    genre = models.CharField(_('žánr'), max_length=2, choices=GENRE_CHOICES)
+    film_url = models.URLField(_('url stažení filmu'))
+    film_password = models.CharField(_('heslo k filmu'), max_length=64, null=True, blank=True)
+    trailer_url = models.URLField(_('url stažení traileru'))
+    trailer_password = models.CharField(_('heslo k traileru'), max_length=64, null=True, blank=True)
+    subtitles_url = models.URLField(_('url stažení titulků'))
+    subtitles_password = models.CharField(_('heslo k titulkům'), max_length=64, null=True, blank=True)
+    starring = models.TextField(_('herecké obsazení'), max_length=200, null=True, blank=True)
+    directing = models.CharField(_('režie'), max_length=50, null=True, blank=True)
     screenplay = models.CharField(_('scénář'), max_length=50, null=True, blank=True)
     camera = models.CharField(_('kamera'), max_length=50, null=True, blank=True)
     sound = models.CharField(_('zvuk'), max_length=50, null=True, blank=True)
     cut = models.CharField(_('střih'), max_length=50, null=True, blank=True)
     others = models.TextField(_('ostatní tvůrci'), max_length=200, null=True, blank=True)
-    category = models.ForeignKey(Category, verbose_name=_('Kategorie'), on_delete=models.PROTECT)
-    attendance = models.BooleanField(_('mám zájem o osobní účast na festivalu'))
-    tos = models.BooleanField(_('souhlasím s podmínkami přihlášení'))
+    tos = models.BooleanField('souhlas s podmínkami přihlášení', default=False)
+    gdpr = models.BooleanField('souhlas se zásadami zpracování osobních údajů', default=False)
+    attendance = models.BooleanField('zájem o osobní účast na festivalu', default=False)
     status = models.CharField('status', max_length=1, choices=STATUS_CHOICES, default='u')
+    technical_check = models.BooleanField('technicky ok', null=True, blank=True, default=None)
 
     class Meta:
         verbose_name = 'film'
@@ -199,29 +251,34 @@ class Film(models.Model):
         return self.name
 
     def get_rating(self):
-        rating = Evaluation.objects.filter(film=self).aggregate(Avg('like'))
+        rating = Evaluation.objects.filter(film=self).aggregate(models.Avg('like'))
         return rating['like__avg']
 
     get_rating.short_description ='průměrné hodnocení'
 
+
 class Evaluation(models.Model):
-    UNCHECKED = 'nezkontrolováno'
-    VALID = 'ok'
-    INVALID = 'něco v nepořádku'
-    TECHNICAL_CHOICES = (
-        ('u', UNCHECKED),
-        ('v', VALID),
-        ('i', INVALID),
+    LIKE_CHOICES = (
+        (0, 'odpad!'),
+        (1, 'španý'),
+        (2, 'slabší'),
+        (3, 'dobrý'),
+        (4, 'hodně dobrý'),
+        (5, 'bombastický!'),
     )
-    user = models.ForeignKey(User, verbose_name='přidal', editable=False, null=True, blank=True, on_delete=models.SET_NULL)
+    user = models.ForeignKey(User, verbose_name='přidal', editable=False, on_delete=models.CASCADE)
     film = models.ForeignKey(Film, verbose_name='film', on_delete=models.CASCADE)
-    like = models.PositiveSmallIntegerField('líbí', validators=[MinValueValidator(0), MaxValueValidator(5)])
+    like = models.PositiveSmallIntegerField('líbí', choices=LIKE_CHOICES)
     verbal = models.TextField('slovně', max_length=200)
-    technical = models.CharField('technicky', max_length=1, choices=TECHNICAL_CHOICES, default='u', blank=True)
+    technical = models.BooleanField('technicky ok', null=True, blank=True, default=None)
+
 
     class Meta:
         verbose_name = 'hodnocení filmu'
         verbose_name_plural = 'hodnocení filmů'
+
+    def __str__(self):
+        return self.get_like_display()
 
 
 class Block(models.Model):
@@ -239,12 +296,14 @@ class Block(models.Model):
 
 class Sponsor(models.Model):
     COORG = 0
-    MAIN = 10
+    GENERAL = 10
+    SUPPORT = 15
     MEDIA = 20
     OTHERS = 30
-    TYPE_CHOICES = (
+    CATEGORY_CHOICES = (
         (COORG, 'spoluorganizátoři'),
-        (MAIN, 'hlavní'),
+        (GENERAL, 'generální'),
+        (SUPPORT, 'za podpory'),
         (MEDIA, 'medialní'),
         (OTHERS, 'ostatní'),
     )
@@ -252,12 +311,13 @@ class Sponsor(models.Model):
     name = models.CharField('jméno', max_length=50)
     logo = models.ImageField('logo', null=True, blank=True)
     url = models.URLField('odkaz na web', null=True, blank=True)
-    type = models.PositiveSmallIntegerField('kategorie', default=30, choices=TYPE_CHOICES)
+    category = models.PositiveSmallIntegerField('kategorie', default=30, choices=CATEGORY_CHOICES)
+    order = models.PositiveSmallIntegerField('pořadí', default=1)
 
     class Meta:
         verbose_name = 'sponzor'
         verbose_name_plural = 'sponzoři'
-        ordering = ['type']
+        ordering = ['category', 'order']
 
     def __str__(self):
         return self.name
@@ -279,8 +339,77 @@ class PressRelease(models.Model):
         return self.name
 
 
+class Ticket(models.Model):
+    pass
+
+
+class ThepayPayment(models.Model):
+    OK = 2
+    CANCELED = 3
+    ERROR = 4
+    UNDERPAID = 6
+    WAITING = 7
+    CARD_DEPOSIT = 9
+    STATUS_CHOICES = (
+        (OK , 'úspěšně zaplaceno'),
+        (CANCELED , 'platba byla zrušena zákazníkem'),
+        (ERROR , 'při platbě došlo k chybě.'),
+        (UNDERPAID , 'zákazník zaplatil nižší než požadovanou částku.'),
+        (WAITING , 'zákazník platbu provedl, ale je nutné počkat na potvrzení'),
+        (CARD_DEPOSIT , 'částka je blokována na účtu zákazníka'),
+    )
+    FILM = 'f'
+    TICKETS = 't'
+    TYPE_CHOICES = (
+        (FILM, _('registrační poplatek')),
+        (TICKETS, _('prodej vstupenek')),
+    )
+    value = models.DecimalField('částka', decimal_places=2, max_digits=10)
+    currency = models.CharField('měna', max_length=3)
+    methodId = models.PositiveSmallIntegerField('id platební metody')
+    merchantData = models.CharField(max_length=150)
+    status = models.PositiveSmallIntegerField('status', choices=STATUS_CHOICES)
+    paymentId = models.PositiveIntegerField('id platby', unique=True)
+    isOffline = models.BooleanField('offline', null=True)
+    type = models.CharField('typ', max_length=1, choices=TYPE_CHOICES)
+    datetime = models.DateTimeField('datum a čas', auto_now_add=True)
+    valid_signature = models.BooleanField('validní podpis', default=False)
+    film = models.OneToOneField('Film', on_delete=models.SET_NULL, null=True, blank=True)
+    ticket = models.OneToOneField('Ticket', on_delete=models.SET_NULL, null=True, blank=True)
+
+    class Meta:
+        verbose_name = 'thepay platba'
+        verbose_name_plural = 'thepay platby'
+
+    def save(self, **kwargs):
+        if self._state.adding and self.valid_signature and self.status == self.OK:
+            if self.type == self.FILM:
+                with transaction.atomic():
+                    self.film.status = Film.REGISTERED
+                    self.film.save(update_fields=['status'])
+                    super().save(**kwargs)
+        else:
+            super().save(**kwargs)
+
+
+class ThepayPaymentForm(ModelForm):
+
+    class Meta:
+        model = ThepayPayment
+        exclude = []
+
+
 class FilmRegistrationForm(ModelForm):
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
+        self.fields['attendance'].label = _('Mám zájem o osobní účast na festivalu.')
+        self.fields['tos'].label = _('Souhlasím s podmínkami přihlášení.')
+        self.fields['gdpr'].label = _('Souhlasím se zásadami zpracování osobních údajů.')
+        self.fields['tos'].required = True
+        self.fields['gdpr'].required = True
+        self.fields['time'].widget.attrs['placeholder'] = 'mm:ss'
+        self.fields['phone'].widget.attrs['placeholder'] = '+420 111 222 333'
 
     class Meta:
         model = Film
-        exclude = ('status', )
+        exclude = ('status', 'technical_check', 'gdpr')
