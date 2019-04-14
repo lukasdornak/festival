@@ -6,8 +6,8 @@ class FestivalLocaleMiddleware:
     def __init__(self, get_response):
         self.get_response = get_response
 
-    en_urls = [re.compile(p) for p in ['^/author/', '^/visitor/', '^/journalist/', '^/author', '^/visitor', '^/journalist']]
-    cs_urls = [re.compile(p) for p in ['^/tvurce/', '^/navstevnik/', '^/novinar/', '^/tvurce', '^/navstevnik', '^/novinar']]
+    en_urls = [re.compile(p) for p in ['^/author/', '^/visitor/', '^/journalist/', ]]
+    cs_urls = [re.compile(p) for p in ['^/tvurce/', '^/navstevnik/', '^/novinar/', ]]
 
     def get_lang_from_url(self, request):
         for url in self.en_urls:

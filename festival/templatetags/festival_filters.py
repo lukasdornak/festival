@@ -12,5 +12,5 @@ def add_nbsps(value):
 
 @register.filter(name='tp_escape')
 def tp_escape(value):
-    value = re.sub(r'/', r"\/", value)
-    return re.sub(r'&', r"\u0026", value)
+    value = re.sub(r'/', '\/', value)
+    return re.sub(r'&', '\u0026', value)
