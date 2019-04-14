@@ -307,7 +307,7 @@ class Sponsor(models.Model):
         (MEDIA, 'medialní'),
         (OTHERS, 'ostatní'),
     )
-    year = models.ManyToManyField(Year, verbose_name='ročník', null=True, blank=True)
+    year = models.ManyToManyField(Year, verbose_name='ročník', blank=True)
     name = models.CharField('jméno', max_length=50)
     logo = models.ImageField('logo', null=True, blank=True)
     url = models.URLField('odkaz na web', null=True, blank=True)
@@ -404,9 +404,9 @@ class FilmRegistrationForm(ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['attendance'].label = _('Mám zájem o osobní účast na festivalu.')
         self.fields['tos'].label = _('Souhlasím s podmínkami přihlášení.')
-        self.fields['gdpr'].label = _('Souhlasím se zásadami zpracování osobních údajů.')
+#        self.fields['gdpr'].label = _('Souhlasím se zásadami zpracování osobních údajů.')
         self.fields['tos'].required = True
-        self.fields['gdpr'].required = True
+#        self.fields['gdpr'].required = True
         self.fields['time'].widget.attrs['placeholder'] = 'mm:ss'
         self.fields['phone'].widget.attrs['placeholder'] = '+420 111 222 333'
 

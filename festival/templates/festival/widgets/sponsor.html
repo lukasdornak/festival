@@ -1,14 +1,14 @@
 {% load i18n %}
     <div>
-    {% regroup widget_context.object_list by type as sponsor_list %}{% for type, list in sponsor_list %}{% if type == 0 and list %}
+    {% regroup widget_context.object_list by category as sponsor_list %}{% for category, list in sponsor_list %}{% if category == 0 and list %}
         <span>{% trans 'Ti, kteří to pořádají' %}</span>
         <div class="partners">{% for object in list %}
             <div class="partner_logo">{% if object.logo %}<img src="{{ object.logo.url }}" alt="{{ object.name }}">{% else %}{{ object.name }}{% endif %}{% if object.url %}<a href="{{ object.url }}" target="_blank"></a>{% endif %}</div>{% endfor %}
-        </div>{% elif type == 10 and list %}
+        </div>{% elif category == 10 and list %}
         <span>{% trans 'za finanční podpory' %}</span>
         <div class="partners">{% for object in list %}
             <div class="partner_logo">{% if object.logo %}<img src="{{ object.logo.url }}" alt="{{ object.name }}">{% else %}{{ object.name }}{% endif %}{% if object.url %}<a href="{{ object.url }}" target="_blank"></a>{% endif %}</div>{% endfor %}
-        </div>{% elif type == 15 and list %}
+        </div>{% elif category == 15 and list %}
         <span>{% trans 'za podpory' %}</span>
         <div class="partners">{% for object in list %}
             <div class="partner_logo">{% if object.logo %}<img src="{{ object.logo.url }}" alt="{{ object.name }}">{% else %}{{ object.name }}{% endif %}{% if object.url %}<a href="{{ object.url }}" target="_blank"></a>{% endif %}</div>{% endfor %}
@@ -17,11 +17,11 @@
     </div>
 </div>
 <div id="sponsor-widget-extra_text" class="extra_text hidden_extra grey_extra">
-    <div class="page_width no_columns">{% for type, list in sponsor_list %}{% if type == 20 and list %}
+    <div class="page_width no_columns">{% for category, list in sponsor_list %}{% if category == 20 and list %}
     <span>{% trans 'Ti, kteří to propagují' %}</span>
     <div class="partners">{% for object in list %}
         <div class="partner_logo">{% if object.logo %}<img src="{{ object.logo.url }}" alt="{{ object.name }}">{% else %}{{ object.name }}{% endif %}{% if object.url %}<a href="{{ object.url }}" target="_blank"></a>{% endif %}</div>{% endfor %}
-    </div>{% elif type == 30 and list %}
+    </div>{% elif category == 30 and list %}
     <span>{% trans 'Ti, kteří to propagují.' %}</span>
     <div class="partners">{% for object in list %}
         <div class="partner_logo">{% if object.logo %}<img src="{{ object.logo.url }}" alt="{{ object.name }}">{% else %}{{ object.name }}{% endif %}{% if object.url %}<a href="{{ object.url }}" target="_blank"></a>{% endif %}</div>{% endfor %}
