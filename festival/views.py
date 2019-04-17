@@ -91,9 +91,9 @@ class FilmRegistrationView(UpdateView):
         payment = the_pay.Payment(
             value=float(100),
             description='registrační poplatek',
-            return_url=f"http://{ self.request.META['HTTP_HOST'] }/thepay-payment-done/",
+            return_url=f"https://{ self.request.META['HTTP_HOST'] }/thepay-payment-done/",
             merchant_data=f'{{"f":{ self.object.id }}}',
-            back_to_eshop_url=f"http://{ self.request.META['HTTP_HOST'] }/{ _('tvurce') }/#{ hash_for_back_to_eshop_url }"
+            back_to_eshop_url=f"https://{ self.request.META['HTTP_HOST'] }/{ _('tvurce') }/#{ hash_for_back_to_eshop_url }"
         )
         helper = the_pay.DivHelper(payment=payment)
         self.template_name = self.pay_template_name
@@ -129,9 +129,9 @@ class RepeatPaymentView(NavContextMixin, DetailView):
         payment = the_pay.Payment(
             value=float(100),
             description='registrační poplatek',
-            return_url=f"http://{ self.request.META['HTTP_HOST'] }/thepay-payment-done/",
+            return_url=f"https://{ self.request.META['HTTP_HOST'] }/thepay-payment-done/",
             merchant_data=self.object.merchantData,
-            back_to_eshop_url=f"http://{ self.request.META['HTTP_HOST'] }{ _('/opakovat-platbu/') }"
+            back_to_eshop_url=f"https://{ self.request.META['HTTP_HOST'] }{ _('/opakovat-platbu/') }{ self.object.paymentId }/"
         )
         helper = the_pay.DivHelper(payment=payment)
         context_data.update(**helper.get_context())
