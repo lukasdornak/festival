@@ -527,7 +527,7 @@ def send_film_registration_notification(sender, instance, **kwargs):
             Email.objects.create(
                 recipient_list=instance.email,
                 subject=texts.mail_film_registered_unpaid_subject,
-                message=texts.mail_film_registered_unpaid_paid_message,
+                message=texts.mail_film_registered_unpaid_message,
                 message_html=texts.mail_film_registered_unpaid_message_html,
             )
         else:
