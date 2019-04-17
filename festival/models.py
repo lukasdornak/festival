@@ -526,16 +526,16 @@ def send_film_registration_notification(sender, instance, **kwargs):
         if instance.country in ['CZ', 'SK']:
             Email.objects.create(
                 recipient_list=instance.email,
-                subject=texts.mail_film_registred_unpaid_subject,
-                message=texts.mail_film_registred_unpaid_paid_message,
-                message_html=texts.mail_film_registred_unpaid_message_html,
+                subject=texts.mail_film_registered_unpaid_subject,
+                message=texts.mail_film_registered_unpaid_paid_message,
+                message_html=texts.mail_film_registered_unpaid_message_html,
             )
         else:
             Email.objects.create(
                 recipient_list=instance.email,
-                subject=texts.mail_film_registred_unpaid_subject_en,
-                message=texts.mail_film_registred_unpaid_message_en,
-                message_html=texts.mail_film_registred_unpaid_message_html_en,
+                subject=texts.mail_film_registered_unpaid_subject_en,
+                message=texts.mail_film_registered_unpaid_message_en,
+                message_html=texts.mail_film_registered_unpaid_message_html_en,
             )
 
 
