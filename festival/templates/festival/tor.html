@@ -1,0 +1,6 @@
+{% extends 'festival/text.html' %}{% load i18n %}
+
+{% block text %}{% if request.LANGUAGE_CODE == 'en' %}
+    {{ texts.tor_en|safe }}{% else %}
+    {{ texts.tor|safe }}{% endif %}
+{% endblock %}

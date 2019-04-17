@@ -1,0 +1,17 @@
+{% extends 'festival/text.html' %}{% load i18n %}
+
+{% block text %}
+    <h2>{% trans 'nový pokus o platbu' %}</h2>
+    <p>{% blocktrans with film_name=object.film.name %}registrační poplatek za film: {{ film_name }}{% endblocktrans %}</p>
+    <p>{% blocktrans with price=object.value %}celková částka: {{ price }}kč{% endblocktrans %}</p>
+    {% include helper_template_name %}
+{% endblock %}
+
+{% block js %}
+    <script>
+$(function () {{% if request.LANGUAGE_CODE == 'en' %}
+    $('#lang_switch').attr('href', $('#lang_switch').attr('href').replace("{% language "en" %}{% trans '/opakovat-platbu/' %}{% endlanguage %}", "{% language "cs" %}{% trans '/opakovat-platbu/' %}{% endlanguage %}"));{% else %}
+    $('#lang_switch').attr('href', $('#lang_switch').attr('href').replace("{% language "cs" %}{% trans '/opakovat-platbu/' %}{% endlanguage %}", "{% language "en" %}{% trans '/opakovat-platbu/' %}{% endlanguage %}"));{% endif %}
+})
+    </script>
+{% endblock %}

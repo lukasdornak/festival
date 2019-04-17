@@ -1,0 +1,16 @@
+{% extends 'festival/base.html' %}{% load i18n %}
+
+{% block logo %}<a href="/"></a>{% endblock %}
+
+{% block content %}
+    <main>
+        <article>
+            <section>
+                <div class="page_width">
+                    {% block text %}{% endblock %}
+                </div>
+            </section>
+        </article>
+        {% include 'festival/contact.html' %}
+    </main>
+{% endblock %}

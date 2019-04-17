@@ -1,11 +1,25 @@
+import json
+
 from django.http import Http404
 from django.shortcuts import redirect, reverse
-from django.views.generic import ListView, TemplateView, UpdateView, CreateView
+from django.views.generic import CreateView, DetailView, ListView, TemplateView, UpdateView
 from django.utils.translation import gettext_lazy as _
 
 from . import models, the_pay
 
-class HomeTemplateView(TemplateView):
+
+class NavContextMixin:
+    def get_context_data(self, *args, **kwargs):
+        context_data = super().get_context_data(*args, **kwargs)
+        context_data['nav_on'] = bool(self.request.GET.get('nav', 0))
+        if self.request.user.is_staff:
+            context_data['nav_sections'] = models.Section.objects.all()
+        else:
+            context_data['nav_sections'] = models.Section.objects.filter(published=True)
+        return context_data
+
+
+class HomeTemplateView(NavContextMixin, TemplateView):
     template_name = 'festival/home.html'
 
     def get(self, request, *args, **kwargs):
@@ -13,15 +27,10 @@ class HomeTemplateView(TemplateView):
         if role:
             return redirect(reverse(role))
         self.first_time = True
-        self.nav = bool(request.GET.get('nav', 0))
-        if request.user.is_staff:
-            self.all_sections = models.Section.objects.all()
-        else:
-            self.all_sections = models.Section.objects.filter(published=True)
         return super().get(request, *args, **kwargs)
 
 
-class SectionListView(ListView):
+class SectionListView(NavContextMixin, ListView):
     model = models.Section
 
     def get_queryset(self):
@@ -57,12 +66,12 @@ class FilmRegistrationView(UpdateView):
     object_id = None
 
     def dispatch(self, request, *args, **kwargs):
-        self.object_id = request.session.get('UNPAID_FILM_REGISTERED')
+        self.object_id = request.session.get('UNPAID_FILM')
         return super().dispatch(request, *args, **kwargs)
 
     def get_object(self, queryset=None):
         if self.object_id:
-            return models.Film.objects.get(id=self.object_id)
+            return models.Film.objects.filter(id=self.object_id).first()
         return None
 
     def get_context_data(self, **kwargs):
@@ -73,7 +82,7 @@ class FilmRegistrationView(UpdateView):
 
     def form_valid(self, form):
         self.object = form.save()
-        self.request.session['UNPAID_FILM_REGISTERED'] = self.object.id
+        self.request.session['UNPAID_FILM'] = self.object.id
         return self.redirect_to_pay()
 
     def redirect_to_pay(self):
@@ -88,10 +97,48 @@ class FilmRegistrationView(UpdateView):
         )
         helper = the_pay.DivHelper(payment=payment)
         self.template_name = self.pay_template_name
-        return self.render_to_response(context=helper.get_context())
+        context = helper.get_context()
+        context['texts'] = models.Texts.objects.first()
+        return self.render_to_response(context)
 
 
-class ThanksView(TemplateView):
+class RepeatPaymentView(NavContextMixin, DetailView):
+    model = models.ThepayPayment
+    template_name = 'festival/repeat_payment.html'
+
+    def get_object(self, queryset=None):
+        payment_id = int(self.kwargs.get(self.pk_url_kwarg))
+        obj = models.ThepayPayment.objects.filter(paymentId=payment_id).first()
+        if obj is None:
+            raise Http404(payment_id)
+        if obj.status not in [
+            models.ThepayPayment.CANCELED,
+            models.ThepayPayment.ERROR,
+            models.ThepayPayment.UNDERPAID]:
+            raise Http404(_('Page no found'))
+        film_id = json.loads(obj.merchantData).get('f')
+        if film_id is not None and models.ThepayPayment.objects.filter(
+                film_id=film_id, status__in=[models.ThepayPayment.OK,
+                                             models.ThepayPayment.WAITING,
+                                             models.ThepayPayment.CARD_DEPOSIT]).exists():
+            raise Http404(_('Page no found'))
+        return obj
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data()
+        payment = the_pay.Payment(
+            value=float(100),
+            description='registrační poplatek',
+            return_url=f"http://{ self.request.META['HTTP_HOST'] }/thepay-payment-done/",
+            merchant_data=self.object.merchantData,
+            back_to_eshop_url=f"http://{ self.request.META['HTTP_HOST'] }{ _('/opakovat-platbu/') }"
+        )
+        helper = the_pay.DivHelper(payment=payment)
+        context_data.update(**helper.get_context())
+        return context_data
+
+
+class ThanksView(NavContextMixin, TemplateView):
     template_names = {
         'f': 'festival/film_registration_paid.html',
         't': 'festival/tickets_paid.html',
@@ -100,13 +147,15 @@ class ThanksView(TemplateView):
     def get(self, request, *args, **kwargs):
         self.payment = request.session.get('THEPAY_PAYMENT')
         if self.payment is None:
-            raise Http404("Page not found")
+            raise Http404(_('Page no found'))
         thanks_for = kwargs['for']
         self.template_name = self.template_names[thanks_for]
         return super().get(request, *args, thanks_for=thanks_for, **kwargs)
 
     def get_context_data(self, thanks_for, **kwargs):
         context_data = super().get_context_data(**kwargs)
+        context_data['status'] = int(self.payment['params']['status'])
+        context_data['payment_id'] = int(self.payment['params']['paymentId'])
         if thanks_for == 'f':
             context_data['film'] = models.Film.objects.filter(id=self.payment['data'][thanks_for]).first()
         elif thanks_for == 't':
@@ -126,10 +175,19 @@ class PaymentCreateView(CreateView):
         payment = the_pay.ReturnedPayment(request.GET)
         self.initial = {
             'valid_signature': payment.signature_is_valid(),
-            'film': payment.get_film_id(request),
-            'tickets': payment.get_ticket_ids(request),
+            'film': payment.data.get('f'),
+            'tickets': payment.data.get('t'),
             'type': payment.get_type(),
         }
+        if payment.params.get('status') not in [models.ThepayPayment.CANCELED, models.ThepayPayment.ERROR]:
+            unpaid_id = request.session.get('UNPAID_FILM')
+            if unpaid_id:
+                if unpaid_id == self.initial['film']:
+                    request.session.pop('UNPAID_FILM')
+            else:
+                unpaid_ids = request.session.get('UNPAID_TICKETS')
+                if unpaid_ids and unpaid_ids == self.initial['tickets']:
+                    request.session.pop('UNPAID_TICKETS')
         request.session['THEPAY_PAYMENT'] = payment.to_JSON()
         return self.post(request, *args, **kwargs)
 
@@ -148,9 +206,25 @@ class PaymentCreateView(CreateView):
         form = super().get_form(form_class)
         form.fields['valid_signature'].disabled = True
         form.fields['film'].disabled = True
-        form.fields['ticket'].disabled = True
+        form.fields['tickets'].disabled = True
         form.fields['type'].disabled = True
         return form
 
     def get_success_url(self):
         return self.success_urls[self.object.type]
+
+
+class TextView(NavContextMixin, TemplateView):
+    template_names = {
+        'tor': 'festival/tor.html'
+    }
+
+    def get_context_data(self, **kwargs):
+        self.text = kwargs.get('text')
+        context_data = super().get_context_data(**kwargs)
+        context_data['texts'] = models.Texts.objects.first()
+        return context_data
+
+    def get_template_names(self):
+        return [self.template_names[self.text]]
+

@@ -12,7 +12,10 @@ function hashCheck(){
     hashChanged = false;
     var newPage = $pages.index($( window.location.hash.replace('#','#id-') ));
     if(newPage === -1){
-        window.location.hash = $pages.eq(0).attr('id').replace('id-', '');
+        var id = $pages.eq(0).attr('id');
+        if(id) {
+            window.location.hash = id.replace('id-', '');
+        }
         return 0;
     }
     if( newPage !== page ){
@@ -55,6 +58,7 @@ function pageCheck(){
 $(function(){
     $pages = $('section');
     hashCheck();
+    window.history.replaceState({}, document.title, window.location.pathname);
     $(window).on('hashchange', function(event) {
         hashCheck();
     });

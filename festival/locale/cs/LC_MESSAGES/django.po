@@ -1,11 +1,27 @@
-#: festival/urls.py:14
+#: festival/urls.py:15
 msgid "author/"
 msgstr "tvurce/"
 
-#: festival/urls.py:15
+#: festival/urls.py:16
 msgid "visitor/"
 msgstr "navstevnik/"
 
-#: festival/urls.py:16
+#: festival/urls.py:17
 msgid "journalist/"
 msgstr "novinar/"
+
+#: festival/urls.py:18
+msgid "thanks-for-film-registration/"
+msgstr "dekujeme-za-registraci-filmu/"
+
+#: festival/urls.py:19
+msgid "thanks-for-tickets-purchase/"
+msgstr "dekujeme-za-zakoupeni-vstupenek/"
+
+#: festival/urls.py:20
+msgid "/repeat-payment/"
+msgstr "/opakovat-platbu/"
+
+#: festival/urls.py:21
+msgid "terms-of-registration/"
+msgstr "podminky-prihlaseni/"

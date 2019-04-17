@@ -13,9 +13,9 @@ body {
       -webkit-box-shadow: none;
       -moz-box-shadow: none;
       box-shadow: none; }
-    body.first_time section:nth-child(1) {
+    body.first_time section.home {
       top: 0; }
-    body.first_time section:nth-child(2) {
+    body.first_time section:first-child:not(.home) {
       padding-top: 70vh; }
 
 h1 {
@@ -66,6 +66,9 @@ header {
   -ms-transition: filter 800ms;
   -o-transition: filter 800ms;
   transition: filter 800ms; }
+  #logo a {
+    display: block;
+    height: 100%; }
 
 #nav_bar {
   display: flex;
@@ -257,10 +260,12 @@ section {
   -ms-transition: all 800ms;
   -o-transition: all 800ms;
   transition: all 800ms; }
-  section:first-child {
+  section.home {
     position: fixed;
     top: -100vh;
     width: 100%; }
+  section a {
+    color: white; }
 
 .extra_text {
   background-color: #38CE95;
@@ -419,7 +424,6 @@ footer {
   .partner_logo img {
     max-height: 80px;
     max-width: 200px;
-    filter: grayscale(1) brightness(100);
     box-sizing: border-box; }
 
 .press_releases {
@@ -478,6 +482,17 @@ form label {
 
 form option {
   color: #1A1C1E; }
+
+main {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between; }
+
+#thepay-method-box {
+  border: 0;
+  max-width: 700px;
+  margin: 0 auto; }
 
 @media (min-aspect-ratio: 1 / 1) {
   .home .page_width .button > div {

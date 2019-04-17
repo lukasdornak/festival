@@ -1,0 +1,21 @@
+{% load static i18n %}
+    <section id="id-{% trans 'kontakt' %}" class="contact">
+        <div class="page_width">
+            <div class="halves">
+                <div>
+                    <b>{% trans 'Potřebuješ se s námi spojit?' %}<br>{% trans 'Nebo nám chceš pomoc?' %}</b><br>
+                    <a href="mailto:info@festivalkratasy.cz"><div class="button smaller_at_larger"><div>{% trans 'Tak nám napiš!' %}</div></div></a>
+                </div>
+                <div>
+                    <div class="social">
+                        <a href="https://www.facebook.com/festivalkratasy/"><img src="{% static '/festival/img/fb.svg' %}" alt="facebook"></a>
+                        <a href="https://www.youtube.com/channel/UC7w24GU53i-yZoCgbsYLKsA"><img src="{% static '/festival/img/yt.svg' %}" alt="youtube"></a>
+                    </div>
+                    <b class="color-mint">Czech festival, s.r.o.</b><br>
+                    <span class="smaller_at_larger">Táborská 1813, 393 01 Pelhřimov,</span><br>
+                    <span class="smaller_at_larger">IČO: 06004750</span>
+                </div>
+            </div>
+        </div>
+        {% include 'festival/footer.html' %}
+    </section>

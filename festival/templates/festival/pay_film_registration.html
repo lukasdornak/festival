@@ -1,5 +1,6 @@
 {% load i18n %}
-    <div class="page_width no_columns">
-        <h2>Vyberte způsob platby</h2>
+    <div class="page_width no_columns">{% if request.LANGUAGE_CODE == 'en' %}
+        {{ texts.method_select_film_en|safe }}{% else %}
+        {{ texts.method_select_film|safe }}{% endif %}
         {% include helper_template_name %}
     </div>

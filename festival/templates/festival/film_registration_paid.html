@@ -1,3 +1,15 @@
-<h2>Děkujeme za ragistraci Vašeho filmu: {{ film.name }}</h2>
-<p>{{ view.payment.params.status.0 }}</p>
-<p>{{ film.get_status_display }}</p>
+{% extends 'festival/text.html' %}{% load i18n %}
+
+{% block text %}{% if status == 3 %}
+    <h1>{% trans 'jejda.' %}</h1>
+    <h2>{% trans 'Něco se pokazilo a platba nebyla dokončena.' %}</h2>
+    <p>{% blocktrans with name=film.name %}Tvůj film "{{ name }}" registrujeme, ale nebude zařazen do soutěže, pokud nebude zaplacen registrační poplatek.{% endblocktrans %}</p>
+    <a href="{% trans '/opakovat-platbu/' %}{{ payment_id }}/" class="button" style="text-decoration: none"><div>{% trans 'Zkus to znova' %}</div></a>{% elif status == 4 %}
+    <h1>{% trans 'jejda.' %}</h1>
+    <h2>{% trans 'Objevil se problém s platební bránou.' %}</h2>
+    <p>{% trans 'Jakmile ho vyřešíme, dáme Ti vědět mailem.' %}</p>{% else %}
+    <h1>{% trans 'díky.' %}</h1>
+    <h2>{% blocktrans with name=film.name %}Platba byla úspěšně přijata a Tvůj film "{{ name }}" byl registrován.{% endblocktrans %}</h2>
+    <p>{% trans 'O jeho zařazení do soutěže Tě budeme informovat mailem.' %}</p>{% endif %}
+{% endblock %}
+

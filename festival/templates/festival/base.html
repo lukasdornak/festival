@@ -1,4 +1,4 @@
-{% load staticfiles %}{% load i18n %}
+{% load static %}{% load i18n %}
 <!DOCTYPE html>
 <html>
 <head>
@@ -54,8 +54,8 @@
     </div></section>
 {% endblock %}
     <header>
-        <nav {% if not view.nav %}class="hidden"{% endif %}>
-            {% regroup view.all_sections by role as section_list %}{% for group in section_list %}
+        <nav {% if not nav_on %}class="hidden"{% endif %}>
+            {% regroup nav_sections by role as section_list %}{% for group in section_list %}
             <div>
                 <span id="{{ group.list.0.get_role_display|slugify }}-head" class="nav-head"><b>{{ group.list.0.get_role_display }}</b></span>
                 <div id="{{ group.list.0.get_role_display|slugify }}-list" class="nav-list{% if not view.role == group.list.0.role %} hidden{% endif %}">{% for section in group.list %}
@@ -65,7 +65,7 @@
             </div>{% endfor %}
         </nav>
         <div id="header">
-            <div id="logo" {% if view.nav %}class="nav_on"{% endif %}></div>
+            <div id="logo">{% block logo %}{% endblock %}</div>
             <div id="nav_bar">{% with request.path|slice:"1:" as path %}{% if request.LANGUAGE_CODE == 'en' %}{% language "cs" %}
                 <a href="/{% trans path %}" id="lang_switch">cs/<b>en</b></a>{% endlanguage %}{% else %}{% comment %}{% language "en" %}
                 <a href="/{% trans path %}" id="lang_switch"><b>cs</b>/en</a>{% endlanguage %}{% endcomment %}{% endif %}{% endwith %}

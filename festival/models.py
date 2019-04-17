@@ -1,8 +1,10 @@
 from datetime import date
 
 from django.contrib.auth.models import User
+from django.core.mail import get_connection, EmailMultiAlternatives
 from django.core.validators import MaxValueValidator, MinValueValidator, FileExtensionValidator, RegexValidator
 from django.db import models, transaction
+from django.dispatch import receiver
 from django.forms import ModelForm
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
@@ -13,6 +15,20 @@ from imagekit.processors import ResizeToFill
 
 from . import widgets, iso3166
 
+def send_mass_html_mail(datatuple, fail_silently=False, auth_user=None, auth_password=None, connection=None):
+    connection = connection or get_connection(
+        username=auth_user,
+        password=auth_password,
+        fail_silently=fail_silently,
+    )
+    messages = []
+    for subject, message, message_html, sender, recipient in datatuple:
+        msg = EmailMultiAlternatives(subject, message, sender, recipient, connection=connection)
+        if message_html:
+            msg.attach_alternative(message_html, 'text/html')
+        messages.append(msg)
+    return connection.send_messages(messages)
+
 
 AUTHOR = 'a'
 VISITOR = 'b'
@@ -22,6 +38,7 @@ ROLE_CHOICES = (
     (VISITOR, _('návštěvník')),
     (JOURNALIST, _('novinář')),
 )
+
 
 class Year(models.Model):
     vol = models.PositiveSmallIntegerField('číslo', validators=[MinValueValidator(0), MaxValueValidator(100)])
@@ -112,7 +129,7 @@ class Section(AbstractArticle):
     class Meta:
         verbose_name = 'sekce'
         verbose_name_plural = 'sekce'
-        ordering = ['role','order']
+        ordering = ['role', 'order']
 
     def get_widget(self):
         return widgets.Widget.get_class(self.widget)
@@ -203,15 +220,16 @@ class Film(models.Model):
         (MUSICAL, _('hudební')),
         (COMEDY, _('komedie')),
         (CRIME, _('kriminální')),
-        (FAIRY_TALE, 'pohádka'),
+        (FAIRY_TALE, _('pohádka')),
         (FAMILY, _('rodinný')),
         (ROMANTIC, _('romantický')),
         (SCI_FI, _('sci-fi')),
-        (THRILLER, ('thriller')),
-        (WAR, 'válečný'),
-        (WESTERN, 'western'),
+        (THRILLER, _('thriller')),
+        (WAR, _('válečný')),
+        (WESTERN, _('western')),
     )
-    phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$', message=_('Zadejte, prosím, platné telefonní číslo ve formátu +999999999'))
+    phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$',
+                                 message=_('Zadejte, prosím, platné telefonní číslo ve formátu +999999999'))
     first_name = models.CharField(_('jméno'), max_length=50)
     last_name = models.CharField(_('příjmení'), max_length=50)
     email = models.EmailField(_('email'))
@@ -221,7 +239,7 @@ class Film(models.Model):
     name = models.CharField(_('název'), max_length=50)
     time = models.DurationField(_('stopáž'))
     description = models.TextField(_('krátký popis'), max_length=200)
-    year = models.SmallIntegerField(_('rok vzniku'), validators=[ MaxCurrentYearValidator, MinValueValidator(1980)])
+    year = models.SmallIntegerField(_('rok vzniku'), validators=[MaxCurrentYearValidator, MinValueValidator(1980)])
     category = models.CharField(_('kategorie'), max_length=1, choices=CATEGORY_CHOICES)
     genre = models.CharField(_('žánr'), max_length=2, choices=GENRE_CHOICES)
     film_url = models.URLField(_('url stažení filmu'))
@@ -237,7 +255,7 @@ class Film(models.Model):
     sound = models.CharField(_('zvuk'), max_length=50, null=True, blank=True)
     cut = models.CharField(_('střih'), max_length=50, null=True, blank=True)
     others = models.TextField(_('ostatní tvůrci'), max_length=200, null=True, blank=True)
-    tos = models.BooleanField('souhlas s podmínkami přihlášení', default=False)
+    tor = models.BooleanField('souhlas s podmínkami přihlášení', default=False)
     gdpr = models.BooleanField('souhlas se zásadami zpracování osobních údajů', default=False)
     attendance = models.BooleanField('zájem o osobní účast na festivalu', default=False)
     status = models.CharField('status', max_length=1, choices=STATUS_CHOICES, default='u')
@@ -254,7 +272,7 @@ class Film(models.Model):
         rating = Evaluation.objects.filter(film=self).aggregate(models.Avg('like'))
         return rating['like__avg']
 
-    get_rating.short_description ='průměrné hodnocení'
+    get_rating.short_description = 'průměrné hodnocení'
 
 
 class Evaluation(models.Model):
@@ -271,7 +289,6 @@ class Evaluation(models.Model):
     like = models.PositiveSmallIntegerField('líbí', choices=LIKE_CHOICES)
     verbal = models.TextField('slovně', max_length=200)
     technical = models.BooleanField('technicky ok', null=True, blank=True, default=None)
-
 
     class Meta:
         verbose_name = 'hodnocení filmu'
@@ -351,12 +368,12 @@ class ThepayPayment(models.Model):
     WAITING = 7
     CARD_DEPOSIT = 9
     STATUS_CHOICES = (
-        (OK , 'úspěšně zaplaceno'),
-        (CANCELED , 'platba byla zrušena zákazníkem'),
-        (ERROR , 'při platbě došlo k chybě.'),
-        (UNDERPAID , 'zákazník zaplatil nižší než požadovanou částku.'),
-        (WAITING , 'zákazník platbu provedl, ale je nutné počkat na potvrzení'),
-        (CARD_DEPOSIT , 'částka je blokována na účtu zákazníka'),
+        (OK, 'úspěšně zaplaceno'),
+        (CANCELED, 'platba byla zrušena zákazníkem'),
+        (ERROR, 'při platbě došlo k chybě.'),
+        (UNDERPAID, 'zákazník zaplatil nižší než požadovanou částku.'),
+        (WAITING, 'zákazník platbu provedl, ale je nutné počkat na potvrzení'),
+        (CARD_DEPOSIT, 'částka je blokována na účtu zákazníka'),
     )
     FILM = 'f'
     TICKETS = 't'
@@ -374,15 +391,18 @@ class ThepayPayment(models.Model):
     type = models.CharField('typ', max_length=1, choices=TYPE_CHOICES)
     datetime = models.DateTimeField('datum a čas', auto_now_add=True)
     valid_signature = models.BooleanField('validní podpis', default=False)
-    film = models.OneToOneField('Film', on_delete=models.SET_NULL, null=True, blank=True)
-    ticket = models.OneToOneField('Ticket', on_delete=models.SET_NULL, null=True, blank=True)
+    film = models.ForeignKey('Film', on_delete=models.SET_NULL, null=True, blank=True)
+    tickets = models.ManyToManyField('Ticket', blank=True)
 
     class Meta:
         verbose_name = 'thepay platba'
         verbose_name_plural = 'thepay platby'
 
+    def __str__(self):
+        return str(self.paymentId)
+
     def save(self, **kwargs):
-        if self._state.adding and self.valid_signature and self.status == self.OK:
+        if self._state.adding and self.valid_signature and self.status not in [self.CANCELED, self.ERROR]:
             if self.type == self.FILM:
                 with transaction.atomic():
                     self.film.status = Film.REGISTERED
@@ -390,6 +410,106 @@ class ThepayPayment(models.Model):
                     super().save(**kwargs)
         else:
             super().save(**kwargs)
+
+
+class Texts(models.Model):
+    og_title = models.CharField('nadpis pro sdílení', max_length=80, null=True, blank=True)
+    og_title_en = models.CharField('nadpis pro sdílení anglicky', max_length=80, null=True, blank=True)
+    og_description = models.CharField('popis pro sdílení', max_length=150, null=True, blank=True)
+    og_description_en = models.CharField('popis pro sdílení anglicky', max_length=150, null=True, blank=True)
+    og_image = models.ImageField('obrázek pro sdílení', null=True, blank=True)
+    tor = RichTextField('podmínky přihlášení', default='podmínky přihlášení', null=True, blank=True)
+    tor_en = RichTextField('podmínky přihlášení anglicky', default='terms of registration', null=True, blank=True)
+    gdpr = RichTextField('zásady zpracování osobních údajů', default='zásady zpracování osobních údajů', null=True, blank=True)
+    gdpr_en = RichTextField('zásady zpracování osobních údajů anglicky', default='privacy policy', null=True, blank=True)
+    method_select_film = RichTextField('registrace filmu - výběr platební metody', default='vyberte platební metodu', null=True, blank=True)
+    method_select_film_en = RichTextField('registrace filmu - výběr platební metody anglicky', default='select a payment method', null=True, blank=True)
+    method_select_tickets = RichTextField('prodej vstupenek - výběr platební metody', default='vyberte platební metodu', null=True, blank=True)
+    method_select_tickets_en = RichTextField('prodej vstupenek - výběr platební metody anglicky', default='select a payment method', null=True, blank=True)
+    default_from_email = models.EmailField('odesílatel automatických emailů', default='info@festivalkratasy.cz', null=True, blank=True)
+    mail_film_paid_subject = models.CharField('film zaregistrován - předmět', default='film zaregistrován', max_length=50, null=True, blank=True)
+    mail_film_paid_subject_en = models.CharField('film zaregistrován - předmět anglicky', default='film registered', max_length=50, null=True, blank=True)
+    mail_film_paid_message = models.TextField('film zaregistrován - zpráva', default='film zaregistrován', null=True, blank=True)
+    mail_film_paid_message_en = models.TextField('film zaregistrován - zpráva anglicky', default='film registered', null=True, blank=True)
+    mail_film_paid_message_html = RichTextField('film zaregistrován - html zpráva', default='film zaregistrován', null=True, blank=True)
+    mail_film_paid_message_html_en = RichTextField('film zaregistrován - html zpráva anglicky', default='film registered', null=True, blank=True)
+    mail_film_unpaid_subject = models.CharField('film nezaplacen - předmět', default='film nezaplacen', max_length=50, null=True, blank=True)
+    mail_film_unpaid_subject_en = models.CharField('film nezaplacen - předmět anglicky', default='film unpaid', max_length=50, null=True, blank=True)
+    mail_film_unpaid_message = models.TextField('film nezaplacen - zpráva', default='film nezaplacen', null=True, blank=True)
+    mail_film_unpaid_message_en = models.TextField('film nezaplacen - zpráva anglicky', default='film unpaid', null=True, blank=True)
+    mail_film_unpaid_message_html = RichTextField('film nezaplacen - html zpráva', default='film nezaplacen', null=True, blank=True)
+    mail_film_unpaid_message_html_en = RichTextField('film nezaplacen - html zpráva anglicky', default='film unpaid', null=True, blank=True)
+    mail_tickets_paid_subject = models.CharField('vstupenky zaplaceny - předmět', default='vstupenky zaplaceny', max_length=50, null=True, blank=True)
+    mail_tickets_paid_subject_en = models.CharField('vstupenky zaplaceny - předmět anglicky', default='tickets paid', max_length=50, null=True, blank=True)
+    mail_tickets_paid_message = models.TextField('vstupenky zaplaceny - zpráva', default='vstupenky zaplaceny', null=True, blank=True)
+    mail_tickets_paid_message_en = models.TextField('vstupenky zaplaceny - zpráva anglicky', default='tickets paid', null=True, blank=True)
+    mail_tickets_paid_message_html = RichTextField('vstupenky zaplaceny - html zpráva', default='vstupenky zaplaceny', null=True, blank=True)
+    mail_tickets_paid_message_html_en = RichTextField('vstupenky zaplaceny - html zpráva anglicky', default='tickets paid', null=True, blank=True)
+    mail_tickets_unpaid_subject = models.CharField('vstupenky nezaplaceny - předmět', default='vstupenky nezaplaceny', max_length=50, null=True, blank=True)
+    mail_tickets_unpaid_subject_en = models.CharField('vstupenky nezaplaceny - předmět anglicky', default='tickets unpaid', max_length=50, null=True, blank=True)
+    mail_tickets_unpaid_message = models.TextField('vstupenky nezaplaceny - zpráva', default='vstupenky nezaplaceny', null=True, blank=True)
+    mail_tickets_unpaid_message_en = models.TextField('vstupenky nezaplaceny - zpráva anglicky', default='tickets unpaid', null=True, blank=True)
+    mail_tickets_unpaid_message_html = RichTextField('vstupenky nezaplaceny - html zpráva', default='vstupenky nezaplaceny', null=True, blank=True)
+    mail_tickets_unpaid_message_html_en = RichTextField('vstupenky nezaplaceny - html zpráva anglicky', default='tickets unpaid', null=True, blank=True)
+
+    class Meta:
+        verbose_name = 'texty'
+        verbose_name_plural = 'texty'
+
+    def __str__(self):
+        return 'texty'
+
+
+class Email(models.Model):
+    recipient_list = models.TextField('adresáti')
+    subject = models.CharField('předmět', max_length=50)
+    message = models.TextField('zpráva')
+    message_html = RichTextField('html zpráva')
+    datetime = models.DateTimeField('odesláno', auto_now_add=True)
+    sent = models.BooleanField('odesláno', default=False, editable=False)
+
+    class Meta:
+        verbose_name = 'automatický email'
+        verbose_name_plural = 'automatické emaily'
+
+    def __str__(self):
+        return str(self.id)
+
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
+        if self._state.adding:
+            self.sent = self.send()
+        super().save()
+
+    def send(self):
+        recipient_list = self.recipient_list.split()
+        sender = Texts.objects.first().default_from_email
+        number_of_sent = send_mass_html_mail(datatuple=(
+            (self.subject, self.message, self.message_html, sender, [recipient]) for recipient in recipient_list)
+        )
+        return number_of_sent == len(recipient_list)
+
+
+@receiver(models.signals.pre_save, sender=Film)
+def send_film_paid_confirmation(sender, instance, **kwargs):
+    if instance.status == Film.REGISTERED:
+        obj = sender.objects.filter(id=instance.id).first()
+        if (obj and obj.status != instance.status) or obj is None:
+            texts = Texts.objects.first()
+            if obj.country == 'CZK':
+                Email.objects.create(
+                    recipient_list=obj.email,
+                    subject=texts.mail_film_paid_subject,
+                    message=texts.mail_film_paid_message,
+                    message_html=texts.mail_film_paid_message_html,
+                )
+            else:
+                Email.objects.create(
+                    recipient_list=obj.email,
+                    subject=texts.mail_film_paid_subject,
+                    message=texts.mail_film_paid_message,
+                    message_html=texts.mail_film_paid_message_html,
+                )
 
 
 class ThepayPaymentForm(ModelForm):
@@ -403,9 +523,9 @@ class FilmRegistrationForm(ModelForm):
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)
         self.fields['attendance'].label = _('Mám zájem o osobní účast na festivalu.')
-        self.fields['tos'].label = _('Souhlasím s podmínkami přihlášení.')
+        self.fields['tor'].label = _('Souhlasím s <a href="/podminky-prihlaseni/" target="_blank">podmínkami přihlášení</a>.')
 #        self.fields['gdpr'].label = _('Souhlasím se zásadami zpracování osobních údajů.')
-        self.fields['tos'].required = True
+        self.fields['tor'].required = True
 #        self.fields['gdpr'].required = True
         self.fields['time'].widget.attrs['placeholder'] = 'mm:ss'
         self.fields['phone'].widget.attrs['placeholder'] = '+420 111 222 333'

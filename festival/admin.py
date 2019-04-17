@@ -95,3 +95,27 @@ class PressRelease(admin.ModelAdmin):
     models = models.PressRelease
     list_display = ['__str__', 'date_release', 'year']
     list_filter = ['year']
+
+
+@admin.register(models.ThepayPayment)
+class ThepayPaymentAdmin(admin.ModelAdmin):
+    model = models.ThepayPayment
+    list_display = ['__str__', 'datetime', 'type', 'film', 'value', 'status_ok', 'status']
+    list_filter = ['type', 'status', 'datetime']
+
+    def status_ok(self, obj=None):
+        return obj.status not in [models.ThepayPayment.CANCELED, models.ThepayPayment.ERROR]
+
+    status_ok.short_description = 'ok'
+    status_ok.boolean = True
+
+
+@admin.register(models.Texts)
+class TextsAdmin(admin.ModelAdmin):
+    model = models.Texts
+
+
+@admin.register(models.Email)
+class EmailModelAdmin(admin.ModelAdmin):
+    models = models.Email
+    list_display = ['datetime', 'subject', 'message', 'recipient_list', ]

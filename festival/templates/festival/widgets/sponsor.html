@@ -22,7 +22,7 @@
     <div class="partners">{% for object in list %}
         <div class="partner_logo">{% if object.logo %}<img src="{{ object.logo.url }}" alt="{{ object.name }}">{% else %}{{ object.name }}{% endif %}{% if object.url %}<a href="{{ object.url }}" target="_blank"></a>{% endif %}</div>{% endfor %}
     </div>{% elif category == 30 and list %}
-    <span>{% trans 'Ti, kteří to propagují.' %}</span>
+    <span>{% trans 'a mnozí další.' %}</span>
     <div class="partners">{% for object in list %}
         <div class="partner_logo">{% if object.logo %}<img src="{{ object.logo.url }}" alt="{{ object.name }}">{% else %}{{ object.name }}{% endif %}{% if object.url %}<a href="{{ object.url }}" target="_blank"></a>{% endif %}</div>{% endfor %}
     </div>{% endif %}{% endfor %}

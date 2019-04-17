@@ -121,3 +121,10 @@ TP_ACCOUNT_ID = os.environ.get('TP_ACCOUNT_ID', 1)
 TP_PASSWORD = os.environ.get('TP_PASSWORD', 'my$up3rsecr3tp4$$word')
 TP_GATE_URL = os.environ.get('TP_GATE_URL', 'https://www.thepay.cz/demo-gate/')
 TP_DATA_API_PASWORD = os.environ.get('TP_DATA_API_PASWORD', 'my$up3rsecr3tp4$$word')
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_USE_TLS = False
+EMAIL_HOST = os.environ.get('EMAIL_HOST', 'email_host')
+EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', 'email_host_user')
+EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', 'email_host_password')
+EMAIL_PORT = 25

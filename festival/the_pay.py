@@ -66,7 +66,6 @@ class Payment(PaymentMixin):
         return params
 
     def clean_value(self, value):
-        print(value)
         value = float(value)
         if value <= 0:
             raise ValueError('Value must be positive.')
@@ -104,22 +103,6 @@ class ReturnedPayment(PaymentMixin):
 
     def get_type(self):
         return list(self.data.keys())[0]
-
-    def get_film_id(self, request):
-        film_id = self.data.get('f')
-        if film_id is not None:
-            unpaid_id = request.session.get('UNPAID_FILM_REGISTERED')
-            if film_id == unpaid_id:
-                request.session.pop('UNPAID_FILM_REGISTERED')
-        return film_id
-
-    def get_ticket_ids(self, request):
-        ticket_ids = self.data.get('t')
-        if ticket_ids is not None:
-            unpaid_ids = request.session.get('UNPAID_TICKETS')
-            if ticket_ids == unpaid_ids:
-                request.session.pop('UNPAID_TICKETS')
-        return ticket_ids
 
     def to_JSON(self):
         return {'params': self.params, 'data': self.data}
