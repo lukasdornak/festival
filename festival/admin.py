@@ -113,7 +113,67 @@ class ThepayPaymentAdmin(admin.ModelAdmin):
 @admin.register(models.Texts)
 class TextsAdmin(admin.ModelAdmin):
     model = models.Texts
-
+    fieldsets = (
+        (None, {
+            'fields': ('default_from_email', )
+        }),
+        ('sdílení', {
+            'fields': ('og_title', 'og_title_en', 'og_description', 'og_description_en', 'og_image'),
+            'classes': ('collapse',),
+        }),
+        ('výber platební metody', {
+            'fields': ('method_select_film', 'method_select_film_en', 'method_select_tickets', 'method_select_tickets_en'),
+            'classes': ('collapse',),
+        }),
+        ('email: film byl zaregistrován, ale zatím ještě nebyl uhrazen poplatek', {
+            'fields': ('mail_film_registered_unpaid_subject', 'mail_film_registered_unpaid_subject_en',
+                       'mail_film_registered_unpaid_message', 'mail_film_registered_unpaid_message_en',
+                       'mail_film_registered_unpaid_message_html', 'mail_film_registered_unpaid_message_html_en'),
+            'classes': ('collapse',),
+        }),
+        ('email: registrační poplatek byl úspěšně zaplacen', {
+            'fields': ('mail_film_paid_subject', 'mail_film_paid_subject_en',
+                       'mail_film_paid_message', 'mail_film_paid_message_en',
+                       'mail_film_paid_message_html', 'mail_film_paid_message_html_en'),
+            'classes': ('collapse',),
+        }),
+        ('email: registrační poplatek se nepodařilo zaplatit', {
+            'fields': ('mail_film_unpaid_subject', 'mail_film_unpaid_subject_en',
+                       'mail_film_unpaid_message', 'mail_film_unpaid_message_en',
+                       'mail_film_unpaid_message_html', 'mail_film_unpaid_message_html_en'),
+            'classes': ('collapse',),
+        }),
+        ('email: registrační poplatek stále nebyl zaplacen', {
+            'fields': ('mail_film_still_unpaid_subject', 'mail_film_still_unpaid_subject_en',
+                       'mail_film_still_unpaid_message', 'mail_film_still_unpaid_message_en',
+                       'mail_film_still_unpaid_message_html', 'mail_film_still_unpaid_message_html_en'),
+            'classes': ('collapse',),
+        }),
+        ('email: vstupenky jsou rezervovány, ale ještě nebyly zaplaceny', {
+            'fields': ('mail_tickets_reserved_unpaid_subject', 'mail_tickets_reserved_unpaid_subject_en',
+                       'mail_tickets_reserved_unpaid_message', 'mail_tickets_reserved_unpaid_message_en',
+                       'mail_tickets_reserved_unpaid_message_html', 'mail_tickets_reserved_unpaid_message_html_en'),
+            'classes': ('collapse',),
+        }),
+        ('email: vstupenky byly úspěšně zaplaceny', {
+            'fields': ('mail_tickets_paid_subject', 'mail_tickets_paid_subject_en',
+                       'mail_tickets_paid_message', 'mail_tickets_paid_message_en',
+                       'mail_tickets_paid_message_html', 'mail_tickets_paid_message_html_en'),
+            'classes': ('collapse',),
+        }),
+        ('email: vstupenky se nepodařilo zaplatit', {
+            'fields': ('mail_tickets_unpaid_subject', 'mail_tickets_unpaid_subject_en',
+                       'mail_tickets_unpaid_message', 'mail_tickets_unpaid_message_en',
+                       'mail_tickets_unpaid_message_html', 'mail_tickets_unpaid_message_html_en'),
+            'classes': ('collapse',),
+        }),
+        ('email: vstupenky doposud nebyly zaplaceny a proto již nejsou déle rezervovány', {
+            'fields': ('mail_tickets_still_unpaid_subject', 'mail_tickets_still_unpaid_subject_en',
+                       'mail_tickets_still_unpaid_message', 'mail_tickets_still_unpaid_message_en',
+                       'mail_tickets_still_unpaid_message_html', 'mail_tickets_still_unpaid_message_html_en'),
+            'classes': ('collapse',),
+        }),
+    )
 
 @admin.register(models.Email)
 class EmailModelAdmin(admin.ModelAdmin):
