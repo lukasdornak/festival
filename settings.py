@@ -128,3 +128,17 @@ EMAIL_HOST = os.environ.get('EMAIL_HOST', 'email_host')
 EMAIL_HOST_USER = os.environ.get('EMAIL_HOST_USER', 'email_host_user')
 EMAIL_HOST_PASSWORD = os.environ.get('EMAIL_HOST_PASSWORD', 'email_host_password')
 EMAIL_PORT = 25
+
+CKEDITOR_CONFIGS = {
+    'default': {
+        'toolbar': 'Custom',
+        'toolbar_Custom': [
+            ['Styles', 'Format', 'FontSize', 'Bold', 'Italic', 'Underline', 'Strike', 'RemoveFormat', 'PasteText', 'Redo', 'Undo', 'Link', 'Unlink', 'Anchor'],
+            ['NumberedList', 'BulletedList', 'Outdent', 'Indent', 'Blockquote'],
+            ['JustifyLeft', 'JustifyCenter', 'JustifyRight'],
+            ['Image', 'Flash', 'Table', 'HorizontalRule', 'Smiley', 'SpecialChar'],
+            ['TextColor', 'BGColor'],
+            ['Source'],
+        ]
+    }
+}
