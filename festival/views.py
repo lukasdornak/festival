@@ -227,4 +227,3 @@ class TextView(NavContextMixin, TemplateView):
 
     def get_template_names(self):
         return [self.template_names[self.text]]
-

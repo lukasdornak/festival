@@ -15,6 +15,7 @@ from imagekit.processors import ResizeToFill
 
 from . import widgets, iso3166
 
+
 def send_mass_html_mail(datatuple, fail_silently=False, auth_user=None, auth_password=None, connection=None):
     connection = connection or get_connection(
         username=auth_user,
@@ -244,10 +245,10 @@ class Film(models.Model):
     genre = models.CharField(_('žánr'), max_length=2, choices=GENRE_CHOICES)
     film_url = models.URLField(_('url stažení filmu'))
     film_password = models.CharField(_('heslo k filmu'), max_length=64, null=True, blank=True)
-    trailer_url = models.URLField(_('url stažení traileru'))
-    trailer_password = models.CharField(_('heslo k traileru'), max_length=64, null=True, blank=True)
     subtitles_url = models.URLField(_('url stažení titulků'))
     subtitles_password = models.CharField(_('heslo k titulkům'), max_length=64, null=True, blank=True)
+    trailer_url = models.URLField(_('url stažení traileru'), null=True, blank=True)
+    trailer_password = models.CharField(_('heslo k traileru'), max_length=64, null=True, blank=True)
     starring = models.TextField(_('herecké obsazení'), max_length=200, null=True, blank=True)
     directing = models.CharField(_('režie'), max_length=50, null=True, blank=True)
     screenplay = models.CharField(_('scénář'), max_length=50, null=True, blank=True)
@@ -427,18 +428,24 @@ class Texts(models.Model):
     method_select_tickets = RichTextField('prodej vstupenek - výběr platební metody', default='vyberte platební metodu', null=True, blank=True)
     method_select_tickets_en = RichTextField('prodej vstupenek - výběr platební metody anglicky', default='select a payment method', null=True, blank=True)
     default_from_email = models.EmailField('odesílatel automatických emailů', default='info@festivalkratasy.cz', null=True, blank=True)
-    mail_film_paid_subject = models.CharField('film zaregistrován - předmět', default='film zaregistrován', max_length=50, null=True, blank=True)
-    mail_film_paid_subject_en = models.CharField('film zaregistrován - předmět anglicky', default='film registered', max_length=50, null=True, blank=True)
-    mail_film_paid_message = models.TextField('film zaregistrován - zpráva', default='film zaregistrován', null=True, blank=True)
-    mail_film_paid_message_en = models.TextField('film zaregistrován - zpráva anglicky', default='film registered', null=True, blank=True)
-    mail_film_paid_message_html = RichTextField('film zaregistrován - html zpráva', default='film zaregistrován', null=True, blank=True)
-    mail_film_paid_message_html_en = RichTextField('film zaregistrován - html zpráva anglicky', default='film registered', null=True, blank=True)
-    mail_film_unpaid_subject = models.CharField('film nezaplacen - předmět', default='film nezaplacen', max_length=50, null=True, blank=True)
-    mail_film_unpaid_subject_en = models.CharField('film nezaplacen - předmět anglicky', default='film unpaid', max_length=50, null=True, blank=True)
-    mail_film_unpaid_message = models.TextField('film nezaplacen - zpráva', default='film nezaplacen', null=True, blank=True)
-    mail_film_unpaid_message_en = models.TextField('film nezaplacen - zpráva anglicky', default='film unpaid', null=True, blank=True)
-    mail_film_unpaid_message_html = RichTextField('film nezaplacen - html zpráva', default='film nezaplacen', null=True, blank=True)
-    mail_film_unpaid_message_html_en = RichTextField('film nezaplacen - html zpráva anglicky', default='film unpaid', null=True, blank=True)
+    mail_film_paid_subject = models.CharField('film zaplacen - předmět', default='film zaregistrován', max_length=50, null=True, blank=True)
+    mail_film_paid_subject_en = models.CharField('film zaplacen - předmět anglicky', default='film registered', max_length=50, null=True, blank=True)
+    mail_film_paid_message = models.TextField('film zaplacen - zpráva', default='film zaregistrován', null=True, blank=True)
+    mail_film_paid_message_en = models.TextField('film zaplacen - zpráva anglicky', default='film registered', null=True, blank=True)
+    mail_film_paid_message_html = RichTextField('film zaplacen - html zpráva', default='film zaregistrován', null=True, blank=True)
+    mail_film_paid_message_html_en = RichTextField('film zaplacen - html zpráva anglicky', default='film registered', null=True, blank=True)
+    mail_film_still_unpaid_subject = models.CharField('film stále nezaplacen - předmět', default='film stále nezaplacen', max_length=50, null=True, blank=True)
+    mail_film_still_unpaid_subject_en = models.CharField('film stále nezaplacen - předmět anglicky', default='film still unpaid', max_length=50, null=True, blank=True)
+    mail_film_still_unpaid_message = models.TextField('film stále nezaplacen - zpráva', default='film stále nezaplacen', null=True, blank=True)
+    mail_film_still_unpaid_message_en = models.TextField('film stále nezaplacen - zpráva anglicky', default='film still unpaid', null=True, blank=True)
+    mail_film_still_unpaid_message_html = RichTextField('film stále nezaplacen - html zpráva', default='film stále nezaplacen', null=True, blank=True)
+    mail_film_still_unpaid_message_html_en = RichTextField('film stále nezaplacen - html zpráva anglicky', default='film still unpaid', null=True, blank=True)
+    mail_film_registered_unpaid_subject = models.CharField('film registorván nezaplacen - předmět', default='film registrován nezaplacen', max_length=50, null=True, blank=True)
+    mail_film_registered_unpaid_subject_en = models.CharField('film registorván nezaplacen - předmět anglicky', default='film registered unpaid', max_length=50, null=True, blank=True)
+    mail_film_registered_unpaid_message = models.TextField('film registorván nezaplacen - zpráva', default='film registrován nezaplacen', null=True, blank=True)
+    mail_film_registered_unpaid_message_en = models.TextField('film registorván nezaplacen - zpráva anglicky', default='film registered unpaid', null=True, blank=True)
+    mail_film_registered_unpaid_message_html = RichTextField('film registorván nezaplacen - html zpráva', default='film registrován nezaplacen', null=True, blank=True)
+    mail_film_registered_unpaid_message_html_en = RichTextField('film registorván nezaplacen - html zpráva anglicky', default='film registered unpaid', null=True, blank=True)
     mail_tickets_paid_subject = models.CharField('vstupenky zaplaceny - předmět', default='vstupenky zaplaceny', max_length=50, null=True, blank=True)
     mail_tickets_paid_subject_en = models.CharField('vstupenky zaplaceny - předmět anglicky', default='tickets paid', max_length=50, null=True, blank=True)
     mail_tickets_paid_message = models.TextField('vstupenky zaplaceny - zpráva', default='vstupenky zaplaceny', null=True, blank=True)
@@ -496,7 +503,7 @@ def send_film_paid_confirmation(sender, instance, **kwargs):
         obj = sender.objects.filter(id=instance.id).first()
         if (obj and obj.status != instance.status) or obj is None:
             texts = Texts.objects.first()
-            if obj.country == 'CZK':
+            if obj.country in ['CZ', 'SK']:
                 Email.objects.create(
                     recipient_list=obj.email,
                     subject=texts.mail_film_paid_subject,
@@ -506,10 +513,30 @@ def send_film_paid_confirmation(sender, instance, **kwargs):
             else:
                 Email.objects.create(
                     recipient_list=obj.email,
-                    subject=texts.mail_film_paid_subject,
-                    message=texts.mail_film_paid_message,
-                    message_html=texts.mail_film_paid_message_html,
+                    subject=texts.mail_film_paid_subject_en,
+                    message=texts.mail_film_paid_message_en,
+                    message_html=texts.mail_film_paid_message_html_en,
                 )
+
+
+@receiver(models.signals.post_save, sender=Film)
+def send_film_registration_notification(sender, instance, **kwargs):
+    if kwargs['created'] and instance.status == sender.UNPAID:
+        texts = Texts.objects.first()
+        if instance.country in ['CZ', 'SK']:
+            Email.objects.create(
+                recipient_list=instance.email,
+                subject=texts.mail_film_registred_unpaid_subject,
+                message=texts.mail_film_registred_unpaid_paid_message,
+                message_html=texts.mail_film_registred_unpaid_message_html,
+            )
+        else:
+            Email.objects.create(
+                recipient_list=instance.email,
+                subject=texts.mail_film_registred_unpaid_subject_en,
+                message=texts.mail_film_registred_unpaid_message_en,
+                message_html=texts.mail_film_registred_unpaid_message_html_en,
+            )
 
 
 class ThepayPaymentForm(ModelForm):
