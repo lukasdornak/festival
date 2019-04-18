@@ -1,6 +1,6 @@
 html {
   font-family: "Poppins";
-  font-size: 15px; }
+  font-size: 16px; }
 
 body {
   margin: 0 auto;
@@ -127,7 +127,7 @@ nav {
       white-space: nowrap; }
 
 #lang_switch {
-  font-size: 13px;
+  font-size: 14px;
   text-decoration: none;
   background: none;
   color: white;
@@ -231,7 +231,7 @@ nav {
   background: -webkit-linear-gradient(top left, #38CE95, #09516B);
   background: -o-linear-gradient(top left, #38CE95, #09516B);
   background: linear-gradient(to bottom right, #38CE95, #09516B);
-  font-size: 15px;
+  font-size: 16px;
   display: inline-block;
   color: white;
   border-radius: 100px; }
@@ -519,16 +519,12 @@ main {
 
 /* Small devices */
 @media (min-width: 576px) {
-  html {
-    font-size: 18px; }
   h1 {
     font-size: 4rem; }
   .page_width {
     width: 85%; } }
 
 @media (min-width: 576px) and (min-aspect-ratio: 1 / 1) {
-  html {
-    font-size: 15px; }
   .halves {
     flex-direction: row; }
   .extra_text > .page_width:not(.max_columns-1):not(.form_columns) {
@@ -565,7 +561,7 @@ main {
 /* Medium devices */
 @media (min-width: 768px) {
   html {
-    font-size: 20px; }
+    font-size: 18px; }
   body.first_time #header {
     height: 60px; }
   .home {
@@ -609,7 +605,7 @@ main {
 
 @media (min-width: 768px) and (min-aspect-ratio: 1 / 1) {
   html {
-    font-size: 18px; }
+    font-size: 16px; }
   .halves {
     flex-direction: row; } }
 
@@ -627,7 +623,7 @@ main {
 
 @media (min-width: 992px) {
   html {
-    font-size: 22px; }
+    font-size: 20px; }
   .home .page_width {
     height: 100%; }
     .home .page_width .button > div {
@@ -651,7 +647,7 @@ main {
 /* Extra large devices */
 @media (min-width: 1200px) {
   html {
-    font-size: 24px; }
+    font-size: 22px; }
   .page_width {
     width: 70%; }
   .extra_text > .page_width:not(.max_columns-1):not(.max_columns-2):not(.form_columns) {
@@ -667,7 +663,7 @@ main {
 /* Extra large devices */
 @media (min-width: 1921px) {
   html {
-    font-size: 26px; }
+    font-size: 24px; }
   .role img {
     max-width: 250px; }
   .home .page_width {
