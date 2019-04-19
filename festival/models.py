@@ -8,6 +8,7 @@ from django.dispatch import receiver
 from django.forms import ModelForm
 from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
+from django.template import Context, Template
 
 from ckeditor.fields import RichTextField
 from imagekit.models import ImageSpecField
@@ -525,15 +526,15 @@ def send_film_paid_confirmation(sender, instance, **kwargs):
                 Email.objects.create(
                     recipient_list=obj.email,
                     subject=texts.mail_film_paid_subject,
-                    message=texts.mail_film_paid_message,
-                    message_html=texts.mail_film_paid_message_html,
+                    message=Template(texts.mail_film_paid_message).render(Context(dict(film=instance))),
+                    message_html=Template(texts.mail_film_paid_message_html).render(Context(dict(film=instance))),
                 )
             else:
                 Email.objects.create(
                     recipient_list=obj.email,
                     subject=texts.mail_film_paid_subject_en,
-                    message=texts.mail_film_paid_message_en,
-                    message_html=texts.mail_film_paid_message_html_en,
+                    message=Template(texts.mail_film_paid_message_en).render(Context(dict(film=instance))),
+                    message_html=Template(texts.mail_film_paid_message_html_en).render(Context(dict(film=instance))),
                 )
 
 
@@ -542,18 +543,46 @@ def send_film_registration_notification(sender, instance, **kwargs):
     if kwargs['created'] and instance.status == sender.UNPAID:
         texts = Texts.objects.first()
         if instance.country in ['CZ', 'SK']:
+            link_url=f'https://festivalkratasy.cz/zaplatit-registraci/{ instance.id }/{ slugify(instance.name) }/'
+            # link = f'<a href="{ link_url }" target="_blank">{ link_url }</a>"'
             Email.objects.create(
                 recipient_list=instance.email,
                 subject=texts.mail_film_registered_unpaid_subject,
-                message=texts.mail_film_registered_unpaid_message,
-                message_html=texts.mail_film_registered_unpaid_message_html,
+                message=Template(texts.mail_film_registered_unpaid_message).render(Context(dict(film=instance, link=link_url))),
+                message_html=Template(texts.mail_film_registered_unpaid_message_html).render(Context(dict(film=instance, link=link_url))),
             )
         else:
+            link_url=f'https://festivalkratasy.cz/pay-registration/{ instance.id }/{ slugify(instance.name) }/'
+            # link = f'<a href="{ link_url }" target="_blank">{ link_url }</a>"'
             Email.objects.create(
                 recipient_list=instance.email,
                 subject=texts.mail_film_registered_unpaid_subject_en,
-                message=texts.mail_film_registered_unpaid_message_en,
-                message_html=texts.mail_film_registered_unpaid_message_html_en,
+                message=Template(texts.mail_film_registered_unpaid_message_en).render(Context(dict(film=instance, link=link_url))),
+                message_html=Template(texts.mail_film_registered_unpaid_message_html_en).render(Context(dict(film=instance, link=link_url))),
+            )
+
+
+@receiver(models.signals.post_save, sender=ThepayPayment)
+def send_film_unpaid_notification(sender, instance, **kwargs):
+    if kwargs['created'] and instance.status in [sender.CANCELED, sender.ERROR] and instance.film is not None:
+        texts = Texts.objects.first()
+        if instance.film.country in ['CZ', 'SK']:
+            link_url=f'https://festivalkratasy.cz/opakovat-platbu/{ instance.paymentId }/'
+            # link = f'<a href="{ link_url }" target="_blank">{ link_url }</a>"'
+            Email.objects.create(
+                recipient_list=instance.film.email,
+                subject=texts.mail_film_unpaid_subject,
+                message=Template(texts.mail_film_unpaid_message).render(Context(dict(film=instance.film, link=link_url))),
+                message_html=Template(texts.mail_film_unpaid_message_html).render(Context(dict(film=instance.film, link=link_url))),
+            )
+        else:
+            link_url=f'https://festivalkratasy.cz/repeat-payment/{ instance.paymentId }/'
+            # link = f'<a href="{ link_url }" target="_blank">{ link_url }</a>"'
+            Email.objects.create(
+                recipient_list=instance.film.email,
+                subject=texts.mail_film_unpaid_subject_en,
+                message=Template(texts.mail_film_unpaid_message_en).render(Context(dict(film=instance.film, link=link_url))),
+                message_html=Template(texts.mail_film_unpaid_message_html_en).render(Context(dict(film=instance.film, link=link_url))),
             )
 
 

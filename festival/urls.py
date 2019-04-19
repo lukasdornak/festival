@@ -17,6 +17,7 @@ urlpatterns = [
     path(_('novinar/'), views.SectionListView.as_view(), {'role':'c'}, name='c'),
     path(_('dekujeme-za-registraci-filmu/'), views.ThanksView.as_view(), {'for': 'f'}),
     path(_('dekujeme-za-zakoupeni-vstupenek/'), views.ThanksView.as_view(), {'for': 't'}),
+    path(_('zaplatit-registraci/<int:pk>/<slug:film_name>/'), views.AlterPayFilmRegistrationView.as_view()),
     path(_('opakovat-platbu/<int:pk>/'), views.RepeatPaymentView.as_view()),
     path(_('podminky-prihlaseni/'), views.TextView.as_view(), {'text': 'tor'}),
     # path(_('zasady-zpracovani-osobnich-udaju/'), views.RepeatPaymentView.as_view()),

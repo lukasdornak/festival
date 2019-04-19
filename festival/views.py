@@ -3,6 +3,7 @@ import json
 from django.http import Http404
 from django.shortcuts import redirect, reverse
 from django.views.generic import CreateView, DetailView, ListView, TemplateView, UpdateView
+from django.utils.text import slugify
 from django.utils.translation import gettext_lazy as _
 
 from . import models, the_pay
@@ -135,6 +136,30 @@ class RepeatPaymentView(NavContextMixin, DetailView):
         )
         helper = the_pay.DivHelper(payment=payment)
         context_data.update(**helper.get_context())
+        return context_data
+
+
+class AlterPayFilmRegistrationView(NavContextMixin, DetailView):
+    model = models.Film
+    template_name = 'festival/alter_pay_film_registration.html'
+
+    def get_object(self, queryset=None):
+        obj = super().get_object()
+        if obj is None or obj.status != obj.UNPAID or slugify(obj.name) != self.kwargs.get('film_name'):
+            raise Http404(_('Page not found'))
+        return obj
+
+    def get_context_data(self, **kwargs):
+        context_data = super().get_context_data()
+        payment = the_pay.Payment(
+            value=float(100),
+            description='registrační poplatek',
+            return_url=f"https://{ self.request.META['HTTP_HOST'] }/thepay-payment-done/",
+            merchant_data=f'{{"f":{ self.object.id }}}',
+            back_to_eshop_url=f"https://{ self.request.META['HTTP_HOST'] }{ _('/zaplatit-registraci/') }{ self.object.id }/{ slugify(self.object.name) }/"
+        )
+        helper = the_pay.DivHelper(payment=payment)
+        context_data.update(**helper.get_context(), value=100)
         return context_data
 
 
