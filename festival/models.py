@@ -548,8 +548,8 @@ def send_film_registration_notification(sender, instance, **kwargs):
             Email.objects.create(
                 recipient_list=instance.email,
                 subject=texts.mail_film_registered_unpaid_subject,
-                message=Template(texts.mail_film_registered_unpaid_message).render(Context(dict(film=instance, link=link_url))),
-                message_html=Template(texts.mail_film_registered_unpaid_message_html).render(Context(dict(film=instance, link=link_url))),
+                message=Template(texts.mail_film_registered_unpaid_message).render(Context(dict(film=instance, link=link_url, empty="-"))),
+                message_html=Template(texts.mail_film_registered_unpaid_message_html).render(Context(dict(film=instance, link=link_url, empty="-"))),
             )
         else:
             link_url=f'https://festivalkratasy.cz/pay-registration/{ instance.id }/{ slugify(instance.name) }/'
@@ -557,8 +557,8 @@ def send_film_registration_notification(sender, instance, **kwargs):
             Email.objects.create(
                 recipient_list=instance.email,
                 subject=texts.mail_film_registered_unpaid_subject_en,
-                message=Template(texts.mail_film_registered_unpaid_message_en).render(Context(dict(film=instance, link=link_url))),
-                message_html=Template(texts.mail_film_registered_unpaid_message_html_en).render(Context(dict(film=instance, link=link_url))),
+                message=Template(texts.mail_film_registered_unpaid_message_en).render(Context(dict(film=instance, link=link_url, empty="-"))),
+                message_html=Template(texts.mail_film_registered_unpaid_message_html_en).render(Context(dict(film=instance, link=link_url, empty="-"))),
             )
 
 
