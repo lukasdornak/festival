@@ -428,7 +428,7 @@ class Texts(models.Model):
     method_select_film_en = RichTextField('registrace filmu - výběr platební metody anglicky', default='select a payment method', null=True, blank=True)
     method_select_tickets = RichTextField('prodej vstupenek - výběr platební metody', default='vyberte platební metodu', null=True, blank=True)
     method_select_tickets_en = RichTextField('prodej vstupenek - výběr platební metody anglicky', default='select a payment method', null=True, blank=True)
-    default_from_email = models.EmailField('odesílatel automatických emailů', default='info@festivalkratasy.cz', null=True, blank=True)
+    default_from_email = models.CharField('odesílatel automatických emailů', max_length=100, default='Festival Kraťasy <info@festivalkratasy.cz>', null=True, blank=True)
     mail_film_registered_unpaid_subject = models.CharField('film registorván nezaplacen - předmět', default='film registrován nezaplacen', max_length=50, null=True, blank=True)
     mail_film_registered_unpaid_subject_en = models.CharField('film registorván nezaplacen - předmět anglicky', default='film registered unpaid', max_length=50, null=True, blank=True)
     mail_film_registered_unpaid_message = models.TextField('film registorván nezaplacen - zpráva', default='film registrován nezaplacen', null=True, blank=True)
