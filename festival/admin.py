@@ -100,13 +100,13 @@ class PressRelease(admin.ModelAdmin):
 @admin.register(models.ThepayPayment)
 class ThepayPaymentAdmin(admin.ModelAdmin):
     model = models.ThepayPayment
-    list_display = ['__str__', 'datetime', 'type', 'film', 'value', 'status_ok', 'status']
+    list_display = ['__str__', 'datetime', 'type', 'film', 'value', 'status', 'status_ok', 'valid_signature']
     list_filter = ['type', 'status', 'datetime']
 
     def status_ok(self, obj=None):
         return obj.status not in [models.ThepayPayment.CANCELED, models.ThepayPayment.ERROR]
 
-    status_ok.short_description = 'ok'
+    status_ok.short_description = 'status ok'
     status_ok.boolean = True
 
 

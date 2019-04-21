@@ -10,7 +10,7 @@ class PaymentMixin:
     params = {}
 
     def get_params(self):
-        params = {k:v for k, v in self.params.items() if v is not None}
+        params = {k: v for k, v in self.params.items() if v is not None}
         if params.get('deposit') is not None:
             params['deposit'] = 1 if params['deposit'] else 0
         if params.get('isRecurring') is not None:
@@ -22,7 +22,7 @@ class PaymentMixin:
     def get_signed_params(self):
         params = self.get_params()
         qs = ''
-        for k,v in params.items():
+        for k, v in params.items():
             qs += f'{ k }={ v }&'
         qs += f'password={ settings.TP_PASSWORD }'
         params['signature'] = md5(qs.encode('utf-8')).hexdigest()
@@ -87,6 +87,7 @@ class ReturnedPayment(PaymentMixin):
             'ipRating':GET.get('ipRating'),
             'isOffline': GET.get('isOffline'),
             'needConfirm': GET.get('needConfirm'),
+            'isConfirm': GET.get('isConfirm'),
             'customerAccountNumber': GET.get('customerAccountNumber'),
             'customerAccountName': GET.get('customerAccountName'),}
         self.signature = GET.get('signature')
