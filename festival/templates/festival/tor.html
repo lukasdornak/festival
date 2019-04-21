@@ -3,4 +3,5 @@
 {% block text %}{% if request.LANGUAGE_CODE == 'en' %}
     {{ texts.tor_en|safe }}{% else %}
     {{ texts.tor|safe }}{% endif %}
+    <a href="/"><div class="button smaller_at_larger"><div>{% trans 'zpět na web' %}</div></div></a>
 {% endblock %}
