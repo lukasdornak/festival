@@ -125,6 +125,14 @@ class TextsAdmin(admin.ModelAdmin):
             'fields': ('method_select_film', 'method_select_film_en', 'method_select_tickets', 'method_select_tickets_en'),
             'classes': ('collapse',),
         }),
+        ('podmínky přihlášení', {
+            'fields': ('tor', 'tor_en'),
+            'classes': ('collapse',),
+        }),
+        ('zásady zpracování osobních údajů', {
+            'fields': ('gdpr', 'gdpr_en'),
+            'classes': ('collapse',),
+        }),
         ('email: film byl zaregistrován, ale zatím ještě nebyl uhrazen poplatek', {
             'fields': ('mail_film_registered_unpaid_subject', 'mail_film_registered_unpaid_subject_en',
                        'mail_film_registered_unpaid_message', 'mail_film_registered_unpaid_message_en',
