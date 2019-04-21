@@ -241,7 +241,8 @@ class PaymentCreateView(CreateView):
 
 class TextView(NavContextMixin, TemplateView):
     template_names = {
-        'tor': 'festival/tor.html'
+        'tor': 'festival/tor.html',
+        'gdpr': 'festival/gdpr.html'
     }
 
     def get_context_data(self, **kwargs):

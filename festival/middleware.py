@@ -13,7 +13,9 @@ class FestivalLocaleMiddleware:
         '^/thanks-for-film-registration/',
         '^/thanks-for-tickets-purchase/',
         '^/repeat-payment/',
-        '^/terms-of-registration/',]]
+        '^/terms-of-registration/',
+        '^/privacy-policy/',
+    ]]
     cs_urls = [re.compile(p) for p in [
         '^/tvurce/',
         '^/navstevnik/',
@@ -21,7 +23,9 @@ class FestivalLocaleMiddleware:
         '^/dekujeme-za-registraci-filmu/',
         '^/dekujeme-za-zakoupeni-vstupenek/',
         '^/opakovat-platbu/',
-        '^/podminky-prihlaseni/',]]
+        '^/podminky-prihlaseni/',
+        '^/zasady-zpracovani-osobnich-udaju/',
+    ]]
 
     def get_lang_from_url(self, request):
         for url in self.en_urls:

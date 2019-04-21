@@ -20,7 +20,7 @@ urlpatterns = [
     path(_('zaplatit-registraci/<int:pk>/<slug:film_name>/'), views.AlterPayFilmRegistrationView.as_view()),
     path(_('opakovat-platbu/<int:pk>/'), views.RepeatPaymentView.as_view()),
     path(_('podminky-prihlaseni/'), views.TextView.as_view(), {'text': 'tor'}),
-    # path(_('zasady-zpracovani-osobnich-udaju/'), views.RepeatPaymentView.as_view()),
+    path(_('zasady-zpracovani-osobnich-udaju/'), views.TextView.as_view(), {'text': 'gdpr'}),
     path('thepay-payment-done/', views.PaymentCreateView.as_view()),
     path('ajax/film-registration/', views.FilmRegistrationView.as_view()),
     path('admin/', admin.site.urls),

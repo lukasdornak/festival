@@ -1,0 +1,7 @@
+{% extends 'festival/text.html' %}{% load i18n %}
+
+{% block text %}{% if request.LANGUAGE_CODE == 'en' %}
+    {{ texts.gdpr_en|safe }}{% else %}
+    {{ texts.gdpr|safe }}{% endif %}
+    <a href="/"><div class="button smaller_at_larger"><div>{% trans 'zpět na web' %}</div></div></a>
+{% endblock %}

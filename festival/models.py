@@ -598,12 +598,12 @@ class FilmRegistrationForm(ModelForm):
         super().__init__(*args, **kwargs)
         self.fields['attendance'].label = _('Mám zájem o osobní účast na festivalu.')
         self.fields['tor'].label = _('Souhlasím s <a href="/podminky-prihlaseni/" target="_blank">podmínkami přihlášení</a>.')
-#        self.fields['gdpr'].label = _('Souhlasím se zásadami zpracování osobních údajů.')
+        self.fields['gdpr'].label = _('Souhlasím se <a href="/zasady-zpracovani-osobnich-udaju/" target="_blank">zásadami zpracování osobních údajů</a>.')
         self.fields['tor'].required = True
-#        self.fields['gdpr'].required = True
+        self.fields['gdpr'].required = True
         self.fields['time'].widget.attrs['placeholder'] = 'mm:ss'
         self.fields['phone'].widget.attrs['placeholder'] = '+420 111 222 333'
 
     class Meta:
         model = Film
-        exclude = ('status', 'technical_check', 'gdpr')
+        exclude = ('status', 'technical_check')
