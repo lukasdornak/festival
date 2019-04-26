@@ -189,10 +189,12 @@ class Film(models.Model):
     FILM = 'f'
     DOCUMENTARY = 'd'
     ANIMATED = 'a'
+    CLIP = 'c'
     CATEGORY_CHOICES = (
         (FILM, _('hraný')),
         (DOCUMENTARY, _('dokumentární')),
         (ANIMATED, _('animovaný')),
+        (CLIP, _('klip')),
     )
     ACTION = 'ac'
     DETECTIVE = 'de'
