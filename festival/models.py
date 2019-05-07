@@ -1,6 +1,9 @@
+import os
 from datetime import date
 
+from django.conf import settings
 from django.contrib.auth.models import User
+from django.core.files.storage import FileSystemStorage
 from django.core.mail import get_connection, EmailMultiAlternatives
 from django.core.validators import MaxValueValidator, MinValueValidator, FileExtensionValidator, RegexValidator
 from django.db import models, transaction
@@ -11,10 +14,35 @@ from django.utils.translation import gettext_lazy as _
 from django.template import Context, Template
 
 from ckeditor.fields import RichTextField
+from imagekit import ImageSpec, register
 from imagekit.models import ImageSpecField
-from imagekit.processors import ResizeToFill
+from imagekit.processors import ResizeToFit, ResizeToFill
 
 from . import widgets, iso3166
+
+
+class OverwriteStorage(FileSystemStorage):
+    def get_available_name(self, name, max_length=None):
+        if self.exists(name):
+            os.remove(os.path.join(settings.MEDIA_ROOT, name))
+        return name
+
+
+def path_photo(instance, filename):
+    return f'gallery/{ instance.year.get_year() }/{ instance.id }-{ slugify(instance.description) }.jpg'
+
+
+def path_photo_cropped(instance, filename):
+    return f'gallery/{ instance.year.get_year() }/{ instance.id }-{ slugify(instance.description) }_cropped.png'
+
+
+class AutoCrop(ImageSpec):
+    processors = [ResizeToFill(300, 300)]
+    format = 'JPEG'
+    options = {'quality': 100}
+
+
+register.generator('festival:auto_crop', AutoCrop)
 
 
 def send_mass_html_mail(datatuple, fail_silently=False, auth_user=None, auth_password=None, connection=None):
@@ -80,6 +108,13 @@ class Year(models.Model):
         return cls.objects.filter(current=True).first()
 
 
+class Gallery(Year):
+    class Meta:
+        proxy = True
+        verbose_name = 'galerie'
+        verbose_name_plural = 'galerie'
+
+
 class AbstractArticle(models.Model):
     headline = models.CharField('nadpis', max_length=50)
     headline_en = models.CharField('nadpis anglicky', max_length=50)
@@ -114,6 +149,7 @@ class Article(AbstractArticle):
     class Meta:
         verbose_name = 'Článek'
         verbose_name_plural = 'Články'
+        ordering = ['-date']
 
 
 class Section(AbstractArticle):
@@ -151,6 +187,45 @@ class Guide(models.Model):
 
     def __str__(self):
         return self.headline
+
+
+class Photo(models.Model):
+    original = models.ImageField('fotka', width_field='width', height_field='height', upload_to=path_photo, storage=OverwriteStorage(), null=True, blank=False)
+    width = models.PositiveSmallIntegerField('šířka', null=True, blank=True, editable=False)
+    height = models.PositiveSmallIntegerField('šířka', null=True, blank=True, editable=False)
+    cropped = models.ImageField('ořez', upload_to=path_photo_cropped, storage=OverwriteStorage(), null=True, blank=False)
+    small = ImageSpecField(source='original', processors=[ResizeToFit(300, 300)], format='JPEG', options={'quality': 85})
+    middle = ImageSpecField(source='original', processors=[ResizeToFit(600, 600)], format='JPEG', options={'quality': 90})
+    large = ImageSpecField(source='original', processors=[ResizeToFit(1200, 1200)], format='JPEG', options={'quality': 95})
+    description = models.CharField('popisek', max_length=200)
+    description_en = models.CharField('popisek anglicky', max_length=200)
+    year = models.ForeignKey(Year, verbose_name='ročník', on_delete=models.SET_NULL, null=True, blank=True)
+    order = models.PositiveSmallIntegerField('pořadí', default=1)
+
+    class Meta:
+        verbose_name = 'fotka'
+        verbose_name_plural = 'fotky'
+        ordering = ['year', 'order']
+
+    def __str__(self):
+        return self.description
+
+    def save(self, *args, **kwargs):
+        hidden_original = self.original
+        hidden_cropped = self.cropped
+        self.original = None
+        self.cropped = None
+        super().save(*args, **kwargs)
+        self.original = hidden_original
+        self.cropped = hidden_cropped
+        super().save(update_fields=['original', 'cropped'])
+
+    def get_ratio(self):
+        return round(100*self.height/self.width) if (self.height and self.width) else 0
+
+    def assign_to(self, year):
+        self.year=year
+        self.save(update_fields=['year'])
 
 
 class Contact(models.Model):

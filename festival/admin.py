@@ -1,7 +1,25 @@
-from django.contrib import admin
+import base64
+from io import BytesIO
+
+from django.contrib import admin, messages
+from django.core.files.uploadedfile import InMemoryUploadedFile
+
 from import_export.admin import ImportExportModelAdmin
 
-from . import models
+from . import models, forms
+
+
+def make_assign_to_gallery(year):
+    def assign_to_gallery(modeladmin, request, queryset):
+        for photo in queryset:
+            changed = photo.assign_to(year)
+            if changed:
+                messages.info(request, f'Fotka { photo.name } zařazena do galerie { year }')
+
+    assign_to_gallery.short_description = f'Zařadit do galerie { year }'
+    assign_to_gallery.__name__ = f'assign_to_gallery_{ year.id }'
+
+    return assign_to_gallery
 
 
 class PublishMixin:
@@ -49,6 +67,83 @@ class SectionAdmin(PublishMixin, admin.ModelAdmin):
 @admin.register(models.Guide)
 class GuideAdmin(admin.ModelAdmin):
     model = models.Guide
+
+
+class PhotoInline(admin.TabularInline):
+    model = models.Photo
+    fields = ['original', 'description', 'order']
+    extra = 1
+
+
+@admin.register(models.Gallery)
+class GalleryAdmin(admin.ModelAdmin):
+    inlines = [PhotoInline, ]
+    form = forms.GalleryAdminForm
+
+    def has_add_permission(self, request):
+        return False
+
+    def has_delete_permission(self, request, obj=None):
+        return False
+
+    def save_model(self, request, obj, form, change):
+        super().save_model(request, obj, form, change)
+        photo_list = dict(form.files).get('photo_list', [])
+        for photo in photo_list:
+            models.Photo.objects.create(original=photo, description=obj.get_year(), year=obj)
+
+
+@admin.register(models.Photo)
+class PhotoAdmin(admin.ModelAdmin):
+    list_display = ['id', '__str__', 'year', 'order']
+    list_display_links = ['__str__']
+    form = forms.PhotoAdminForm
+    actions = ['unassign']
+    readonly_fields = ['get_img_url']
+
+    def get_img_url(self, obj):
+        return obj.original.url
+
+    get_img_url.short_description = "url fotky"
+
+    def unassign(self, request, queryset):
+        for photo in queryset:
+            if photo.year:
+                messages.info(request, f'Fotka { photo } vyřazena z galerie { photo.year }')
+        queryset.update(year=None)
+
+    unassign.short_description = "Vyřadit z galerie"
+
+    def get_actions(self, request):
+        actions = super().get_actions(request)
+
+        for year in list(models.Year.objects.all()):
+            action = make_assign_to_gallery(year)
+            actions[action.__name__] = (action, action.__name__, action.short_description)
+
+        return actions
+
+    def save_model(self, request, obj, form, change):
+        if 'cropped' in form.changed_data:
+            format, imgstr = request.POST['cropped'].split(';base64,')
+            ext = format.split('/')[-1]
+            file = BytesIO(base64.b64decode(imgstr))
+            image = InMemoryUploadedFile(file,
+                                         field_name='cropped',
+                                         name=str(obj.id) + ext,
+                                         content_type="image/jpeg",
+                                         size=len(file.getvalue()),
+                                         charset=None)
+            obj.cropped = image
+        super().save_model(request, obj, form, change)
+
+    class Media:
+        js = ['https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js',
+              'https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.1/croppie.min.js',
+              '/static/festival/js/croppie_image_field.js']
+        css = {
+            'all': ('https://cdnjs.cloudflare.com/ajax/libs/croppie/2.6.1/croppie.min.css',)
+        }
 
 
 @admin.register(models.Contact)

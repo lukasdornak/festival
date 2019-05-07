@@ -11,6 +11,7 @@ ALLOWED_HOSTS = ['festivalkratasy.cz', 'www.festivalkratasy.cz', 'festivalkratas
 INSTALLED_APPS = [
     'festival',
     'ckeditor',
+    'imagekit',
     'import_export',
     'django.contrib.admin',
     'django.contrib.auth',
