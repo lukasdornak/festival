@@ -1,4 +1,5 @@
 from django.contrib import admin
+from import_export.admin import ImportExportModelAdmin
 
 from . import models
 
@@ -56,7 +57,7 @@ class ContactAdmin(admin.ModelAdmin):
 
 
 @admin.register(models.Film)
-class FilmAdmin(admin.ModelAdmin):
+class FilmAdmin(ImportExportModelAdmin):
     model = models.Film
     list_display = ['__str__', 'year', 'time', 'category', 'genre', 'country', 'get_rating', 'status', 'technical_check']
     list_filter = ['status', 'category', 'genre']

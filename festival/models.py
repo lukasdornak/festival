@@ -522,7 +522,7 @@ class Email(models.Model):
 def send_film_paid_confirmation(sender, instance, **kwargs):
     if instance.status == Film.REGISTERED:
         obj = sender.objects.filter(id=instance.id).first()
-        if (obj and obj.status != instance.status) or obj is None:
+        if obj and obj.status != instance.status:
             texts = Texts.objects.first()
             if obj.country in ['CZ', 'SK']:
                 Email.objects.create(
