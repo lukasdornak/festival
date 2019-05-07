@@ -97,6 +97,7 @@ class GalleryAdmin(admin.ModelAdmin):
 class PhotoAdmin(admin.ModelAdmin):
     list_display = ['id', '__str__', 'year', 'order']
     list_display_links = ['__str__']
+    list_filter = ['year']
     form = forms.PhotoAdminForm
     actions = ['unassign']
     readonly_fields = ['get_img_url']
