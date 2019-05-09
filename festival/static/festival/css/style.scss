@@ -593,6 +593,37 @@ main {
     margin: 0 auto;
 }
 
+.gallery_bar {
+    position: absolute;
+    background-image: url("/static/festival/img/gallery_bar.jpg");
+    background-size: cover;
+    background-position: center 77%;
+    width: 95%;
+    height: 100%;
+    z-index: -1;
+    right: 0;
+    border-radius: 2em 0 0 2em;
+    ~ h1 ~ .page_width {
+        color: white;
+        padding: 0 1em;
+    }
+}
+
+.gallery {
+    width: 93vw;
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    align-items: center;
+    img {
+        margin: 1em;
+        border-radius: 0.5em;
+        -webkit-box-shadow: 5px 5px 15px 0px rgba(0,0,0,0.5);
+        -moz-box-shadow: 5px 5px 15px 0px rgba(0,0,0,0.5);
+        box-shadow: 5px 5px 15px 0px rgba(0,0,0,0.5);
+    }
+}
 
 @media (min-aspect-ratio: 1/1) {
     .home .page_width {
@@ -636,6 +667,9 @@ main {
     }
     .page_width {
         width: 85%;
+    }
+    .gallery_bar {
+        width: 92.5%;
     }
 }
 @media (min-width: 576px) and (min-aspect-ratio: 1/1) {
@@ -788,6 +822,12 @@ main {
     .page_width {
         width: 75%;
     }
+    .gallery_bar {
+        width: calc(50% + 350px);
+        ~ h1 ~ .page_width {
+            width: 700px;
+        }
+    }
     .halves {
         flex-direction: row;
     }
@@ -811,6 +851,9 @@ main {
 @media (min-width: 1200px) {
     html {
         font-size: 20px;
+    }
+    .gallery {
+        width: 80vw;
     }
     .extra_text > .page_width:not(.max_columns-1):not(.max_columns-2):not(.form_columns) {
         -webkit-column-count: 3;
@@ -848,5 +891,62 @@ main {
         -webkit-column-count: 4;
         -moz-column-count: 4;
         column-count: 4;
+    }
+}
+
+body#gallery_body {
+    height: 100vh;
+    background-color: $color-deep-dark;
+    h2 {
+        font-weight: normal;
+        margin: auto;
+    }
+    header {
+        background-color: $color-deep-dark;
+        -webkit-box-shadow: none;
+        -moz-box-shadow: none;
+        box-shadow: none;
+    }
+    section {
+        height: 100vh;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        align-items: center;
+        transition: none;
+    }
+    #photo_detail {
+        max-height: 100%;
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-around;
+        img {
+            display: block;
+            margin: 0 auto;
+            max-height: 100%;
+            max-width: 100%;
+        }
+        div {
+            color: white;
+            display: inline-block;
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            margin: 0 auto;
+            padding: 0.5em;
+            background-color: rgba(0,0,0,0.66);
+        }
+        a {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+    }
+    #logo {
+        width: 40px;
+        background-image: url("../img/logo-bare.png");
     }
 }

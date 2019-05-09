@@ -58,6 +58,19 @@ class SectionListView(NavContextMixin, ListView):
         return super().get(request, *args, **kwargs)
 
 
+class PhotoListView(NavContextMixin, ListView):
+    model = models.Photo
+
+
+class PhotoDetailView(NavContextMixin, DetailView):
+    model = models.Photo
+
+    def get_context_data(self, *args, **kwargs):
+        context_data = super().get_context_data()
+        context_data['gallery_info'] = self.object.get_gallery_info()
+        return context_data
+
+
 class FilmRegistrationView(UpdateView):
     success_url = "/tvurce/#prihlaseni-filmu"
     model = models.FilmRegistrationForm

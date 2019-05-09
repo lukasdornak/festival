@@ -37,7 +37,7 @@ def path_photo_cropped(instance, filename):
 
 
 class AutoCrop(ImageSpec):
-    processors = [ResizeToFill(300, 300)]
+    processors = [ResizeToFill(250, 250)]
     format = 'JPEG'
     options = {'quality': 100}
 
@@ -201,6 +201,7 @@ class Photo(models.Model):
     description_en = models.CharField('popisek anglicky', max_length=200)
     year = models.ForeignKey(Year, verbose_name='ročník', on_delete=models.SET_NULL, null=True, blank=True)
     order = models.PositiveSmallIntegerField('pořadí', default=1)
+    slug = models.SlugField(editable=False)
 
     class Meta:
         verbose_name = 'fotka'
@@ -211,6 +212,7 @@ class Photo(models.Model):
         return self.description
 
     def save(self, *args, **kwargs):
+        self.slug = f'{ self.id }-{ slugify(self.description) }'
         hidden_original = self.original
         hidden_cropped = self.cropped
         self.original = None
@@ -226,6 +228,19 @@ class Photo(models.Model):
     def assign_to(self, year):
         self.year=year
         self.save(update_fields=['year'])
+
+    def get_gallery_info(self):
+        photos = list(Photo.objects.filter(year=self.year).values_list('slug', flat=True))
+        index = photos.index(self.slug)
+        length=len(photos)
+        gallery_info = {
+            'index': index + 1,
+            'length': length,
+            'previous': photos[(index+1)%length],
+            'next': photos[(index+1)%length],
+            'year': self.year.get_year()
+        }
+        return gallery_info
 
 
 class Contact(models.Model):

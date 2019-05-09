@@ -4,7 +4,8 @@
     {{ block.super }}
     <main><article>
     {% for section in object_list %}
-    <section id="id-{% if request.LANGUAGE_CODE == 'en' %}{{ section.slug_en }}{% else %}{{ section.slug }}{% endif %}">{% if section.auto_headline %}
+    <section id="id-{% if request.LANGUAGE_CODE == 'en' %}{{ section.slug_en }}{% else %}{{ section.slug }}{% endif %}">{% if section.widget and section.get_widget.is_wrapper %}
+        {% include section.get_widget.template_name_before with widget_context=section.widget_context %}{% endif %}{% if section.auto_headline %}
         <h1>{% if request.LANGUAGE_CODE == 'en' %}{{ section.headline_en }}{% else %}{{ section.headline }}{% endif %}</h1>{% endif %}
         <div class="page_width">{% if section.widget and section.widget_first %}
             {% include section.get_widget.template_name with widget_context=section.widget_context %}{% endif %}
@@ -15,7 +16,8 @@
         <div id="{{ section.slug_en }}-extra_text" class="extra_text hidden_extra"><div class="page_width{% if section.max_columns %} max_columns-{{ section.max_columns }}{% endif %}">{{ section.extra_full_text_en|add_nbsps|safe }}</div></div>
         <div class="button"><div id="{{ section.slug_en }}-button" class="extra_button">{% trans 'chceš vědět víc?' %}</div></div>{% elif request.LANGUAGE_CODE == 'cs' and section.extra_full_text %}
         <div id="{{ section.slug_en }}-extra_text" class="extra_text hidden_extra"><div class="page_width{% if section.max_columns %} max_columns-{{ section.max_columns }}{% endif %}">{{ section.extra_full_text|add_nbsps|safe }}</div></div>
-        <div class="button"><div id="{{ section.slug_en }}-button" class="extra_button">{% trans 'chceš vědět víc?' %}</div></div>{% endif %}
+        <div class="button"><div id="{{ section.slug_en }}-button" class="extra_button">{% trans 'chceš vědět víc?' %}</div></div>{% endif %}{% if section.widget and section.get_widget.is_wrapper %}
+        {% include section.get_widget.template_name_after with widget_context=section.widget_context %}{% endif %}
     </section>
     {% endfor %}
     </article>

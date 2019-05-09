@@ -1,0 +1,24 @@
+{% extends 'festival/base.html' %}{% load i18n %}
+
+{% block logo %}<a href="/"></a>{% endblock %}
+
+{% block content %}
+    <main>{% regroup object_list by year as by_year %}{% for year, list in by_year %}
+        <section>
+            <h1>{{ year }}</h1>
+            <div class="gallery">{% for photo in list %}
+                <a href="{{ photo.year.get_year }}/{{ photo.slug }}"><img src="{% if photo.cropped %}{{ photo.cropped.url }}{% else %}{% load imagekit %}{% generateimage 'festival:auto_crop' source=photo.original as ac %}{{ ac.url }}{% endif %}"></a>{% endfor %}
+            </div>{% endfor %}
+        </section>
+        {% include 'festival/contact.html' %}
+    </main>
+{% endblock %}
+
+{% block js %}
+    <script>
+$(function () {{% if request.LANGUAGE_CODE == 'en' %}
+    $('#lang_switch').attr('href', $('#lang_switch').attr('href').replace("{% language "en" %}{% trans '/galerie/' %}{% endlanguage %}", "{% language "cs" %}{% trans '/opakovat-platbu/' %}{% endlanguage %}"));{% else %}
+    $('#lang_switch').attr('href', $('#lang_switch').attr('href').replace("{% language "cs" %}{% trans '/galerie/' %}{% endlanguage %}", "{% language "en" %}{% trans '/opakovat-platbu/' %}{% endlanguage %}"));{% endif %}
+})
+    </script>
+{% endblock %}

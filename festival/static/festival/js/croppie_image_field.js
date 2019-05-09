@@ -1,6 +1,6 @@
 $(function () {
     $('#cropper').croppie({
-        viewport: {width: 296, height: 296, type: 'squere'},
+        viewport: {width: 246, height: 246, type: 'squere'},
         boundary: {width: 500, height: 500},
         showZoomer: true,
         enableResize: true,
