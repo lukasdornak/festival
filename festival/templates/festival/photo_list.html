@@ -8,8 +8,8 @@
             <h1>{{ year }}</h1>
             <div class="gallery">{% for photo in list %}
                 <a href="{{ photo.year.get_year }}/{{ photo.slug }}"><img src="{% if photo.cropped %}{{ photo.cropped.url }}{% else %}{% load imagekit %}{% generateimage 'festival:auto_crop' source=photo.original as ac %}{{ ac.url }}{% endif %}"></a>{% endfor %}
-            </div>{% endfor %}
-        </section>
+            </div>
+        </section>{% endfor %}
         {% include 'festival/contact.html' %}
     </main>
 {% endblock %}
