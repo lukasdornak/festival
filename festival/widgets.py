@@ -4,27 +4,14 @@ from . import models
 
 
 class Widget:
-    def __init__(self, template_name=None, get_context_data=None, short_name=None, name=None):
-        if template_name is not None:
-            self.template_name = template_name
-        if get_context_data is not None:
-            self.get_context_data = get_context_data
-        if short_name is not None:
-            self.short_name = short_name
-        if name is not None:
-            self.name = name
-
     template_name = None
     get_context_data = None
     short_name = None
     name = None
+    is_wrapper = False
 
     @classmethod
     def get_choices(cls):
-        # choices = tuple()
-        # for sub_cls in cls.__subclasses__():
-        #     choices = (*choices, (sub_cls.short_name, sub_cls.get_name()))
-        # return choices
         choices = [(sub_cls.short_name, sub_cls.get_name()) for sub_cls in cls.__subclasses__()]
         return tuple(choices)
 
@@ -39,6 +26,15 @@ class Widget:
         if cls.name:
             return cls.name
         return cls.__class__.__name__
+
+    @classmethod
+    def template_name_before(cls):
+        return cls.template_name.replace('.html', '_before.html') if cls.is_wrapper else None
+
+    @classmethod
+    def template_name_after(cls):
+        return cls.template_name.replace('.html', '_after.html') if cls.is_wrapper else None
+
 
 
 class SponsorWidget(Widget):
@@ -91,3 +87,13 @@ class FilmRegistrationWidget(Widget):
         for field in context_data['form']:
             field.boolean = True if field.field.__class__.__name__ == 'BooleanField' else False
         return context_data
+
+
+class GalleryBarWidget(Widget):
+    name = 'odkaz do galerie'
+    short_name = 'g'
+    template_name = 'festival/widgets/gallery_bar.html'
+    is_wrapper = True
+
+    def get_context_data(self):
+        return {}
