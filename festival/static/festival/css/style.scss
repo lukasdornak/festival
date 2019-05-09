@@ -55,7 +55,7 @@ h1 {
 }
 .page_width {
     width: 90%;
-    max-width: 1200px;
+    max-width: 900px;
     box-sizing: border-box;
     margin: 0 auto;
 }
@@ -302,6 +302,7 @@ nav {
 }
 
 section {
+    position: relative;
     padding-top: $header-height + $header-padding + $header-padding;
     box-sizing: border-box;
     text-align: center;
@@ -361,6 +362,7 @@ section {
     }
     > .page_width {
         margin: 3em auto;
+        max-width: 1200px;
     }
     p {
         margin: 0;
@@ -770,9 +772,6 @@ main {
 }
 
 @media (min-width: 992px) {
-    html {
-        font-size: 20px;
-    }
     .home {
         .page_width {
             height: 100%;
@@ -811,10 +810,7 @@ main {
 /* Extra large devices */
 @media (min-width: 1200px) {
     html {
-        font-size: 22px;
-    }
-    .page_width {
-        width: 70%;
+        font-size: 20px;
     }
     .extra_text > .page_width:not(.max_columns-1):not(.max_columns-2):not(.form_columns) {
         -webkit-column-count: 3;
@@ -834,7 +830,7 @@ main {
 /* Extra large devices */
 @media (min-width: 1921px) {
     html {
-        font-size: 24px;
+        font-size: 22px;
     }
     .role {
         img {

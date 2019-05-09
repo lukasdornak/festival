@@ -26,7 +26,7 @@ h1 {
 
 .page_width {
   width: 90%;
-  max-width: 1200px;
+  max-width: 900px;
   box-sizing: border-box;
   margin: 0 auto; }
 
@@ -251,6 +251,7 @@ nav {
       background-color: transparent; }
 
 section {
+  position: relative;
   padding-top: 64px;
   box-sizing: border-box;
   text-align: center;
@@ -306,7 +307,8 @@ section {
     -moz-box-shadow: 0 0 60px 15px #292b2f;
     box-shadow: 0 0 60px 15px #292b2f; }
   .extra_text > .page_width {
-    margin: 3em auto; }
+    margin: 3em auto;
+    max-width: 1200px; }
   .extra_text p {
     margin: 0;
     line-height: 1.4em;
@@ -622,8 +624,6 @@ main {
     padding-top: 44px; } }
 
 @media (min-width: 992px) {
-  html {
-    font-size: 20px; }
   .home .page_width {
     height: 100%; }
     .home .page_width .button > div {
@@ -647,9 +647,7 @@ main {
 /* Extra large devices */
 @media (min-width: 1200px) {
   html {
-    font-size: 22px; }
-  .page_width {
-    width: 70%; }
+    font-size: 20px; }
   .extra_text > .page_width:not(.max_columns-1):not(.max_columns-2):not(.form_columns) {
     -webkit-column-count: 3;
     -moz-column-count: 3;
@@ -663,7 +661,7 @@ main {
 /* Extra large devices */
 @media (min-width: 1921px) {
   html {
-    font-size: 24px; }
+    font-size: 22px; }
   .role img {
     max-width: 250px; }
   .home .page_width {
