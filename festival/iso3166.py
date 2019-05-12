@@ -204,7 +204,7 @@ COUNTRY_CHOICES = (
     ('SL', "Sierra Leone"),
     ('SG', "Singapore"),
     ('SX', "Sint Maarten (Dutch part)"),
-    ('SK', "Slovakia"),
+    ('SK', "Slovensko"),
     ('SI', "Slovenia"),
     ('SB', "Solomon Islands"),
     ('SO', "Somalia"),
