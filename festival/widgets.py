@@ -97,3 +97,15 @@ class GalleryBarWidget(Widget):
 
     def get_context_data(self):
         return {}
+
+
+class HotNewsWidget(Widget):
+    name = 'Hot news'
+    short_name = 'h'
+    template_name = 'festival/widgets/hot_news.html'
+
+    def get_context_data(self):
+        context_data = {
+            'object_list': models.Article.objects.all()[:3]
+        }
+        return context_data

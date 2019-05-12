@@ -144,11 +144,7 @@ class Article(AbstractArticle):
     date = models.DateField('datum')
     short_text = models.CharField('úryvek', max_length=150)
     short_text_en = models.CharField('úryvek anglicky', max_length=150)
-    photo = models.ImageField('Fotka', blank=True, null=True)
-    photo_small = ImageSpecField(source='fotka', processors=[ResizeToFill(300, 300)],
-                                 format='JPEG', options={'quality': 100})
-    photo_large = ImageSpecField(source='fotka', processors=[ResizeToFill(1200, 800)],
-                                 format='JPEG', options={'quality': 100})
+    photo = models.ForeignKey('Photo', verbose_name='fotka', on_delete=models.CASCADE)
 
     class Meta:
         verbose_name = 'Článek'
@@ -426,7 +422,7 @@ class Sponsor(models.Model):
     name = models.CharField('jméno', max_length=50)
     logo = models.ImageField('logo', null=True, blank=True)
     url = models.URLField('odkaz na web', null=True, blank=True)
-    category = models.PositiveSmallIntegerField('kategorie', default=30, choices=CATEGORY_CHOICES)
+    category = models.PositiveSmallIntegerField('kategorie', default=OTHERS, choices=CATEGORY_CHOICES)
     order = models.PositiveSmallIntegerField('pořadí', default=1)
 
     class Meta:

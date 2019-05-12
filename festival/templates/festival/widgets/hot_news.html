@@ -1,0 +1,10 @@
+{% load i18n %}
+<div id="hot_news">{% for article in widget_context.object_list %}
+    <div class="hot_new">
+        <img src="{{ article.photo.cropped.url }}" alt="{{ article.headline }}">
+        <h3 class="new_headline">{{ article.headline }}</h3>
+        <p class="smaller_at_larger">{{ article.date }}</p>
+        <p class="smaller_at_larger">{{ article.short_text }}</p>
+        <a href=""></a>
+    </div>{% endfor %}
+</div>
