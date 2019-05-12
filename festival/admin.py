@@ -185,6 +185,9 @@ class EvaluationAdmin(admin.ModelAdmin):
 @admin.register(models.Sponsor)
 class SponsorAdmin(admin.ModelAdmin):
     model = models.Sponsor
+    list_display = ['name', 'category', 'order', 'url']
+    list_editable = ['order']
+    list_filter = ['category', 'year']
 
 
 @admin.register(models.PressRelease)
