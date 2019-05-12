@@ -90,7 +90,7 @@ class FilmRegistrationWidget(Widget):
 
 
 class GalleryBarWidget(Widget):
-    name = 'odkaz do galerie'
+    name = 'Odkaz do galerie'
     short_name = 'g'
     template_name = 'festival/widgets/gallery_bar.html'
     is_wrapper = True

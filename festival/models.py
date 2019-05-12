@@ -29,11 +29,15 @@ class OverwriteStorage(FileSystemStorage):
 
 
 def path_photo(instance, filename):
-    return f'gallery/{ instance.year.get_year() }/{ instance.id }-{ slugify(instance.description) }.jpg'
+    if instance.year:
+        return f'gallery/{ instance.year.get_year() }/{ instance.id }-{ slugify(instance.description) }.jpg'
+    return f'gallery/{ instance.id }-{ slugify(instance.description) }.jpg'
 
 
 def path_photo_cropped(instance, filename):
-    return f'gallery/{ instance.year.get_year() }/{ instance.id }-{ slugify(instance.description) }_cropped.png'
+    if instance.year:
+        return f'gallery/{ instance.year.get_year() }/{ instance.id }-{ slugify(instance.description) }_cropped.png'
+    return f'gallery/{ instance.id }-{ slugify(instance.description) }_cropped.png'
 
 
 class AutoCrop(ImageSpec):
@@ -201,7 +205,7 @@ class Photo(models.Model):
     description_en = models.CharField('popisek anglicky', max_length=200)
     year = models.ForeignKey(Year, verbose_name='ročník', on_delete=models.SET_NULL, null=True, blank=True)
     order = models.PositiveSmallIntegerField('pořadí', default=1)
-    slug = models.SlugField(editable=False)
+    slug = models.SlugField(editable=False, null=True)
 
     class Meta:
         verbose_name = 'fotka'
@@ -212,7 +216,6 @@ class Photo(models.Model):
         return self.description
 
     def save(self, *args, **kwargs):
-        self.slug = f'{ self.id }-{ slugify(self.description) }'
         hidden_original = self.original
         hidden_cropped = self.cropped
         self.original = None
@@ -220,7 +223,8 @@ class Photo(models.Model):
         super().save(*args, **kwargs)
         self.original = hidden_original
         self.cropped = hidden_cropped
-        super().save(update_fields=['original', 'cropped'])
+        self.slug = f'{ self.id }-{ slugify(self.description) }'
+        super().save(update_fields=['original', 'cropped', 'slug'])
 
     def get_ratio(self):
         return round(100*self.height/self.width) if (self.height and self.width) else 0

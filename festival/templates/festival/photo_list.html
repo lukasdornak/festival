@@ -1,15 +1,15 @@
-{% extends 'festival/base.html' %}{% load i18n %}
+{% extends 'festival/base.html' %}{% load i18n %}{% load imagekit %}
 
 {% block logo %}<a href="/"></a>{% endblock %}
 
 {% block content %}
-    <main>{% regroup object_list by year as by_year %}{% for year, list in by_year %}
-        <section>
+    <main>{% regroup object_list by year as by_year %}{% for year, list in by_year %}{% if year is not None %}
+        <section id="id-{{ year.get_year }}">
             <h1>{{ year }}</h1>
             <div class="gallery">{% for photo in list %}
-                <a href="{{ photo.year.get_year }}/{{ photo.slug }}"><img src="{% if photo.cropped %}{{ photo.cropped.url }}{% else %}{% load imagekit %}{% generateimage 'festival:auto_crop' source=photo.original as ac %}{{ ac.url }}{% endif %}"></a>{% endfor %}
+                <a href="{{ year.get_year }}/{{ photo.slug }}"><img src="{% if photo.cropped %}{{ photo.cropped.url }}{% else %}{% generateimage 'festival:auto_crop' source=photo.original as ac %}{{ ac.url }}{% endif %}"></a>{% endfor %}
             </div>
-        </section>{% endfor %}
+        </section>{% endif %}{% endfor %}
         {% include 'festival/contact.html' %}
     </main>
 {% endblock %}
