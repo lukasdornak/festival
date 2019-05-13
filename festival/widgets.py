@@ -44,7 +44,7 @@ class SponsorWidget(Widget):
 
     def get_context_data(self):
         context_data = {
-            'object_list': models.Sponsor.objects.filter(year__in=[models.Year.get_current()]).order_by('category')
+            'object_list': models.Sponsor.objects.filter(year__in=[models.Year.get_current()])
         }
         return context_data
 

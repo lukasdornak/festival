@@ -444,7 +444,7 @@ class PressRelease(models.Model):
     class Meta:
         verbose_name = 'tiskovka'
         verbose_name_plural = 'tiskovky'
-        ordering = ['date_release']
+        ordering = ['-year__date_start' ,'-date_release']
 
     def __str__(self):
         return self.name
