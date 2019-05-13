@@ -16,7 +16,7 @@ urlpatterns = [
     path(_('navstevnik/'), views.SectionListView.as_view(), {'role':'b'}, name='b'),
     path(_('novinar/'), views.SectionListView.as_view(), {'role':'c'}, name='c'),
     path(_('galerie/'), views.PhotoListView.as_view()),
-    path(_('galerie/<int:year>/<slug:slug>'), views.PhotoDetailView.as_view()),
+    path(_('galerie/<int:year>/<slug:slug>/'), views.PhotoDetailView.as_view()),
     path(_('dekujeme-za-registraci-filmu/'), views.ThanksView.as_view(), {'for': 'f'}),
     path(_('dekujeme-za-zakoupeni-vstupenek/'), views.ThanksView.as_view(), {'for': 't'}),
     path(_('zaplatit-registraci/<int:pk>/<slug:film_name>/'), views.AlterPayFilmRegistrationView.as_view()),

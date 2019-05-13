@@ -7,26 +7,28 @@ class FestivalLocaleMiddleware:
         self.get_response = get_response
 
     en_urls = [re.compile(p) for p in [
-        '^/author/',
-        '^/visitor/',
-        '^/journalist/',
-        '^/gallery/',
-        '^/thanks-for-film-registration/',
-        '^/thanks-for-tickets-purchase/',
-        '^/repeat-payment/',
-        '^/terms-of-registration/',
-        '^/privacy-policy/',
+        '^/author/', '^/author',
+        '^/visitor/', '^/visitor',
+        '^/journalist/', '^/journalist',
+        '^/gallery/', '^/gallery',
+        '^/thanks-for-film-registration/', '^/thanks-for-film-registration',
+        '^/thanks-for-tickets-purchase/', '^/thanks-for-tickets-purchase',
+        '^/repeat-payment/', '^/repeat-payment',
+        '^/pay-registration-fee/', '^/pay-registration-fee',
+        '^/terms-of-registration/', '^/terms-of-registration',
+        '^/privacy-policy/', '^/privacy-policy',
     ]]
     cs_urls = [re.compile(p) for p in [
-        '^/tvurce/',
-        '^/navstevnik/',
-        '^/novinar/',
-        '^/galerie/',
-        '^/dekujeme-za-registraci-filmu/',
-        '^/dekujeme-za-zakoupeni-vstupenek/',
-        '^/opakovat-platbu/',
-        '^/podminky-prihlaseni/',
-        '^/zasady-zpracovani-osobnich-udaju/',
+        '^/tvurce/', '^/tvurce',
+        '^/navstevnik/', '^/navstevnik',
+        '^/novinar/', '^/novinar',
+        '^/galerie/', '^/galerie',
+        '^/dekujeme-za-registraci-filmu/', '^/dekujeme-za-registraci-filmu',
+        '^/dekujeme-za-zakoupeni-vstupenek/', '^/dekujeme-za-zakoupeni-vstupenek',
+        '^/opakovat-platbu/', '^/opakovat-platbu',
+        '^/zaplatit-registraci/', '^/zaplatit-registraci',
+        '^/podminky-prihlaseni/', '^/podminky-prihlaseni',
+        '^/zasady-zpracovani-osobnich-udaju/', '^/zasady-zpracovani-osobnich-udaju',
     ]]
 
     def get_lang_from_url(self, request):

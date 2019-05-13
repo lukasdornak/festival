@@ -18,10 +18,11 @@ msgstr "dekujeme-za-registraci-filmu/"
 msgid "thanks-for-tickets-purchase/"
 msgstr "dekujeme-za-zakoupeni-vstupenek/"
 
-#: festival/urls.py:20
-msgid "/repeat-payment/"
-msgstr "/opakovat-platbu/"
-
 #: festival/urls.py:21
 msgid "terms-of-registration/"
 msgstr "podminky-prihlaseni/"
+
+#: festival/urls.py:18
+msgid "gallery/"
+msgstr "galerie/"
+

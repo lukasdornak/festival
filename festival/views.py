@@ -53,7 +53,6 @@ class SectionListView(NavContextMixin, ListView):
         if self.role:
             request.session['FESTIVAL_ROLE'] = self.role
         self.first_time = bool(request.GET.get('first', 0))
-        self.nav = bool(request.GET.get('nav', 0))
         self.home = bool(request.GET.get('home', 0))
         return super().get(request, *args, **kwargs)
 
@@ -129,13 +128,13 @@ class RepeatPaymentView(NavContextMixin, DetailView):
             models.ThepayPayment.CANCELED,
             models.ThepayPayment.ERROR,
             models.ThepayPayment.UNDERPAID]:
-            raise Http404(_('Page no found'))
+            raise Http404(_('Page not found'))
         film_id = json.loads(obj.merchantData).get('f')
         if film_id is not None and models.ThepayPayment.objects.filter(
                 film_id=film_id, status__in=[models.ThepayPayment.OK,
                                              models.ThepayPayment.WAITING,
                                              models.ThepayPayment.CARD_DEPOSIT]).exists():
-            raise Http404(_('Page no found'))
+            raise Http404(_('Page not found'))
         return obj
 
     def get_context_data(self, **kwargs):
@@ -185,7 +184,7 @@ class ThanksView(NavContextMixin, TemplateView):
     def get(self, request, *args, **kwargs):
         self.payment = request.session.get('THEPAY_PAYMENT')
         if self.payment is None:
-            raise Http404(_('Page no found'))
+            raise Http404(_('Page not found'))
         thanks_for = kwargs['for']
         self.template_name = self.template_names[thanks_for]
         return super().get(request, *args, thanks_for=thanks_for, **kwargs)

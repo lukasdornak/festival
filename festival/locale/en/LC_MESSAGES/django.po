@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2019-04-16 21:38+0200\n"
+"POT-Creation-Date: 2019-05-12 18:27+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,221 +18,253 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
 
-#: festival/models.py:37 festival/templates/festival/base.html:43
+#: festival/models.py:71 festival/templates/festival/base.html:43
 msgid "tvůrce"
 msgstr "author"
 
-#: festival/models.py:38 festival/templates/festival/base.html:47
+#: festival/models.py:72 festival/templates/festival/base.html:47
 msgid "návštěvník"
 msgstr "visitor"
 
-#: festival/models.py:39 festival/templates/festival/base.html:51
+#: festival/models.py:73 festival/templates/festival/base.html:51
 msgid "novinář"
 msgstr "journalist"
 
-#: festival/models.py:191
+#: festival/models.py:284
 msgid "hraný"
 msgstr ""
 
-#: festival/models.py:192
+#: festival/models.py:285
 msgid "dokumentární"
 msgstr ""
 
-#: festival/models.py:193
+#: festival/models.py:286
 msgid "animovaný"
 msgstr ""
 
-#: festival/models.py:213
+#: festival/models.py:287
+msgid "klip"
+msgstr ""
+
+#: festival/models.py:307
 msgid "akční"
 msgstr ""
 
-#: festival/models.py:214
+#: festival/models.py:308
 msgid "detektivní"
 msgstr ""
 
-#: festival/models.py:215
+#: festival/models.py:309
 msgid "dobrodružný"
 msgstr ""
 
-#: festival/models.py:216
+#: festival/models.py:310
 msgid "drama"
 msgstr ""
 
-#: festival/models.py:217
+#: festival/models.py:311
 msgid "fantasy"
 msgstr ""
 
-#: festival/models.py:218
+#: festival/models.py:312
 msgid "historický"
 msgstr ""
 
-#: festival/models.py:219
+#: festival/models.py:313
 msgid "horor"
 msgstr ""
 
-#: festival/models.py:220
+#: festival/models.py:314
 msgid "hudební"
 msgstr ""
 
-#: festival/models.py:221
+#: festival/models.py:315
 msgid "komedie"
 msgstr ""
 
-#: festival/models.py:222
+#: festival/models.py:316
 msgid "kriminální"
 msgstr ""
 
-#: festival/models.py:223
+#: festival/models.py:317
 msgid "pohádka"
 msgstr ""
 
-#: festival/models.py:224
+#: festival/models.py:318
 msgid "rodinný"
 msgstr ""
 
-#: festival/models.py:225
+#: festival/models.py:319
 msgid "romantický"
 msgstr ""
 
-#: festival/models.py:226
+#: festival/models.py:320
 msgid "sci-fi"
 msgstr ""
 
-#: festival/models.py:227
+#: festival/models.py:321
 msgid "thriller"
 msgstr ""
 
-#: festival/models.py:228
+#: festival/models.py:322
 msgid "válečný"
 msgstr ""
 
-#: festival/models.py:229
+#: festival/models.py:323
 msgid "western"
 msgstr ""
 
-#: festival/models.py:232
+#: festival/models.py:326
 msgid "Zadejte, prosím, platné telefonní číslo ve formátu +999999999"
 msgstr ""
 
-#: festival/models.py:233
+#: festival/models.py:327
 msgid "jméno"
 msgstr "first name"
 
-#: festival/models.py:234
+#: festival/models.py:328
 msgid "příjmení"
 msgstr "last name"
 
-#: festival/models.py:235
+#: festival/models.py:329
 msgid "email"
 msgstr "email"
 
-#: festival/models.py:236
+#: festival/models.py:330
 msgid "škola/produkce"
 msgstr ""
 
-#: festival/models.py:237
+#: festival/models.py:331
 msgid "stát"
 msgstr ""
 
-#: festival/models.py:238
+#: festival/models.py:332
 msgid "telefon"
 msgstr ""
 
-#: festival/models.py:239
+#: festival/models.py:333
 msgid "název"
 msgstr ""
 
-#: festival/models.py:240
+#: festival/models.py:334
 msgid "stopáž"
 msgstr ""
 
-#: festival/models.py:241
+#: festival/models.py:335
 msgid "krátký popis"
-msgstr ""
+msgstr "short description"
 
-#: festival/models.py:242
+#: festival/models.py:336
 msgid "rok vzniku"
 msgstr ""
 
-#: festival/models.py:243
+#: festival/models.py:337
 msgid "kategorie"
 msgstr "category"
 
-#: festival/models.py:244
+#: festival/models.py:338
 msgid "žánr"
 msgstr "genre"
 
-#: festival/models.py:245
+#: festival/models.py:339
 msgid "url stažení filmu"
 msgstr ""
 
-#: festival/models.py:246
+#: festival/models.py:340
 msgid "heslo k filmu"
 msgstr ""
 
-#: festival/models.py:247
-msgid "url stažení traileru"
-msgstr ""
-
-#: festival/models.py:248
-msgid "heslo k traileru"
-msgstr ""
-
-#: festival/models.py:249
+#: festival/models.py:341
 msgid "url stažení titulků"
 msgstr ""
 
-#: festival/models.py:250
+#: festival/models.py:342
 msgid "heslo k titulkům"
 msgstr ""
 
-#: festival/models.py:251
-msgid "herecké obsazení"
+#: festival/models.py:343
+msgid "url stažení traileru"
 msgstr ""
 
-#: festival/models.py:252
+#: festival/models.py:344
+msgid "heslo k traileru"
+msgstr ""
+
+#: festival/models.py:345
 msgid "režie"
 msgstr ""
 
-#: festival/models.py:253
-msgid "scénář"
-msgstr ""
-
-#: festival/models.py:254
+#: festival/models.py:346
 msgid "kamera"
 msgstr ""
 
-#: festival/models.py:255
+#: festival/models.py:347
 msgid "zvuk"
 msgstr ""
 
-#: festival/models.py:256
+#: festival/models.py:348
 msgid "střih"
 msgstr ""
 
-#: festival/models.py:257
+#: festival/models.py:349
+msgid "scénář"
+msgstr ""
+
+#: festival/models.py:350
+msgid "herecké obsazení"
+msgstr ""
+
+#: festival/models.py:351
 msgid "ostatní tvůrci"
 msgstr ""
 
-#: festival/models.py:381
+#: festival/models.py:475
+#: festival/templates/festival/alter_pay_film_registration.html:4
 msgid "registrační poplatek"
 msgstr ""
 
-#: festival/models.py:382
+#: festival/models.py:476
 msgid "prodej vstupenek"
 msgstr ""
 
-#: festival/models.py:516
+#: festival/models.py:691
 msgid "Mám zájem o osobní účast na festivalu."
 msgstr ""
 
-#: festival/models.py:517
+#: festival/models.py:692
 msgid ""
 "Souhlasím s <a href=\"/podminky-prihlaseni/\" target=\"_blank\">podmínkami "
 "přihlášení</a>."
 msgstr ""
 "I agree with <a href=\"/terms-of-registration/\" target=\"_blank\">terms of "
 "registration</a>."
+
+#: festival/models.py:693
+msgid ""
+"Souhlasím se <a href=\"/zasady-zpracovani-osobnich-udaju/\" target=\"_blank"
+"\">zásadami zpracování osobních údajů</a>."
+msgstr ""
+"I agree with <a href=\"/privacy-policy/\" target=\"_blank\">privacy policy</a>."
+
+#: festival/templates/festival/alter_pay_film_registration.html:5
+msgid "za film:"
+msgstr ""
+
+#: festival/templates/festival/alter_pay_film_registration.html:6
+#: festival/templates/festival/repeat_payment.html:6
+#, python-format
+msgid "celková částka: %(price)skč"
+msgstr "total price: %(price)skč"
+
+#: festival/templates/festival/alter_pay_film_registration.html:7
+#: festival/templates/festival/repeat_payment.html:7
+msgid "jak budeš platit?"
+msgstr ""
+
+#: festival/templates/festival/alter_pay_film_registration.html:14
+#: festival/templates/festival/alter_pay_film_registration.html:15
+msgid "/zaplatit-registraci/"
+msgstr "/pay-registration-fee/"
 
 #: festival/templates/festival/base.html:33
 msgid "uvod"
@@ -283,49 +315,59 @@ msgstr "Or you wanna help us?"
 msgid "Tak nám napiš!"
 msgstr "Write to us!"
 
-#: festival/templates/festival/film_registration_paid.html:10
-#: festival/templates/festival/film_registration_paid.html:14
+#: festival/templates/festival/film_registration_paid.html:4
+#: festival/templates/festival/film_registration_paid.html:8
 msgid "jejda."
 msgstr ""
 
-#: festival/templates/festival/film_registration_paid.html:11
+#: festival/templates/festival/film_registration_paid.html:5
 msgid "Něco se pokazilo a platba nebyla dokončena."
 msgstr ""
 
-#: festival/templates/festival/film_registration_paid.html:12
+#: festival/templates/festival/film_registration_paid.html:6
 #, python-format
 msgid ""
 "Tvůj film \"%(name)s\" registrujeme, ale nebude zařazen do soutěže, pokud "
 "nebude zaplacen registrační poplatek."
 msgstr ""
 
-#: festival/templates/festival/film_registration_paid.html:13
+#: festival/templates/festival/film_registration_paid.html:7
+#: festival/templates/festival/photo_list.html:20
+#: festival/templates/festival/photo_list.html:21
+#: festival/templates/festival/repeat_payment.html:14
+#: festival/templates/festival/repeat_payment.html:15
 msgid "/opakovat-platbu/"
 msgstr "/repeat-payment/"
 
-#: festival/templates/festival/film_registration_paid.html:13
-msgid "Zkus to znova"
+#: festival/templates/festival/film_registration_paid.html:7
+msgid "zkus to znova"
 msgstr ""
 
-#: festival/templates/festival/film_registration_paid.html:15
+#: festival/templates/festival/film_registration_paid.html:9
 msgid "Objevil se problém s platební bránou."
 msgstr ""
 
-#: festival/templates/festival/film_registration_paid.html:16
+#: festival/templates/festival/film_registration_paid.html:10
 msgid "Jakmile ho vyřešíme, dáme Ti vědět mailem."
 msgstr ""
 
-#: festival/templates/festival/film_registration_paid.html:17
+#: festival/templates/festival/film_registration_paid.html:11
 msgid "díky."
 msgstr "thanks."
 
-#: festival/templates/festival/film_registration_paid.html:18
+#: festival/templates/festival/film_registration_paid.html:12
 #, python-format
 msgid "Platba byla úspěšně přijata a Tvůj film \"%(name)s\" byl registrován."
 msgstr ""
 
-#: festival/templates/festival/film_registration_paid.html:19
+#: festival/templates/festival/film_registration_paid.html:13
 msgid "O jeho zařazení do soutěže Tě budeme informovat mailem."
+msgstr ""
+
+#: festival/templates/festival/film_registration_paid.html:14
+#: festival/templates/festival/gdpr.html:6
+#: festival/templates/festival/tor.html:6
+msgid "zpět na web"
 msgstr ""
 
 #: festival/templates/festival/footer.html:5
@@ -336,47 +378,55 @@ msgstr "designed by"
 msgid "stvořil"
 msgstr "created by"
 
-#: festival/templates/festival/repeat_payment.html:10
+#: festival/templates/festival/photo_detail.html:35
+#: festival/templates/festival/widgets/gallery_bar.html:2
+msgid "galerie"
+msgstr "gallery"
+
+#: festival/templates/festival/photo_list.html:20
+#: festival/templates/festival/photo_list.html:21
+msgid "/galerie/"
+msgstr "/gallery/"
+
+#: festival/templates/festival/repeat_payment.html:4
 msgid "nový pokus o platbu"
 msgstr ""
 
-#: festival/templates/festival/repeat_payment.html:11
-#, python-format
-msgid "registrační poplatek za film: %(film_name)s"
+#: festival/templates/festival/repeat_payment.html:5
+msgid "registrační poplatek za film:"
 msgstr ""
 
-#: festival/templates/festival/repeat_payment.html:12
-#, python-format
-msgid "celková částka: %(price)skč"
-msgstr ""
-
-#: festival/templates/festival/section_list.html:16
-#: festival/templates/festival/section_list.html:18
-#: festival/templates/festival/section_list.html:78
+#: festival/templates/festival/section_list.html:17
+#: festival/templates/festival/section_list.html:19
+#: festival/templates/festival/section_list.html:80
 msgid "chceš vědět víc?"
 msgstr "wanna know more?"
 
-#: festival/templates/festival/section_list.html:62
+#: festival/templates/festival/section_list.html:64
 msgid "radši si to ještě pročtu"
 msgstr "I'd rather reed it once again"
 
-#: festival/templates/festival/section_list.html:64
+#: festival/templates/festival/section_list.html:66
 msgid "hlavní partneři"
 msgstr "main partners"
 
-#: festival/templates/festival/section_list.html:66
+#: festival/templates/festival/section_list.html:68
 msgid "chceš vědět míň?"
 msgstr "wanna know less?"
 
-#: festival/templates/festival/section_list.html:74
+#: festival/templates/festival/section_list.html:76
 #: festival/templates/festival/widgets/film_registration.html:36
 msgid "četl jsem a chci přihlásit svůj film"
 msgstr ""
 
-#: festival/templates/festival/section_list.html:76
+#: festival/templates/festival/section_list.html:78
 #: festival/templates/festival/widgets/sponsor.html:31
 msgid "všichni partneři"
 msgstr "all partners"
+
+#: festival/templates/festival/widgets/gallery_bar.html:2
+msgid "chci to vidět"
+msgstr ""
 
 #: festival/templates/festival/widgets/sponsor.html:4
 msgid "Ti, kteří to pořádají"
@@ -411,29 +461,45 @@ msgid "novinar/"
 msgstr "journalist/"
 
 #: festival/urls.py:18
+msgid "galerie/"
+msgstr "gallery/"
+
+#: festival/urls.py:19
+msgid "galerie/<int:year>/<slug:slug>/"
+msgstr "gallery/<int:year>/<slug:slug>/"
+
+#: festival/urls.py:20
 msgid "dekujeme-za-registraci-filmu/"
 msgstr "thanks-for-film-registration/"
 
-#: festival/urls.py:19
+#: festival/urls.py:21
 msgid "dekujeme-za-zakoupeni-vstupenek/"
 msgstr "thanks-for-tickets-purchase/"
 
-#: festival/urls.py:20
+#: festival/urls.py:22
+msgid "zaplatit-registraci/<int:pk>/<slug:film_name>/"
+msgstr "pay-registration-fee/<int:pk>/<slug:film_name>/"
+
+#: festival/urls.py:23
 msgid "opakovat-platbu/<int:pk>/"
 msgstr "repeat-payment/<int:pk>/"
 
-#: festival/urls.py:21
+#: festival/urls.py:24
 msgid "podminky-prihlaseni/"
 msgstr "terms-of-registration/"
 
-#: festival/views.py:118 festival/views.py:124 festival/views.py:150
-msgid "Page no found"
+#: festival/urls.py:25
+msgid "zasady-zpracovani-osobnich-udaju/"
 msgstr ""
 
-#: festival/views.py:170
+#: festival/views.py:132 festival/views.py:138 festival/views.py:162 festival/views.py:188
+msgid "Page not found"
+msgstr ""
+
+#: festival/views.py:208
 msgid "/dekujeme-za-registraci-filmu/"
 msgstr "/thanks-for-film-registration/"
 
-#: festival/views.py:171
+#: festival/views.py:209
 msgid "/dekujeme-za-nakup-vstupenek/"
 msgstr "/thanks-for-tickets-purchase/"

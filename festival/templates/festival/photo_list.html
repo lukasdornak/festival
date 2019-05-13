@@ -13,12 +13,3 @@
         {% include 'festival/contact.html' %}
     </main>
 {% endblock %}
-
-{% block js %}
-    <script>
-$(function () {{% if request.LANGUAGE_CODE == 'en' %}
-    $('#lang_switch').attr('href', $('#lang_switch').attr('href').replace("{% language "en" %}{% trans '/galerie/' %}{% endlanguage %}", "{% language "cs" %}{% trans '/opakovat-platbu/' %}{% endlanguage %}"));{% else %}
-    $('#lang_switch').attr('href', $('#lang_switch').attr('href').replace("{% language "cs" %}{% trans '/galerie/' %}{% endlanguage %}", "{% language "en" %}{% trans '/opakovat-platbu/' %}{% endlanguage %}"));{% endif %}
-})
-    </script>
-{% endblock %}
