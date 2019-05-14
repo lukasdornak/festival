@@ -157,6 +157,15 @@ class FilmAdmin(ImportExportModelAdmin):
     model = models.Film
     list_display = ['__str__', 'year', 'time', 'category', 'genre', 'country', 'get_rating', 'status', 'technical_check']
     list_filter = ['status', 'category', 'genre']
+    actions = ['send_unpaid_remainder',]
+
+    def send_unpaid_remainder(self, request, queryset):
+        for obj in queryset:
+            sent = obj.send_unpaid_remainder()
+            if sent == 1:
+                messages.info(request, f'Připomenutí registrce filmu { obj.name } odesláno na adresu { obj.email }.')
+            elif sent == 0:
+                messages.error(request, f'Připomenutí registrce filmu { obj.name } se nepodařilo odeslat na adresu { obj.email }.')
 
 
 @admin.register(models.Evaluation)

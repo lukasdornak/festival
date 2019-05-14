@@ -368,6 +368,32 @@ class Film(models.Model):
 
     get_rating.short_description = 'průměrné hodnocení'
 
+    def send_unpaid_remainder(self):
+        if self.status == self.UNPAID:
+            texts = Texts.objects.first()
+            if self.country in ['CZ', 'SK']:
+                link_url=f'https://festivalkratasy.cz/zaplatit-registraci/{ self.id }/{ slugify(self.name) }/'
+                # link = f'<a href="{ link_url }" target="_blank">{ link_url }</a>"'
+                email = Email.objects.create(
+                    recipient_list=f'{ self.first_name } { self.last_name } <{ self.email }>',
+                    subject=texts.mail_film_still_unpaid_subject,
+                    message=Template(texts.mail_film_still_unpaid_message).render(Context(dict(film=self, link=link_url, empty="-"))),
+                    message_html=Template(texts.mail_film_still_unpaid_message_html).render(Context(dict(film=self, link=link_url, empty="-"))),
+                )
+                return int(email.sent)
+            else:
+                link_url=f'https://festivalkratasy.cz/pay-registration-fee/{ self.id }/{ slugify(self.name) }/'
+                # link = f'<a href="{ link_url }" target="_blank">{ link_url }</a>"'
+                email = Email.objects.create(
+                    recipient_list=f'{ self.first_name } { self.last_name } <{ self.email }>',
+                    subject=texts.mail_film_still_unpaid_subject_en,
+                    message=Template(texts.mail_film_still_unpaid_message_en).render(Context(dict(film=self, link=link_url, empty="-"))),
+                    message_html=Template(texts.mail_film_still_unpaid_message_html_en).render(Context(dict(film=self, link=link_url, empty="-"))),
+                )
+                return int(email.sent)
+        else:
+            return -1
+
 
 class Evaluation(models.Model):
     LIKE_CHOICES = (
@@ -600,7 +626,7 @@ class Email(models.Model):
         super().save()
 
     def send(self):
-        recipient_list = self.recipient_list.split()
+        recipient_list = self.recipient_list.split(',')
         sender = Texts.objects.first().default_from_email
         number_of_sent = send_mass_html_mail(datatuple=(
             (self.subject, self.message, self.message_html, sender, [recipient]) for recipient in recipient_list)
@@ -616,14 +642,14 @@ def send_film_paid_confirmation(sender, instance, **kwargs):
             texts = Texts.objects.first()
             if obj.country in ['CZ', 'SK']:
                 Email.objects.create(
-                    recipient_list=obj.email,
+                    recipient_list=f'{ obj.first_name } { obj.last_name } <{ obj.email }>',
                     subject=texts.mail_film_paid_subject,
                     message=Template(texts.mail_film_paid_message).render(Context(dict(film=instance))),
                     message_html=Template(texts.mail_film_paid_message_html).render(Context(dict(film=instance))),
                 )
             else:
                 Email.objects.create(
-                    recipient_list=obj.email,
+                    recipient_list=f'{ obj.first_name } { obj.last_name } <{ obj.email }>',
                     subject=texts.mail_film_paid_subject_en,
                     message=Template(texts.mail_film_paid_message_en).render(Context(dict(film=instance))),
                     message_html=Template(texts.mail_film_paid_message_html_en).render(Context(dict(film=instance))),
@@ -638,7 +664,7 @@ def send_film_registration_notification(sender, instance, **kwargs):
             link_url=f'https://festivalkratasy.cz/zaplatit-registraci/{ instance.id }/{ slugify(instance.name) }/'
             # link = f'<a href="{ link_url }" target="_blank">{ link_url }</a>"'
             Email.objects.create(
-                recipient_list=instance.email,
+                recipient_list=f'{ instance.first_name } { instance.last_name } <{ instance.email }>',
                 subject=texts.mail_film_registered_unpaid_subject,
                 message=Template(texts.mail_film_registered_unpaid_message).render(Context(dict(film=instance, link=link_url, empty="-"))),
                 message_html=Template(texts.mail_film_registered_unpaid_message_html).render(Context(dict(film=instance, link=link_url, empty="-"))),
@@ -647,7 +673,7 @@ def send_film_registration_notification(sender, instance, **kwargs):
             link_url=f'https://festivalkratasy.cz/pay-registration/{ instance.id }/{ slugify(instance.name) }/'
             # link = f'<a href="{ link_url }" target="_blank">{ link_url }</a>"'
             Email.objects.create(
-                recipient_list=instance.email,
+                recipient_list=f'{ instance.first_name } { instance.last_name } <{ instance.email }>',
                 subject=texts.mail_film_registered_unpaid_subject_en,
                 message=Template(texts.mail_film_registered_unpaid_message_en).render(Context(dict(film=instance, link=link_url, empty="-"))),
                 message_html=Template(texts.mail_film_registered_unpaid_message_html_en).render(Context(dict(film=instance, link=link_url, empty="-"))),
@@ -662,7 +688,7 @@ def send_film_unpaid_notification(sender, instance, **kwargs):
             link_url=f'https://festivalkratasy.cz/opakovat-platbu/{ instance.paymentId }/'
             # link = f'<a href="{ link_url }" target="_blank">{ link_url }</a>"'
             Email.objects.create(
-                recipient_list=instance.film.email,
+                recipient_list=f'{ instance.film.first_name } { instance.film.last_name } <{ instance.film.email }>',
                 subject=texts.mail_film_unpaid_subject,
                 message=Template(texts.mail_film_unpaid_message).render(Context(dict(film=instance.film, link=link_url))),
                 message_html=Template(texts.mail_film_unpaid_message_html).render(Context(dict(film=instance.film, link=link_url))),
@@ -671,7 +697,7 @@ def send_film_unpaid_notification(sender, instance, **kwargs):
             link_url=f'https://festivalkratasy.cz/repeat-payment/{ instance.paymentId }/'
             # link = f'<a href="{ link_url }" target="_blank">{ link_url }</a>"'
             Email.objects.create(
-                recipient_list=instance.film.email,
+                recipient_list=f'{ instance.film.first_name } { instance.film.last_name } <{ instance.film.email }>',
                 subject=texts.mail_film_unpaid_subject_en,
                 message=Template(texts.mail_film_unpaid_message_en).render(Context(dict(film=instance.film, link=link_url))),
                 message_html=Template(texts.mail_film_unpaid_message_html_en).render(Context(dict(film=instance.film, link=link_url))),
