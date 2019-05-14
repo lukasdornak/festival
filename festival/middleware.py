@@ -15,6 +15,7 @@ class FestivalLocaleMiddleware:
         '^/thanks-for-tickets-purchase/', '^/thanks-for-tickets-purchase',
         '^/repeat-payment/', '^/repeat-payment',
         '^/pay-registration-fee/', '^/pay-registration-fee',
+        '^/pay-registration/', '^/pay-registration',
         '^/terms-of-registration/', '^/terms-of-registration',
         '^/privacy-policy/', '^/privacy-policy',
     ]]
