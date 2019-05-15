@@ -253,13 +253,13 @@ msgstr "for film:"
 #: festival/templates/festival/alter_pay_film_registration.html:6
 #: festival/templates/festival/repeat_payment.html:6
 #, python-format
-msgid "celková částka: %(price)skč"
-msgstr "total price: %(price)skč"
+msgid "celková částka: %(price)s Kč"
+msgstr "total price: %(price)s CZK"
 
 #: festival/templates/festival/alter_pay_film_registration.html:7
 #: festival/templates/festival/repeat_payment.html:7
 msgid "jak budeš platit?"
-msgstr ""
+msgstr "What's your preferred payment method?"
 
 #: festival/templates/festival/alter_pay_film_registration.html:14
 #: festival/templates/festival/alter_pay_film_registration.html:15
