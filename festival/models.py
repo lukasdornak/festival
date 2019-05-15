@@ -670,7 +670,7 @@ def send_film_registration_notification(sender, instance, **kwargs):
                 message_html=Template(texts.mail_film_registered_unpaid_message_html).render(Context(dict(film=instance, link=link_url, empty="-"))),
             )
         else:
-            link_url=f'https://festivalkratasy.cz/pay-registration/{ instance.id }/{ slugify(instance.name) }/'
+            link_url=f'https://festivalkratasy.cz/pay-registration-fee/{ instance.id }/{ slugify(instance.name) }/'
             # link = f'<a href="{ link_url }" target="_blank">{ link_url }</a>"'
             Email.objects.create(
                 recipient_list=f'{ instance.first_name } { instance.last_name } <{ instance.email }>',
