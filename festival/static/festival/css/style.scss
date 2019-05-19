@@ -632,12 +632,14 @@ main {
     flex-wrap: wrap;
     justify-content: center;
     color: white;
+    width: 100%;
+    max-width: 1200px;
     .hot_new {
         position: relative;
         display: flex;
         flex-direction: column;
         align-items: start;
-        margin: 0.5em;
+        margin: 0.7em;
         img {
             width: 200px;
             border-radius: 0.5em;
@@ -646,8 +648,11 @@ main {
             box-shadow: 0 3px 15px 0 rgba(0,0,0,0.5);
         }
         p {
+            max-width: 200px;
             text-align: justify;
             margin-top: 0;
+            padding-right: 0.5em;
+            box-sizing: border-box;
         }
         a {
             position: absolute;
@@ -754,9 +759,6 @@ main {
 
     /* Medium devices */
 @media (min-width: 768px) {
-    html {
-        font-size: 18px;
-    }
     body.first_time #header {
         height: $big-header-height;
     }
@@ -794,6 +796,9 @@ main {
         width: 200px;
         background-image: url("../img/logo-full.png");
     }
+    .smaller_at_larger {
+        font-size: 0.9rem;
+    }
     .extra_text > .page_width:not(.max_columns-1):not(.form_columns) {
         -webkit-column-count: 2;
         -moz-column-count: 2;
@@ -813,9 +818,6 @@ main {
     }
 }
 @media (min-width: 768px) and (min-aspect-ratio: 1/1) {
-    html {
-        font-size: 16px;
-    }
     .halves {
         flex-direction: row;
     }
@@ -903,8 +905,13 @@ main {
     .smaller_at_larger {
         font-size: 0.7rem;
     }
-    #hot_news .hot_new img {
-        width: 250px;
+    #hot_news .hot_new {
+        img {
+            width: 250px;
+        }
+        p {
+          max-width: 250px;
+        }
     }
 }
 

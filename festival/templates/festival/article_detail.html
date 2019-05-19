@@ -1,0 +1,21 @@
+{% extends 'festival/text.html' %}{% load i18n %}
+
+{% block text %}{% if request.LANGUAGE_CODE == 'en' %}
+    <h1>{{ object.headline_en }}</h1>
+    <img style="display: block; margin: 0 auto" src="{{ object.photo.middle.url }}" alt="{{ object.photo.description_en|default_if_none:object.photo.description }}">
+    <span class="smaller_at_larger">{{ object.date }}</span><br>
+    {{ object.full_text_en|safe }}{% else %}
+    <h1>{{ object.headline }}</h1>
+    <img style="display: block; margin: 0 auto" src="{{ object.photo.middle.url }}" alt="{{ object.photo.description }}">
+    <span class="smaller_at_larger">{{ object.date }}</span><br>
+    {{ object.full_text|safe }}{% endif %}
+{% endblock %}
+
+{% block js %}
+    <script>
+$(function () {{% if request.LANGUAGE_CODE == 'en' %}
+    $('#lang_switch').attr('href', function (){ return $(this).attr('href').replace("{% language "en" %}{% trans 'clanky/' %}{% endlanguage %}", "{% language "cs" %}{% trans 'clanky/' %}{% endlanguage %}").replace('{{ object.slug_en }}', '{{ object.slug }}')});{% else %}
+    $('#lang_switch').attr('href', function (){ return $(this).attr('href').replace("{% language "cs" %}{% trans 'clanky/' %}{% endlanguage %}", "{% language "en" %}{% trans 'clanky/' %}{% endlanguage %}").replace('{{ object.slug }}', '{{ object.slug_en }}')});{% endif %}
+})
+    </script>
+{% endblock %}

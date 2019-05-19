@@ -49,7 +49,7 @@ class ArticleAdmin(PublishMixin, admin.ModelAdmin):
 @admin.register(models.Section)
 class SectionAdmin(PublishMixin, admin.ModelAdmin):
     model = models.Section
-    list_display = ['__str__', 'role', 'order', 'published']
+    list_display = ['__str__', 'role', 'order', 'published', 'widget', 'max_columns']
     list_filter = ['role', 'published']
     fieldsets = (
         (None, {
@@ -71,7 +71,7 @@ class GuideAdmin(admin.ModelAdmin):
 
 class PhotoInline(admin.TabularInline):
     model = models.Photo
-    fields = ['original', 'description', 'order']
+    fields = ['original', 'description', 'description_en', 'order']
     extra = 1
 
 

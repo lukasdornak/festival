@@ -131,9 +131,15 @@ class AbstractArticle(models.Model):
     class Meta:
         abstract = True
 
+    def get_slug(self):
+        return slugify(self.headline)
+
+    def get_slug_en(self):
+        return slugify(self.headline_en)
+
     def save(self, *args, **kwargs):
-        self.slug = slugify(self.headline)
-        self.slug_en = slugify(self.headline_en)
+        self.slug = self.get_slug()
+        self.slug_en = self.get_slug_en()
         return super().save(*args, **kwargs)
 
     def __str__(self):
@@ -150,6 +156,16 @@ class Article(AbstractArticle):
         verbose_name = 'Článek'
         verbose_name_plural = 'Články'
         ordering = ['-date']
+        unique_together = [
+            ['date', 'headline'],
+            ['date', 'headline_en']
+        ]
+
+    def get_slug(self):
+        return f'{ slugify(self.date) }-{ super().get_slug() }'
+
+    def get_slug_en(self):
+        return f'{ slugify(self.date) }-{ super().get_slug_en() }'
 
 
 class Section(AbstractArticle):
@@ -198,7 +214,7 @@ class Photo(models.Model):
     middle = ImageSpecField(source='original', processors=[ResizeToFit(600, 600)], format='JPEG', options={'quality': 90})
     large = ImageSpecField(source='original', processors=[ResizeToFit(1200, 1200)], format='JPEG', options={'quality': 95})
     description = models.CharField('popisek', max_length=200)
-    description_en = models.CharField('popisek anglicky', max_length=200)
+    description_en = models.CharField('popisek anglicky', max_length=200, null=True, blank=True)
     year = models.ForeignKey(Year, verbose_name='ročník', on_delete=models.SET_NULL, null=True, blank=True)
     order = models.PositiveSmallIntegerField('pořadí', default=1)
     slug = models.SlugField(editable=False, null=True)

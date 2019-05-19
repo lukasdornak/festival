@@ -1,0 +1,26 @@
+{% extends 'festival/base.html' %}{% load i18n %}{% load imagekit %}
+
+{% block logo %}<a href="/"></a>{% endblock %}
+
+{% block content %}
+    <main>{% regroup object_list by date.year as by_year %}{% for year, list in by_year %}
+        <section id="id-{{ year }}">
+            <h1>{{ year }}</h1>
+            <div id="hot_news" class="page_width">{% for article in list %}
+                <div class="hot_new">{% if request.LANGUAGE_CODE == 'en' %}
+                    <img src="{% if article.photo.cropped %}{{ article.photo.cropped.url }}{% else %}{% generateimage 'festival:auto_crop' source=article.photo.original as ac %}{{ ac.url }}{% endif %}" alt="{{ article.headline_en }}">
+                    <h3 class="new_headline">{{ article.headline_en }}</h3>
+                    <p class="smaller_at_larger">{{ article.date }}</p>
+                    <p class="smaller_at_larger">{{ article.short_text_en }}</p>
+                    <a href="{{ article.slug_en }}/"></a>{% else %}
+                    <img src="{% if article.photo.cropped %}{{ article.photo.cropped.url }}{% else %}{% generateimage 'festival:auto_crop' source=article.photo.original as ac %}{{ ac.url }}{% endif %}" alt="{{ article.headline }}">
+                    <h3 class="new_headline">{{ article.headline }}</h3>
+                    <p class="smaller_at_larger">{{ article.date }}</p>
+                    <p class="smaller_at_larger">{{ article.short_text }}</p>
+                    <a href="{{ article.slug }}/"></a>{% endif %}
+                </div>{% endfor %}
+            </div>
+        </section>{% endfor %}
+        {% include 'festival/contact.html' %}
+    </main>
+{% endblock %}

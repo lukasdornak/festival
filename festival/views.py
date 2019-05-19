@@ -70,6 +70,19 @@ class PhotoDetailView(NavContextMixin, DetailView):
         return context_data
 
 
+class ArticleListView(NavContextMixin, ListView):
+    model = models.Article
+
+
+class ArticleDetailView(NavContextMixin, DetailView):
+    model = models.Article
+
+    def get(self, *args, **kwargs):
+        if self.request.LANGUAGE_CODE == 'en':
+            self.slug_field = 'slug_en'
+        return super().get(self, *args, **kwargs)
+
+
 class FilmRegistrationView(UpdateView):
     success_url = "/tvurce/#prihlaseni-filmu"
     model = models.FilmRegistrationForm

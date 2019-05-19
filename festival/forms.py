@@ -6,7 +6,7 @@ class PhotoAdminForm(forms.ModelForm):
     cropped = forms.CharField(widget=forms.HiddenInput, required=False)
 
     class Meta:
-        fields = ['original', 'description', 'year', 'order']
+        fields = ['original', 'description', 'description_en', 'year', 'order']
         model = models.Photo
 
 
