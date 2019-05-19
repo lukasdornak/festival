@@ -3,7 +3,7 @@
 {% block text %}
     <h2>{% trans 'nový pokus o platbu' %}</h2>
     <p>{% trans 'registrační poplatek za film:' %} {{ object.film.name }}</p>
-    <p>{% blocktrans with price=object.value %}celková částka: {{ price }}kč{% endblocktrans %}</p>
+    <p>{% blocktrans with price=object.value %}celková částka: {{ price }} Kč{% endblocktrans %}</p>
     <p>{% trans 'jak budeš platit?' %}</p>
     {% include helper_template_name %}
 {% endblock %}

@@ -22,6 +22,10 @@ msgstr "dekujeme-za-zakoupeni-vstupenek/"
 msgid "terms-of-registration/"
 msgstr "podminky-prihlaseni/"
 
+#: festival/urls.py:21
+msgid "privacy-policy/"
+msgstr "zasady-zpracovani-osobnich-udaju/"
+
 #: festival/urls.py:18
 msgid "gallery/"
 msgstr "galerie/"

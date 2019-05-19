@@ -323,7 +323,7 @@ class Film(models.Model):
         (WESTERN, _('western')),
     )
     phone_regex = RegexValidator(regex=r'^\+?1?\d{9,15}$',
-                                 message=_('Zadejte, prosím, platné telefonní číslo ve formátu +999999999'))
+                                 message=_('Zadejte, prosím, platné telefonní číslo v mezinárodním formátu.'))
     first_name = models.CharField(_('jméno'), max_length=50)
     last_name = models.CharField(_('příjmení'), max_length=50)
     email = models.EmailField(_('email'))

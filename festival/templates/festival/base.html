@@ -67,8 +67,8 @@
         <div id="header">
             <div id="logo">{% block logo %}{% endblock %}</div>
             <div id="nav_bar">{% with request.path|slice:"1:" as path %}{% if request.LANGUAGE_CODE == 'en' %}{% language "cs" %}
-                <a href="/{% trans path %}" id="lang_switch">cs/<b>en</b></a>{% endlanguage %}{% else %}{% comment %}{% language "en" %}
-                <a href="/{% trans path %}" id="lang_switch"><b>cs</b>/en</a>{% endlanguage %}{% endcomment %}{% endif %}{% endwith %}
+                <a href="/{% trans path %}" id="lang_switch">cs/<b>en</b></a>{% endlanguage %}{% else %}{% language "en" %}
+                <a href="/{% trans path %}" id="lang_switch"><b>cs</b>/en</a>{% endlanguage %}{% endif %}{% endwith %}
                 <div id="menu_button"{% if nav_on %} class="cross"{% endif %}>
                     <div class="bar1"></div>
                     <div class="bar2"></div>
