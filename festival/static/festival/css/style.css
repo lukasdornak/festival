@@ -577,9 +577,7 @@ main {
         height: auto; }
   #hello {
     text-align: center;
-    padding-left: 0; }
-    #hello h3 {
-      font-size: 0.8rem; } }
+    padding-left: 0; } }
 
 /* Small devices */
 @media (min-width: 576px) {
@@ -633,8 +631,6 @@ main {
   #hello {
     text-align: center;
     padding-left: 0; }
-    #hello h3 {
-      font-size: 0.8rem; }
   nav {
     flex-direction: row;
     justify-content: space-evenly; }
