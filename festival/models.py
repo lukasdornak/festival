@@ -30,14 +30,12 @@ class OverwriteStorage(FileSystemStorage):
 
 def path_photo(instance, filename):
     if instance.year:
-        return f'gallery/{ instance.year.get_year() }/{ instance.id }-{ slugify(instance.description) }.jpg'
-    return f'gallery/{ instance.id }-{ slugify(instance.description) }.jpg'
+        return f"gallery/{ instance.year.get_year() }/{ instance.id }-{ slugify(instance.description) }.{ filename.split('.')[-1] }"
+    return f"gallery/{ instance.id }-{ slugify(instance.description) }.{ filename.split('.')[-1] }"
 
 
 def path_photo_cropped(instance, filename):
-    if instance.year:
-        return f'gallery/{ instance.year.get_year() }/{ instance.id }-{ slugify(instance.description) }_cropped.png'
-    return f'gallery/{ instance.id }-{ slugify(instance.description) }_cropped.png'
+    return f"{ ''.join(instance.original.url.replace('/media/', '').split('.')[0:-1]) }_cropped.png"
 
 
 class AutoCrop(ImageSpec):
@@ -215,7 +213,7 @@ class Photo(models.Model):
     large = ImageSpecField(source='original', processors=[ResizeToFit(1200, 1200)], format='JPEG', options={'quality': 95})
     description = models.CharField('popisek', max_length=200)
     description_en = models.CharField('popisek anglicky', max_length=200, null=True, blank=True)
-    year = models.ForeignKey(Year, verbose_name='ročník', on_delete=models.SET_NULL, null=True, blank=True)
+    year = models.ForeignKey(Year, verbose_name='galerie', on_delete=models.SET_NULL, null=True, blank=True)
     order = models.PositiveSmallIntegerField('pořadí', default=1)
     slug = models.SlugField(editable=False, null=True)
 
@@ -718,6 +716,12 @@ def send_film_unpaid_notification(sender, instance, **kwargs):
                 message=Template(texts.mail_film_unpaid_message_en).render(Context(dict(film=instance.film, link=link_url))),
                 message_html=Template(texts.mail_film_unpaid_message_html_en).render(Context(dict(film=instance.film, link=link_url))),
             )
+
+
+@receiver(models.signals.post_delete, sender=Photo)
+def remove_photo_file(sender, instance, **kwargs):
+    os.remove(f'{ settings.BASE_DIR }{ instance.original.url } ')
+    os.remove(f'{ settings.BASE_DIR }{ instance.cropped.url } ')
 
 
 class ThepayPaymentForm(ModelForm):
