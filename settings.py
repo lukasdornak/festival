@@ -6,7 +6,11 @@ SECRET_KEY = os.environ.get('SECRET_KEY', 'not secret key')
 
 DEBUG = False
 
-ALLOWED_HOSTS = ['festivalkratasy.cz', 'www.festivalkratasy.cz', 'festivalkratasy.com', 'www.festivalkratasy.com', 'localhost']
+ADMINS = [('Lukáš Dorňák', 'lukasdornak@gmail.com')]
+
+MANAGERS = ADMINS
+
+ALLOWED_HOSTS = ['festivalkratasy.cz', 'www.festivalkratasy.cz', 'festivalkratasy.com', 'www.festivalkratasy.com']
 
 INSTALLED_APPS = [
     'festival',
@@ -23,6 +27,7 @@ INSTALLED_APPS = [
 ]
 
 MIDDLEWARE = [
+    'django.middleware.common.BrokenLinkEmailsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'festival.middleware.FestivalLocaleMiddleware',
